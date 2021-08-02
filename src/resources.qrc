@@ -1,0 +1,25 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/logo.svg</file>
+        <file>images/Uoslogo.jpg</file>
+        <file>images/watermelon.png</file>
+        <file>images/strawberry.png</file>
+        <file>images/grape.png</file>
+        <file>images/coconut.png</file>
+        <file>images/banana.png</file>
+        <file>images/apple.png</file>
+        <file>images/cow.png</file>
+        <file>images/dog.png</file>
+        <file>images/cat.png</file>
+        <file>images/fox.png</file>
+        <file>images/panda.png</file>
+        <file>images/lion.png</file>
+        <file>images/horse.png</file>
+        <file>images/pig.png</file>
+        <file>images/rabbit.png</file>
+        <file>images/sheep.png</file>
+        <file>images/snake.png</file>
+        <file>images/tiger.png</file>
+        <file>images/background.png</file>
+    </qresource>
+</RCC>
