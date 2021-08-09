@@ -18,29 +18,24 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef MAINWIDNOW_H
-#define MAINWIDNOW_H
+#ifndef LLKSTYLE_H
+#define LLKSTYLE_H
 
-#include <DMainWindow>
-#include <DStackedWidget>
+#include <QCommonStyle>
+#include <DStyle>
 
 DWIDGET_USE_NAMESPACE
-class MainWidnow : public DMainWindow
+class LLKStyle : public DStyle
 {
     Q_OBJECT
 public:
-    explicit MainWidnow(QWidget *parent = nullptr);
+    explicit LLKStyle();
 protected:
-    bool eventFilter(QObject *obj, QEvent *event) override;
-    void paintEvent(QPaintEvent *event)override;
+    void drawControl(QStyle::ControlElement element, const QStyleOption *opt, QPainter *p,
+                     const QWidget *w = nullptr) const override;
 signals:
 
-private:
-   void initUI();
-
-private:
-   DStackedWidget *m_stackedWidget;
-   DTitlebar *m_titlebar;
+public slots:
 };
 
-#endif // MAINWIDNOW_H
+#endif // LLKSTYLE_H

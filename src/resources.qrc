@@ -1,13 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>images/logo.svg</file>
-        <file>images/Uoslogo.jpg</file>
-        <file>images/watermelon.png</file>
-        <file>images/strawberry.png</file>
-        <file>images/grape.png</file>
-        <file>images/coconut.png</file>
-        <file>images/banana.png</file>
-        <file>images/apple.png</file>
         <file>images/cow.png</file>
         <file>images/dog.png</file>
         <file>images/cat.png</file>
@@ -21,5 +14,8 @@
         <file>images/snake.png</file>
         <file>images/tiger.png</file>
         <file>images/background.png</file>
+        <file>images/big.svg</file>
+        <file>images/mid.svg</file>
+        <file>images/small.svg</file>
     </qresource>
 </RCC>

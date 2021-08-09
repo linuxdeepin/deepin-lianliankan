@@ -1,3 +1,4 @@
+#include "source/llkstyle.h"
 #include <DApplication>
 #include <DMainWindow>
 #include <DWidgetUtil>

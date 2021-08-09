@@ -9,9 +9,15 @@
 
 class BtnFactory{
 public:
-    GameButton * createBtn(GameBtnFlag flag){
-        GameButton *button=new GameButton (flag);
-        return  button;
+    static GameButton * createBtn(const GameBtnFlag &flag,const QString &text,QWidget *parent=nullptr){
+        GameButton *btn=nullptr;
+        switch (flag) {
+             case control:{
+                btn=new GameButton(QIcon(QPixmap::fromImage(QImage(":/images/big.svg"))),text,parent);
+                btn->setGeometry(100,100,230,120);
+             }
+        }
+        return  btn;
     }
 };
 
@@ -27,6 +33,8 @@ public:
     //
     void gameBegin(int row,int column);//游戏开始
     void gameReset();//游戏重置
+//    bool bfs();//搜索
+//    bool judge();//判断是否为死局
     QMap<QPair<int,int>,GameBtnFlag>&gameMap();//游戏地图
 signals:
 

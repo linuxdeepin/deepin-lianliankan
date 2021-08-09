@@ -16,15 +16,16 @@ void GameControl::gameBegin(int row,int column)
    m_row=row;
    m_column=column;
 
-   for (int i=0;i<row*column;i+=10) {
-       for (int j=0;j<10;j++) {
-          m_vec.append(GameBtnFlag(i/10+1));
+
+   for (int i=0;i<GAMEROW*GAMECOLUMN;i+=14) {
+       for (int j=0;j<14;j++) {
+          m_vec.append(GameBtnFlag(i/14+1));
        }
    }
 
 
    srand(static_cast<unsigned>(time(nullptr)));
-   std::random_shuffle(m_vec.begin(),m_vec.begin()+row*column);
+   std::random_shuffle(m_vec.begin(),m_vec.begin()+GAMEROW*GAMECOLUMN);
 
    int k=0;
    for (int i=0;i<row+2;i++) {

@@ -1,53 +1,59 @@
+/*
+* Copyright (C) 2019 ~ 2021 Uniontech Software Technology Co.,Ltd.
+*
+* Author:     linxun <linxun@uniontech.com>
+*
+* Maintainer: linxun <linxun@uniontech.com>
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
 #include "gamebutton.h"
 
 #include <QPainter>
+#include <QStylePainter>
+#include <QStyleOption>
+#include <QHBoxLayout>
+#include <QSizePolicy>
 
-const static int iconHeight=50;
-const static int iconWidth=50;
+#include <DLabel>
+#include <DApplicationHelper>
 
-GameButton::GameButton(GameBtnFlag flag,QWidget *parent) : DPushButton(parent),m_flag(flag)
+
+GameButton::GameButton(const QIcon &icon, const QString &text, QWidget *parent):DPushButton(parent),m_icon(icon),m_text(text)
 {
-
+    DLabel *textLabel=new DLabel (m_text,this);
+    QFont font;
+    QHBoxLayout *mainLayout=new QHBoxLayout ();
+    mainLayout->setContentsMargins(0,0,0,20);
+    mainLayout->addWidget(textLabel);
+    mainLayout->setAlignment(Qt::AlignHCenter);
+    this->setLayout(mainLayout);
 
 }
 
 void GameButton::paintEvent(QPaintEvent *e)
 {
-
-
-    QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing, true);
-    QRect pixRect(0,0,ICONWIDTH,ICONHEIGHT);
-    QPixmap pix;
-    switch (m_flag) {
-
-    case cow:{
-        pix.load(":/images/cow.png");
-        break;
-    }
-    case tiger:{
-        pix.load(":/images/cow.png");
-        break;
-    }
-    case sheep:{
-        pix.load(":/images/sheep.png");
-        break;
-    }
-    case snake:{
-        pix.load(":/images/snake.png");
-        break;
-    }
-    case horse:{
-        pix.load(":/images/horse.png");
-        break;
-    }
-    default:{
-        pix.load(":/images/horse.png");
-        break;
-    }
-    }
-
-    painter.drawPixmap(rect(),pix);
-
+    Q_UNUSED(e);
+    QStylePainter stylePainter(this);
+    QStyleOptionButton option;
+    initStyleOption(&option);
+    stylePainter.drawControl(QStyle::CE_PushButtonLabel, option);
 }
 
+void GameButton::initStyleOption(QStyleOptionButton *option) const
+{
+    DPushButton::initStyleOption(option);
+    option->icon=m_icon;
+    option->iconSize=QSize(rect().size().width(),rect().size().height()) ;
+}

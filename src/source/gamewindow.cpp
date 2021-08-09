@@ -22,6 +22,7 @@ void GameWindow::paintEvent(QPaintEvent *event)
 {
       QPainter p(this);
       p.drawPixmap(rect(),QPixmap(":/images/background.png"));
+      DMainWindow::paintEvent(event);
 }
 
 void GameWindow::initUI()

@@ -18,29 +18,18 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef MAINWIDNOW_H
-#define MAINWIDNOW_H
+#ifndef MAINPAGE_H
+#define MAINPAGE_H
 
-#include <DMainWindow>
-#include <DStackedWidget>
+#include <DWidget>
 
 DWIDGET_USE_NAMESPACE
-class MainWidnow : public DMainWindow
+class MainPage: public DWidget
 {
-    Q_OBJECT
 public:
-    explicit MainWidnow(QWidget *parent = nullptr);
-protected:
-    bool eventFilter(QObject *obj, QEvent *event) override;
-    void paintEvent(QPaintEvent *event)override;
-signals:
-
+    MainPage(QWidget *parent = nullptr);
 private:
-   void initUI();
-
-private:
-   DStackedWidget *m_stackedWidget;
-   DTitlebar *m_titlebar;
+    void initUI();
 };
 
-#endif // MAINWIDNOW_H
+#endif // MAINPAGE_H
