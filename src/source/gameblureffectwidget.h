@@ -18,35 +18,22 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef GAMEBUTTON_H
-#define GAMEBUTTON_H
+#ifndef GAMEBLUREFFECTWIDGET_H
+#define GAMEBLUREFFECTWIDGET_H
 
-#include "global.h"
-#include <DPushButton>
+#include <DBlurEffectWidget>
 
 DWIDGET_USE_NAMESPACE
-class GameButton : public QAbstractButton
+class GameBlurEffectWidget : public DBlurEffectWidget
 {
     Q_OBJECT
 public:
-    explicit GameButton(const QPixmap &pic,const QString &text,QWidget *parent = nullptr);
-    explicit GameButton(const QPixmap &pic,const QPixmap &icon,QWidget*parent=nullptr);
-    explicit GameButton(const QPixmap &pic,QWidget*parent=nullptr);
-    void setFont(const QFont &font);
+    explicit GameBlurEffectWidget(QWidget *parent = nullptr);
+protected:
+    void paintEvent(QPaintEvent *event)override;
 signals:
 
 public slots:
-
-protected:
-   void paintEvent(QPaintEvent *event) override;
-private:
-   void initUI();
-   void initIcon(GameBtnFlag flag);
-private:
-   QPixmap m_pic;//按钮背景图
-   QPixmap m_icon;//按钮图标
-   QString m_text;//按钮文字
-   QFont  m_font; //按钮字体
 };
 
-#endif // GAMEBUTTON_H
+#endif // GAMEBLUREFFECTWIDGET_H

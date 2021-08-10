@@ -14,8 +14,7 @@
         <file>images/snake.png</file>
         <file>images/tiger.png</file>
         <file>images/background.png</file>
-        <file>images/big.svg</file>
-        <file>images/mid.svg</file>
-        <file>images/small.svg</file>
+        <file>images/rect.png</file>
+        <file>images/normal.svg</file>
     </qresource>
 </RCC>

@@ -24,6 +24,8 @@
 
 #include <DTitlebar>
 
+#include <QImageReader>
+
 MainWidnow::MainWidnow(QWidget *parent):DMainWindow (parent)
 {
     initUI();
@@ -45,13 +47,19 @@ bool MainWidnow::eventFilter(QObject *obj, QEvent *event)
     //对titlebar透明度进行处理
     if(obj==m_titlebar){
     if(event->type()==QEvent::Paint){
+        DGuiApplicationHelper::ColorType themtype = DGuiApplicationHelper::instance()->themeType();
+        QColor broundColor;
+         if (themtype == DGuiApplicationHelper::ColorType::DarkType) {
+             broundColor = m_titlebar->palette().color(QPalette::Normal, QPalette::Dark);
+         } else if (themtype == DGuiApplicationHelper::ColorType::LightType) {
+             broundColor = m_titlebar->palette().color(QPalette::Normal, QPalette::Light);
+         }
         QPainter painter(m_titlebar);
         painter.setRenderHint(QPainter::Antialiasing, true);
-        QColor color("#FFFFFF");
-        color.setAlphaF(0.8);
-        painter.setBrush(QBrush(color));
+        broundColor.setAlphaF(0.8);
+        painter.setBrush(broundColor);
         painter.setPen(Qt::NoPen);
-        painter.fillRect(titlebar()->rect(), color);
+        painter.fillRect(titlebar()->rect(), broundColor);
         painter.drawRect(titlebar()->rect());
         return  true;
      }
@@ -64,7 +72,8 @@ void MainWidnow::paintEvent(QPaintEvent *event)
     //绘制背景图片
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing, true);
-    QImage image(":/images/background.png");
-    p.drawPixmap(rect(),QPixmap::fromImage(image));
+    QImageReader imageReader(":/images/background.png");
+    imageReader.setScaledSize(rect().size());
+    p.drawPixmap(rect(),QPixmap::fromImageReader(&imageReader));
     DWidget::paintEvent(event);
 }

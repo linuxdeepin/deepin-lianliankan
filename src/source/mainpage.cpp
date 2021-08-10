@@ -18,47 +18,51 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#define FRAMEWH 486
+#define FRAMEWH 480
+#define FRAMEHH 515
 
 
 #include "mainpage.h"
 #include "global.h"
 #include "gamecontrol.h"
-
-#include <DBlurEffectWidget>
+#include "gameblureffectwidget.h"
 
 #include <QPainter>
+#include <QButtonGroup>
 #include <QVBoxLayout>
-#include <QHBoxLayout>
+#include <QDebug>
 
 MainPage::MainPage(QWidget*parent):DWidget (parent)
 {
-   initUI();
+    initUI();
 }
 
 void MainPage::initUI()
 {
-    QHBoxLayout *mainLayout=new QHBoxLayout();
-    QVBoxLayout *vLayout=new QVBoxLayout();
+    QButtonGroup *btnGrp=new QButtonGroup;
+    GameButton *primaryBtn=BtnFactory::createBtn(GameBtnFlag::ButtonNormal,GameBtnSize::Mid,GameIconType::None,tr("初级"),this);
+    GameButton *interBtn=BtnFactory::createBtn(GameBtnFlag::ButtonNormal,GameBtnSize::Mid,GameIconType::None,tr("中级"),this);
+    GameButton *advanceBtn=BtnFactory::createBtn(GameBtnFlag::ButtonNormal,GameBtnSize::Mid,GameIconType::None,tr("高级"),this);
+    btnGrp->addButton(primaryBtn);
+    btnGrp->addButton(interBtn);
+    btnGrp->addButton(advanceBtn);
+    btnGrp->setExclusive(true);
 
-    DBlurEffectWidget *switchFrame=new DBlurEffectWidget(this);
-    QColor color("#F3AC6C");
-    color.setAlphaF(0.2);
-    switchFrame->setMaskColor(color);
-    switchFrame->setMinimumSize(FRAMEWH,FRAMEWH);
-    switchFrame->setBlendMode(DBlurEffectWidget::InWindowBlend);
-    switchFrame->setFull(true);
-    switchFrame->setBlurRectXRadius(FRAMERADIUS);
-    switchFrame->setBlurRectYRadius(FRAMERADIUS);
-    switchFrame->setMaskAlpha(10);
+    GameBlurEffectWidget *switchFrame=new GameBlurEffectWidget(this);
+    QVBoxLayout *frameLayout=new QVBoxLayout;
+    frameLayout->addWidget(primaryBtn);
+    frameLayout->addSpacing(-20);
+    frameLayout->addWidget(interBtn);
+    frameLayout->addSpacing(-20);
+    frameLayout->addWidget(advanceBtn);
+    frameLayout->addSpacing(-20);
+    frameLayout->setAlignment(Qt::AlignHCenter);
+    switchFrame->setGeometry(278,125,FRAMEWH,FRAMEHH);
+    switchFrame->setLayout(frameLayout);
 
-
-    GameButton *btn=BtnFactory::createBtn(GameBtnFlag::control,tr("Diffculty selection"),this);
-
-    btn->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-    vLayout->addWidget(switchFrame);
-    vLayout->setAlignment(Qt::AlignCenter);
-    mainLayout->addLayout(vLayout);
-    mainLayout->setAlignment(Qt::AlignCenter);
-    this->setLayout(mainLayout);
+    GameButton *swithBtn=BtnFactory::createBtn(GameBtnFlag::ButtonNormal,GameBtnSize::Big,GameIconType::None,tr("选择难度"),this);
+    swithBtn->setGeometry(393,80,250,135);
+    GameButton *soundBtn=BtnFactory::createBtn(GameBtnFlag::ButtonNormal,GameBtnSize::Small,GameIconType::Sound);
+    soundBtn->setParent(this);
+    soundBtn->setGeometry(854,569,140,80);
 }

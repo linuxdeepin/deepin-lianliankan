@@ -21,16 +21,34 @@
 #include "gamebutton.h"
 
 #include <QPainter>
-#include <QStylePainter>
-#include <QStyleOption>
 #include <QHBoxLayout>
 #include <QSizePolicy>
 
 #include <DLabel>
-#include <DApplicationHelper>
 
 
-GameButton::GameButton(const QIcon &icon, const QString &text, QWidget *parent):DPushButton(parent),m_icon(icon),m_text(text)
+GameButton::GameButton(const QPixmap &pic, const QString &text, QWidget *parent):QAbstractButton(parent),m_pic(pic),m_text(text)
+{
+    initUI();
+
+}
+
+GameButton::GameButton(const QPixmap &pic, const QPixmap &icon, QWidget *parent):QAbstractButton(parent),m_pic(pic),m_icon(icon)
+{
+    initUI();
+}
+
+GameButton::GameButton(const QPixmap &pic, QWidget *parent):QAbstractButton(parent),m_pic(pic)
+{
+    initUI();
+}
+
+void GameButton::setFont(const QFont &font)
+{
+    m_font=font;
+}
+
+void GameButton::initUI()
 {
     DLabel *textLabel=new DLabel (m_text,this);
     QFont font;
@@ -39,21 +57,15 @@ GameButton::GameButton(const QIcon &icon, const QString &text, QWidget *parent):
     mainLayout->addWidget(textLabel);
     mainLayout->setAlignment(Qt::AlignHCenter);
     this->setLayout(mainLayout);
-
 }
 
 void GameButton::paintEvent(QPaintEvent *e)
 {
     Q_UNUSED(e);
-    QStylePainter stylePainter(this);
-    QStyleOptionButton option;
-    initStyleOption(&option);
-    stylePainter.drawControl(QStyle::CE_PushButtonLabel, option);
-}
+    QPainter p(this);
+    p.setRenderHint(QPainter::Antialiasing, true);
+    p.drawPixmap(rect(),m_pic);
+    if(m_text!=" "){
 
-void GameButton::initStyleOption(QStyleOptionButton *option) const
-{
-    DPushButton::initStyleOption(option);
-    option->icon=m_icon;
-    option->iconSize=QSize(rect().size().width(),rect().size().height()) ;
+    }
 }

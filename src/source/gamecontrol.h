@@ -6,17 +6,63 @@
 
 #include <QObject>
 #include <QMap>
+#include <QImageReader>
 
 class BtnFactory{
 public:
-    static GameButton * createBtn(const GameBtnFlag &flag,const QString &text,QWidget *parent=nullptr){
+    static GameButton * createBtn(const GameBtnFlag &flag,const GameBtnSize &btnSize ,const GameIconType &iconType,const QString &text=" ",QWidget *parent=nullptr){
         GameButton *btn=nullptr;
-        switch (flag) {
-             case control:{
-                btn=new GameButton(QIcon(QPixmap::fromImage(QImage(":/images/big.svg"))),text,parent);
-                btn->setGeometry(100,100,230,120);
-             }
+        QImageReader imageReader;
+        QSize scaledSize;
+        QPixmap *btnIcon=nullptr;
+        switch (iconType) {
+           case Sound:
+            break;
+           case Begin:
+            break;
+           case Reset:
+            break;
+           case Hint:
+            break;
+           case Home:
+            break;
+           default:
+            break;
         }
+
+
+        switch (btnSize) {
+        case Big:
+            scaledSize=QSize(250,135);
+            break;
+        case Mid:
+            scaledSize=QSize(200,115);
+            break;
+        case Small:
+            scaledSize=QSize(140,80);
+            break;
+        default:
+            scaledSize=QSize(50,50);
+        }
+
+        if(flag==ButtonNormal){
+            imageReader.setFileName(":/images/normal.svg");
+            imageReader.setScaledSize(scaledSize);
+
+            if(!btnIcon){
+                btn=new GameButton(QPixmap::fromImageReader(&imageReader),text,parent);
+            }else {
+                btn=new GameButton(QPixmap::fromImageReader(&imageReader),*btnIcon,parent);
+            }
+
+        }else {
+            imageReader.setFileName(":/images/normal.svg");
+            imageReader.setScaledSize(scaledSize);
+            btn=new GameButton (QPixmap::fromImageReader(&imageReader),parent);
+        }
+
+        btn->setFixedSize(scaledSize);
+        btn->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
         return  btn;
     }
 };

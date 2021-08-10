@@ -18,35 +18,23 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef GAMEBUTTON_H
-#define GAMEBUTTON_H
+#include "gameblureffectwidget.h"
 
-#include "global.h"
-#include <DPushButton>
+#include <QPainter>
+#include <QtMath>
+#include <QImageReader>
 
-DWIDGET_USE_NAMESPACE
-class GameButton : public QAbstractButton
+GameBlurEffectWidget::GameBlurEffectWidget(QWidget *parent) :DBlurEffectWidget(parent)
 {
-    Q_OBJECT
-public:
-    explicit GameButton(const QPixmap &pic,const QString &text,QWidget *parent = nullptr);
-    explicit GameButton(const QPixmap &pic,const QPixmap &icon,QWidget*parent=nullptr);
-    explicit GameButton(const QPixmap &pic,QWidget*parent=nullptr);
-    void setFont(const QFont &font);
-signals:
 
-public slots:
+}
 
-protected:
-   void paintEvent(QPaintEvent *event) override;
-private:
-   void initUI();
-   void initIcon(GameBtnFlag flag);
-private:
-   QPixmap m_pic;//按钮背景图
-   QPixmap m_icon;//按钮图标
-   QString m_text;//按钮文字
-   QFont  m_font; //按钮字体
-};
-
-#endif // GAMEBUTTON_H
+void GameBlurEffectWidget::paintEvent(QPaintEvent *event)
+{
+   Q_UNUSED(event);
+   QPainter painter(this);
+   painter.setRenderHint(QPainter::Antialiasing, true);
+   QImageReader image(":/images/rect.png");
+   image.setScaledSize(QSize(480,515));
+   painter.drawPixmap(rect(),QPixmap::fromImageReader(&image));
+}

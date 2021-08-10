@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
     w.titlebar()->setIcon(QIcon(":/images/logo.svg"));
     w.titlebar()->setTitle(QCoreApplication::translate("MainWindow", "LianLianKan"));
     // 设置标题，宽度不够会隐藏标题文字
-    w.setFixedSize(QSize(1024,718));
+    w.setFixedSize(QSize(1024,768));
     Dtk::Widget::moveToCenter(&w);
     w.show();
     return a.exec();

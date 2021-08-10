@@ -10,8 +10,9 @@
 //主界面/游戏界面背景圆角
 #define FRAMERADIUS 18
 
+//游戏所有按钮类型
 enum GameBtnFlag{
-    control=0,
+    ButtonNormal=0,
     blank,
     cow,
     tiger,
@@ -27,5 +28,21 @@ enum GameBtnFlag{
     panda
 };
 
+//游戏所有按钮类型大小
+enum GameBtnSize{
+    Default=0,
+    Big,
+    Mid,
+    Small
+};
 
+//游戏图标类型
+enum GameIconType{
+    None=0,
+    Sound,
+    Begin,
+    Reset,
+    Hint,
+    Home
+};
 #endif // GLOBAL_H
