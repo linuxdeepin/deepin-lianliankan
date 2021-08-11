@@ -34,7 +34,7 @@
 MainPage::MainPage(QWidget*parent):DWidget (parent)
 {
     initUI();
-
+    connect(m_btnGrp, static_cast<void (QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonPressed), this, &MainPage::buttonPress);
 }
 
 void MainPage::initUI()

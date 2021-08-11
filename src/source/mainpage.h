@@ -27,6 +27,7 @@
 DWIDGET_USE_NAMESPACE
 class MainPage: public DWidget
 {
+    Q_OBJECT
 public:
     MainPage(QWidget *parent = nullptr);
 private:
@@ -34,6 +35,9 @@ private:
 
 private:
     QButtonGroup *m_btnGrp;
+
+signals:
+    void buttonPress(QAbstractButton *);
 };
 
 #endif // MAINPAGE_H
