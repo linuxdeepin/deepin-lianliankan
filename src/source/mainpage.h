@@ -22,6 +22,7 @@
 #define MAINPAGE_H
 
 #include <DWidget>
+#include <QButtonGroup>
 
 DWIDGET_USE_NAMESPACE
 class MainPage: public DWidget
@@ -30,6 +31,9 @@ public:
     MainPage(QWidget *parent = nullptr);
 private:
     void initUI();
+
+private:
+    QButtonGroup *m_btnGrp;
 };
 
 #endif // MAINPAGE_H

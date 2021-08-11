@@ -20,7 +20,6 @@
 */
 
 #include "mainwidnow.h"
-#include "mainpage.h"
 
 #include <DTitlebar>
 
@@ -29,6 +28,8 @@
 MainWidnow::MainWidnow(QWidget *parent):DMainWindow (parent)
 {
     initUI();
+
+
 }
 
 void MainWidnow::initUI()
@@ -36,9 +37,11 @@ void MainWidnow::initUI()
    m_titlebar=titlebar();
    m_titlebar->installEventFilter(this);
    m_titlebar->setBackgroundTransparent(true);
-   m_stackedWidget=new DStackedWidget(this);
-   MainPage *mainPage=new MainPage (m_stackedWidget);
-   m_stackedWidget->addWidget(mainPage);
+
+   m_stackedWidget = new DStackedWidget(this);
+   m_mainPage = new MainPage(m_stackedWidget);
+
+   m_stackedWidget->addWidget(m_mainPage);
    setCentralWidget(m_stackedWidget);
 }
 
@@ -73,7 +76,10 @@ void MainWidnow::paintEvent(QPaintEvent *event)
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing, true);
     QImageReader imageReader(":/images/background.png");
-    imageReader.setScaledSize(rect().size());
-    p.drawPixmap(rect(),QPixmap::fromImageReader(&imageReader));
+    QSize backgroundSize;
+    backgroundSize.setWidth(rect().width());
+    backgroundSize.setHeight(rect().height()-m_titlebar->rect().height());
+    imageReader.setScaledSize(backgroundSize);
+    p.drawPixmap(rect().x(),rect().y()+m_titlebar->rect().height(),QPixmap::fromImageReader(&imageReader));
     DWidget::paintEvent(event);
 }

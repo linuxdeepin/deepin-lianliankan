@@ -21,6 +21,9 @@
 #ifndef MAINWIDNOW_H
 #define MAINWIDNOW_H
 
+#include "mainpage.h"
+#include "gamewindow.h"
+
 #include <DMainWindow>
 #include <DStackedWidget>
 
@@ -41,6 +44,9 @@ private:
 private:
    DStackedWidget *m_stackedWidget;
    DTitlebar *m_titlebar;
+   MainPage *m_mainPage;
+   GameWindow *m_gameWindow;
+
 };
 
 #endif // MAINWIDNOW_H

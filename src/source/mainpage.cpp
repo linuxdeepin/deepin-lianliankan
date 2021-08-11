@@ -28,25 +28,25 @@
 #include "gameblureffectwidget.h"
 
 #include <QPainter>
-#include <QButtonGroup>
 #include <QVBoxLayout>
 #include <QDebug>
 
 MainPage::MainPage(QWidget*parent):DWidget (parent)
 {
     initUI();
+
 }
 
 void MainPage::initUI()
 {
-    QButtonGroup *btnGrp=new QButtonGroup;
+    m_btnGrp=new QButtonGroup(this);
     GameButton *primaryBtn=BtnFactory::createBtn(GameBtnFlag::ButtonNormal,GameBtnSize::Mid,GameIconType::None,tr("初级"),this);
     GameButton *interBtn=BtnFactory::createBtn(GameBtnFlag::ButtonNormal,GameBtnSize::Mid,GameIconType::None,tr("中级"),this);
     GameButton *advanceBtn=BtnFactory::createBtn(GameBtnFlag::ButtonNormal,GameBtnSize::Mid,GameIconType::None,tr("高级"),this);
-    btnGrp->addButton(primaryBtn);
-    btnGrp->addButton(interBtn);
-    btnGrp->addButton(advanceBtn);
-    btnGrp->setExclusive(true);
+    m_btnGrp->addButton(primaryBtn);
+    m_btnGrp->addButton(interBtn);
+    m_btnGrp->addButton(advanceBtn);
+    m_btnGrp->setExclusive(true);
 
     GameBlurEffectWidget *switchFrame=new GameBlurEffectWidget(this);
     QVBoxLayout *frameLayout=new QVBoxLayout;
