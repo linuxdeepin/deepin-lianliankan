@@ -1,20 +1,20 @@
 <RCC>
     <qresource prefix="/">
-        <file>images/logo.svg</file>
-        <file>images/cow.png</file>
-        <file>images/dog.png</file>
-        <file>images/cat.png</file>
-        <file>images/fox.png</file>
-        <file>images/panda.png</file>
-        <file>images/lion.png</file>
-        <file>images/horse.png</file>
-        <file>images/pig.png</file>
-        <file>images/rabbit.png</file>
-        <file>images/sheep.png</file>
-        <file>images/snake.png</file>
-        <file>images/tiger.png</file>
-        <file>images/background.png</file>
-        <file>images/rect.png</file>
-        <file>images/normal.svg</file>
+        <file>assets/images/background.png</file>
+        <file>assets/images/cat.png</file>
+        <file>assets/images/cow.png</file>
+        <file>assets/images/dog.png</file>
+        <file>assets/images/fox.png</file>
+        <file>assets/images/horse.png</file>
+        <file>assets/images/lion.png</file>
+        <file>assets/images/normal.svg</file>
+        <file>assets/images/panda.png</file>
+        <file>assets/images/pig.png</file>
+        <file>assets/images/rabbit.png</file>
+        <file>assets/images/rect.png</file>
+        <file>assets/images/sheep.png</file>
+        <file>assets/images/snake.png</file>
+        <file>assets/images/tiger.png</file>
+        <file>assets/images/deepin-lianliankan.svg</file>
     </qresource>
 </RCC>

@@ -1,4 +1,4 @@
-#include "source/llkstyle.h"
+
 #include <DApplication>
 #include <DMainWindow>
 #include <DWidgetUtil>
@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     a.setOrganizationName("deepin");
     a.setApplicationName("dtk-application");
     a.setApplicationVersion("1.0");
-    a.setProductIcon(QIcon(":/images/logo.svg"));
+    a.setProductIcon(QIcon(":/assets/images/deepin-lianliankan.svg"));
     a.setProductName("Dtk Application");
     a.setApplicationDescription("This is a dtk template application.");
 
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
     a.setProductName(QCoreApplication::translate("Main", "LianLianKan"));
 
     MainWidnow w;
-    w.titlebar()->setIcon(QIcon(":/images/logo.svg"));
+    w.titlebar()->setIcon(QIcon(":/assets/images/deepin-lianliankan.svg"));
     w.titlebar()->setTitle(QCoreApplication::translate("MainWindow", "LianLianKan"));
     // 设置标题，宽度不够会隐藏标题文字
     w.setFixedSize(QSize(1024,768));

@@ -21,7 +21,7 @@ void GameWindow::closeEvent(QCloseEvent *event)
 void GameWindow::paintEvent(QPaintEvent *event)
 {
       QPainter p(this);
-      p.drawPixmap(rect(),QPixmap(":/images/background.png"));
+      p.drawPixmap(rect(),QPixmap(":/assets/images/background.png"));
       DMainWindow::paintEvent(event);
 }
 

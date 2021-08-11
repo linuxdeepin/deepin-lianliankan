@@ -75,7 +75,7 @@ void MainWidnow::paintEvent(QPaintEvent *event)
     //绘制背景图片
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing, true);
-    QImageReader imageReader(":/images/background.png");
+    QImageReader imageReader(":/assets/images/background.png");
     QSize backgroundSize;
     backgroundSize.setWidth(rect().width());
     backgroundSize.setHeight(rect().height()-m_titlebar->rect().height());

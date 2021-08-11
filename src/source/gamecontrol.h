@@ -46,7 +46,7 @@ public:
         }
 
         if(flag==ButtonNormal){
-            imageReader.setFileName(":/images/normal.svg");
+            imageReader.setFileName(":/assets/images/normal.svg");
             imageReader.setScaledSize(scaledSize);
 
             if(!btnIcon){
@@ -56,7 +56,7 @@ public:
             }
 
         }else {
-            imageReader.setFileName(":/images/normal.svg");
+            imageReader.setFileName(":/assets/images/normal.svg");
             imageReader.setScaledSize(scaledSize);
             btn=new GameButton (QPixmap::fromImageReader(&imageReader),parent);
         }
