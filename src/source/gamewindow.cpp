@@ -39,10 +39,6 @@ void GameWindow::initUI()
     configLayout->addWidget(m_progress);
     configLayout->addWidget(m_btnBox);
 
-    GameFrame *gameFrame=new GameFrame(m_row,m_column);
-
-
-    mainLayout->addWidget(gameFrame);
     mainLayout->addLayout(configLayout);
     auto centerWidget=new QWidget;
     centerWidget->setLayout(mainLayout);

@@ -30,9 +30,11 @@
 #include <QPainter>
 #include <QVBoxLayout>
 #include <QDebug>
+#include <QTime>
 
 MainPage::MainPage(QWidget*parent):DWidget (parent)
 {
+    controlTest();
     initUI();
     connect(m_btnGrp, static_cast<void (QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonPressed), this, &MainPage::buttonPress);
 }
@@ -60,9 +62,25 @@ void MainPage::initUI()
     switchFrame->setGeometry(278,125,FRAMEWH,FRAMEHH);
     switchFrame->setLayout(frameLayout);
 
-    GameButton *swithBtn=BtnFactory::createBtn(GameBtnFlag::ButtonNormal,GameBtnSize::Big,GameIconType::None,tr("选择难度"),this);
+    GameButton *swithBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Big, GameIconType::None, tr("难度选择"), this);
     swithBtn->setGeometry(393,80,250,135);
     GameButton *soundBtn=BtnFactory::createBtn(GameBtnFlag::ButtonNormal,GameBtnSize::Small,GameIconType::Sound);
     soundBtn->setParent(this);
     soundBtn->setGeometry(854,569,140,80);
+
+    //    创建游戏按钮
+    //    GameButton*testBtn=BtnFactory::createBtn(GameBtnFlag::ButtonBlank,GameBtnSize::Default,GameIconType::None);
+    //    testBtn->setParent(this);
+    //    testBtn->setGeometry(213,569,50,50);
+    //    qInfo()<<testBtn->geometry();
+}
+
+void MainPage::controlTest()
+{
+    QTime t;
+    t.start();
+    GameControl::GameInterFace().gameBegin();
+
+    GameControl::GameInterFace().gameReset();
+    qInfo() << "elapsed::" << t.elapsed();
 }

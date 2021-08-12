@@ -1,8 +1,6 @@
 #ifndef GAMEWINDOW_H
 #define GAMEWINDOW_H
 
-#include "gameframe.h"
-
 #include <DMainWindow>
 #include <DProgressBar>
 #include <DButtonBox>

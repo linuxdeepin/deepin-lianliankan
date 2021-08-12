@@ -32,6 +32,7 @@ public:
     MainPage(QWidget *parent = nullptr);
 private:
     void initUI();
+    void controlTest();
 
 private:
     QButtonGroup *m_btnGrp;

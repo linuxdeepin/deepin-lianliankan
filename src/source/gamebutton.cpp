@@ -23,40 +23,28 @@
 #include <QPainter>
 #include <QHBoxLayout>
 #include <QSizePolicy>
+#include <QFontMetricsF>
+#include <QTextOption>
 
 #include <DLabel>
 
 
 GameButton::GameButton(const QPixmap &pic, const QString &text, QWidget *parent):QAbstractButton(parent),m_pic(pic),m_text(text)
 {
-    initUI();
 
 }
 
 GameButton::GameButton(const QPixmap &pic, const QPixmap &icon, QWidget *parent):QAbstractButton(parent),m_pic(pic),m_icon(icon)
 {
-    initUI();
 }
 
 GameButton::GameButton(const QPixmap &pic, QWidget *parent):QAbstractButton(parent),m_pic(pic)
 {
-    initUI();
 }
 
 void GameButton::setFont(const QFont &font)
 {
     m_font=font;
-}
-
-void GameButton::initUI()
-{
-    DLabel *textLabel=new DLabel (m_text,this);
-    QFont font;
-    QHBoxLayout *mainLayout=new QHBoxLayout ();
-    mainLayout->setContentsMargins(0,0,0,20);
-    mainLayout->addWidget(textLabel);
-    mainLayout->setAlignment(Qt::AlignHCenter);
-    this->setLayout(mainLayout);
 }
 
 void GameButton::paintEvent(QPaintEvent *e)
@@ -66,6 +54,13 @@ void GameButton::paintEvent(QPaintEvent *e)
     p.setRenderHint(QPainter::Antialiasing, true);
     p.drawPixmap(rect(),m_pic);
     if(m_text!=" "){
-
+        QFontMetricsF mertic(m_font);
+        qreal fontHeight = mertic.height();
+        qreal fontWidth = mertic.width(m_text);
+        p.setFont(m_font);
+        p.setPen(QColor("#FFFFFF"));
+        qreal textX = (rect().width() - fontWidth) / 2;
+        qreal textY = (rect().height() - fontHeight - fontHeight / 2) / 2;
+        p.drawText(QRectF(textX, textY, fontWidth, fontHeight), m_text);
     }
 }
