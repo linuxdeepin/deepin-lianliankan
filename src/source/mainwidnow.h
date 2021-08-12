@@ -38,14 +38,14 @@ protected:
     void paintEvent(QPaintEvent *event)override;
 signals:
 
-
 private slots:
     void showClickedPage();
 
 private:
    void initUI();
+   void initConnect();
 
-private:
+   private:
    DStackedWidget *m_stackedWidget;
    DTitlebar *m_titlebar;
    MainPage *m_mainPage;

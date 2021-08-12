@@ -36,11 +36,12 @@ public slots:
 
 private:
     void initUI();
-    void initBtn();
-
 private:
     DProgressBar *m_progress;
     QGridLayout *m_gridLayout;
+
+private:
+    void addBtn();
 };
 
 #endif // GAMEPAGE_H

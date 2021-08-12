@@ -39,6 +39,5 @@ void GameBlurEffectWidget::paintEvent(QPaintEvent *event)
    painter.setRenderHint(QPainter::Antialiasing, true);
    QImageReader image(":/assets/images/rect.png");
    image.setScaledSize(m_size);
-   qInfo() << "rect:" << rect();
    painter.drawPixmap(rect(),QPixmap::fromImageReader(&image));
 }

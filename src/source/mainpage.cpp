@@ -77,10 +77,10 @@ void MainPage::initUI()
 
 void MainPage::controlTest()
 {
-    //    QTime t;
-    //    t.start();
-    //    GameControl::GameInterFace().gameBegin();
+    //        QTime t;
+    //        t.start();
+    //        GameControl::GameInterFace().gameBegin();
 
-    //    GameControl::GameInterFace().gameReset();
-    //    qInfo() << "elapsed::" << t.elapsed();
+    //        GameControl::GameInterFace().gameReset();
+    //        qInfo() << "elapsed::" << t.elapsed();
 }

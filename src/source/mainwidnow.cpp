@@ -30,7 +30,7 @@
 MainWidnow::MainWidnow(QWidget *parent):DMainWindow (parent)
 {
     initUI();
-    connect(m_mainPage, &MainPage::buttonPress, this, &MainWidnow::showClickedPage);
+    initConnect();
 }
 
 void MainWidnow::initUI()
@@ -47,6 +47,11 @@ void MainWidnow::initUI()
    m_stackedWidget->addWidget(m_gamePage);
 
    setCentralWidget(m_stackedWidget);
+}
+
+void MainWidnow::initConnect()
+{
+    connect(m_mainPage, &MainPage::buttonPress, this, &MainWidnow::showClickedPage);
 }
 
 bool MainWidnow::eventFilter(QObject *obj, QEvent *event)
@@ -90,6 +95,5 @@ void MainWidnow::paintEvent(QPaintEvent *event)
 
 void MainWidnow::showClickedPage()
 {
-    GameControl::GameInterFace().gameBegin();
     m_stackedWidget->setCurrentWidget(m_gamePage);
 }

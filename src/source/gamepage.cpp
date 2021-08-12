@@ -39,16 +39,16 @@ void GamePage::initUI()
     GameBlurEffectWidget *gameFrame = new GameBlurEffectWidget(QSize(850, 516), this);
     m_gridLayout = new QGridLayout;
     m_gridLayout->setContentsMargins(30, 10, 35, 35);
-    initBtn();
+    addBtn();
     gameFrame->setLayout(m_gridLayout);
-
     gameFrame->setGeometry(-5, 86, 850, 516);
     m_progress = new DProgressBar(this);
     m_progress->setGeometry(15, 633, 816, 49);
 }
 
-void GamePage::initBtn()
+void GamePage::addBtn()
 {
+    GameControl::GameInterFace().gameBegin();
     for (int i = 1; i < ROW + 1; i++) {
         for (int j = 1; j < COLUMN + 1; j++) {
             GameButton *gameBtn = BtnFactory::createBtn(GameControl::m_map[i][j], Default, None);
