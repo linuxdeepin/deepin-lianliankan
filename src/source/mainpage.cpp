@@ -3,7 +3,7 @@
 *
 * Author:     linxun <linxun@uniontech.com>
 *
-* Maintainer: linxun <linxun@uniontech.com>
+* Maintainer: zhangdingwen <zhangdingwen@uniontech.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -50,7 +50,7 @@ void MainPage::initUI()
     m_btnGrp->addButton(advanceBtn);
     m_btnGrp->setExclusive(true);
 
-    GameBlurEffectWidget *switchFrame=new GameBlurEffectWidget(this);
+    GameBlurEffectWidget *switchFrame = new GameBlurEffectWidget(QSize(FRAMEWH, FRAMEHH), this);
     QVBoxLayout *frameLayout=new QVBoxLayout;
     frameLayout->addWidget(primaryBtn);
     frameLayout->addSpacing(-20);
@@ -77,10 +77,10 @@ void MainPage::initUI()
 
 void MainPage::controlTest()
 {
-    QTime t;
-    t.start();
-    GameControl::GameInterFace().gameBegin();
+    //    QTime t;
+    //    t.start();
+    //    GameControl::GameInterFace().gameBegin();
 
-    GameControl::GameInterFace().gameReset();
-    qInfo() << "elapsed::" << t.elapsed();
+    //    GameControl::GameInterFace().gameReset();
+    //    qInfo() << "elapsed::" << t.elapsed();
 }

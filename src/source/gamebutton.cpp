@@ -3,7 +3,7 @@
 *
 * Author:     linxun <linxun@uniontech.com>
 *
-* Maintainer: linxun <linxun@uniontech.com>
+* Maintainer: zhangdingwen <zhangdingwen@uniontech.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -21,13 +21,7 @@
 #include "gamebutton.h"
 
 #include <QPainter>
-#include <QHBoxLayout>
-#include <QSizePolicy>
 #include <QFontMetricsF>
-#include <QTextOption>
-
-#include <DLabel>
-
 
 GameButton::GameButton(const QPixmap &pic, const QString &text, QWidget *parent):QAbstractButton(parent),m_pic(pic),m_text(text)
 {
@@ -45,6 +39,12 @@ GameButton::GameButton(const QPixmap &pic, QWidget *parent):QAbstractButton(pare
 void GameButton::setFont(const QFont &font)
 {
     m_font=font;
+}
+
+void GameButton::setLocation(int x, int y)
+{
+    m_rowIndex = x;
+    m_columnIndex = y;
 }
 
 void GameButton::paintEvent(QPaintEvent *e)

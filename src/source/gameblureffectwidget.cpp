@@ -3,7 +3,7 @@
 *
 * Author:     linxun <linxun@uniontech.com>
 *
-* Maintainer: linxun <linxun@uniontech.com>
+* Maintainer: zhangdingwen <zhangdingwen@uniontech.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -23,8 +23,11 @@
 #include <QPainter>
 #include <QtMath>
 #include <QImageReader>
+#include <QDebug>
 
-GameBlurEffectWidget::GameBlurEffectWidget(QWidget *parent) :DBlurEffectWidget(parent)
+GameBlurEffectWidget::GameBlurEffectWidget(const QSize &size, QWidget *parent)
+    : DBlurEffectWidget(parent)
+    , m_size(size)
 {
 
 }
@@ -35,6 +38,7 @@ void GameBlurEffectWidget::paintEvent(QPaintEvent *event)
    QPainter painter(this);
    painter.setRenderHint(QPainter::Antialiasing, true);
    QImageReader image(":/assets/images/rect.png");
-   image.setScaledSize(QSize(480,515));
+   image.setScaledSize(m_size);
+   qInfo() << "rect:" << rect();
    painter.drawPixmap(rect(),QPixmap::fromImageReader(&image));
 }

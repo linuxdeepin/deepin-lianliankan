@@ -3,7 +3,7 @@
 *
 * Author:     linxun <linxun@uniontech.com>
 *
-* Maintainer: linxun <linxun@uniontech.com>
+* Maintainer: zhangdingwen <zhangdingwen@uniontech.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -20,10 +20,12 @@
 */
 
 #include "mainwidnow.h"
+#include "gamecontrol.h"
 
 #include <DTitlebar>
 
 #include <QImageReader>
+#include <QHBoxLayout>
 
 MainWidnow::MainWidnow(QWidget *parent):DMainWindow (parent)
 {
@@ -39,10 +41,11 @@ void MainWidnow::initUI()
 
    m_stackedWidget = new DStackedWidget(this);
    m_mainPage = new MainPage(m_stackedWidget);
-   m_gameWindow = new GameWindow(16,10,m_stackedWidget);
+   m_gamePage = new GamePage(m_stackedWidget);
 
    m_stackedWidget->addWidget(m_mainPage);
-   m_stackedWidget->addWidget(m_gameWindow);
+   m_stackedWidget->addWidget(m_gamePage);
+
    setCentralWidget(m_stackedWidget);
 }
 
@@ -87,5 +90,6 @@ void MainWidnow::paintEvent(QPaintEvent *event)
 
 void MainWidnow::showClickedPage()
 {
-    m_stackedWidget->setCurrentWidget(m_gameWindow);
+    GameControl::GameInterFace().gameBegin();
+    m_stackedWidget->setCurrentWidget(m_gamePage);
 }

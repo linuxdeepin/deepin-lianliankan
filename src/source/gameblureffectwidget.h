@@ -3,7 +3,7 @@
 *
 * Author:     linxun <linxun@uniontech.com>
 *
-* Maintainer: linxun <linxun@uniontech.com>
+* Maintainer: zhangdingwen <zhangdingwen@uniontech.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -28,12 +28,16 @@ class GameBlurEffectWidget : public DBlurEffectWidget
 {
     Q_OBJECT
 public:
-    explicit GameBlurEffectWidget(QWidget *parent = nullptr);
+    explicit GameBlurEffectWidget(const QSize &size, QWidget *parent = nullptr);
+
 protected:
     void paintEvent(QPaintEvent *event)override;
 signals:
 
 public slots:
+
+private:
+    QSize m_size;
 };
 
 #endif // GAMEBLUREFFECTWIDGET_H

@@ -3,7 +3,7 @@
 *
 * Author:     linxun <linxun@uniontech.com>
 *
-* Maintainer: linxun <linxun@uniontech.com>
+* Maintainer: zhangdingwen <zhangdingwen@uniontech.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -23,6 +23,9 @@
 
 #define ICONWIDTH 50
 #define ICONHEIGHT 50
+
+#define ROW 10
+#define COLUMN 16
 
 //主界面/游戏界面背景圆角
 #define FRAMERADIUS 18

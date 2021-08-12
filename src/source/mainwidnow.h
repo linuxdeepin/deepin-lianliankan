@@ -3,7 +3,7 @@
 *
 * Author:     linxun <linxun@uniontech.com>
 *
-* Maintainer: linxun <linxun@uniontech.com>
+* Maintainer: zhangdingwen <zhangdingwen@uniontech.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -22,7 +22,7 @@
 #define MAINWIDNOW_H
 
 #include "mainpage.h"
-#include "gamewindow.h"
+#include "gamepage.h"
 
 #include <DMainWindow>
 #include <DStackedWidget>
@@ -49,8 +49,7 @@ private:
    DStackedWidget *m_stackedWidget;
    DTitlebar *m_titlebar;
    MainPage *m_mainPage;
-   GameWindow *m_gameWindow;
-
+   GamePage *m_gamePage;
 };
 
 #endif // MAINWIDNOW_H

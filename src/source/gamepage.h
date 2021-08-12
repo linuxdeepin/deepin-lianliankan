@@ -3,7 +3,7 @@
 *
 * Author:     linxun <linxun@uniontech.com>
 *
-* Maintainer: linxun <linxun@uniontech.com>
+* Maintainer: zhangdingwen <zhangdingwen@uniontech.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,29 +18,29 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "gridblureffectwidget.h"
+#ifndef GAMEPAGE_H
+#define GAMEPAGE_H
 
-#include <QPainter>
-#include <QtMath>
-#include <QImageReader>
+#include <DProgressBar>
 
-GridBlurEffectWidget::GridBlurEffectWidget(int x, int y, int width, int height, QWidget *parent)
-    : DBlurEffectWidget(parent)
-    , m_x(x)
-    , m_y(y)
-    , m_width(width)
-    , m_height(height)
+#include <QGridLayout>
+
+DWIDGET_USE_NAMESPACE
+class GamePage : public QWidget
 {
+    Q_OBJECT
+public:
+    explicit GamePage(QWidget *parent = nullptr);
 
-}
+public slots:
 
-void GridBlurEffectWidget::paintEvent(QPaintEvent *event)
-{
-   Q_UNUSED(event);
-   QPainter painter(this);
-   painter.setRenderHint(QPainter::Antialiasing, true);
-   QImageReader image(":/assets/images/rect.png");
-   image.setScaledSize(QSize(m_width,m_height));
-   painter.drawPixmap(rect().x()+m_x,rect().y()+m_y,QPixmap::fromImageReader(&image));
-}
+private:
+    void initUI();
+    void initBtn();
 
+private:
+    DProgressBar *m_progress;
+    QGridLayout *m_gridLayout;
+};
+
+#endif // GAMEPAGE_H

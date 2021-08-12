@@ -3,7 +3,7 @@
 *
 * Author:     linxun <linxun@uniontech.com>
 *
-* Maintainer: linxun <linxun@uniontech.com>
+* Maintainer: zhangdingwen <zhangdingwen@uniontech.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -28,11 +28,13 @@ DWIDGET_USE_NAMESPACE
 class GameButton : public QAbstractButton
 {
     Q_OBJECT
+
 public:
     explicit GameButton(const QPixmap &pic,const QString &text,QWidget *parent = nullptr);
     explicit GameButton(const QPixmap &pic,const QPixmap &icon,QWidget*parent=nullptr);
     explicit GameButton(const QPixmap &pic,QWidget*parent=nullptr);
     void setFont(const QFont &font);
+    void setLocation(int x, int y);
 signals:
 
 public slots:
@@ -47,6 +49,8 @@ private:
    QPixmap m_icon;//按钮图标
    QString m_text;//按钮文字
    QFont  m_font; //按钮字体
+   int m_rowIndex; //行
+   int m_columnIndex; //列
 };
 
 #endif // GAMEBUTTON_H
