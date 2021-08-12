@@ -28,8 +28,7 @@
 MainWidnow::MainWidnow(QWidget *parent):DMainWindow (parent)
 {
     initUI();
-
-
+    connect(m_mainPage, &MainPage::buttonPress, this, &MainWidnow::showClickedPage);
 }
 
 void MainWidnow::initUI()
@@ -40,8 +39,10 @@ void MainWidnow::initUI()
 
    m_stackedWidget = new DStackedWidget(this);
    m_mainPage = new MainPage(m_stackedWidget);
+   m_gameWindow = new GameWindow(16,10,m_stackedWidget);
 
    m_stackedWidget->addWidget(m_mainPage);
+   m_stackedWidget->addWidget(m_gameWindow);
    setCentralWidget(m_stackedWidget);
 }
 
@@ -82,4 +83,9 @@ void MainWidnow::paintEvent(QPaintEvent *event)
     imageReader.setScaledSize(backgroundSize);
     p.drawPixmap(rect().x(),rect().y()+m_titlebar->rect().height(),QPixmap::fromImageReader(&imageReader));
     DWidget::paintEvent(event);
+}
+
+void MainWidnow::showClickedPage()
+{
+    m_stackedWidget->setCurrentWidget(m_gameWindow);
 }

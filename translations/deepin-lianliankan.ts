@@ -4,7 +4,7 @@
 <context>
     <name>GameWindow</name>
     <message>
-        <location filename="../src/source/gamewindow.cpp" line="36"/>
+        <location filename="../src/source/gamewindow.cpp" line="59"/>
         <source>begin</source>
         <translation type="unfinished"></translation>
     </message>

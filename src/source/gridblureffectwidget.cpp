@@ -18,39 +18,29 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef MAINWIDNOW_H
-#define MAINWIDNOW_H
+#include "gridblureffectwidget.h"
 
-#include "mainpage.h"
-#include "gamewindow.h"
+#include <QPainter>
+#include <QtMath>
+#include <QImageReader>
 
-#include <DMainWindow>
-#include <DStackedWidget>
-
-DWIDGET_USE_NAMESPACE
-class MainWidnow : public DMainWindow
+GridBlurEffectWidget::GridBlurEffectWidget(int x, int y, int width, int height, QWidget *parent)
+    : DBlurEffectWidget(parent)
+    , m_x(x)
+    , m_y(y)
+    , m_width(width)
+    , m_height(height)
 {
-    Q_OBJECT
-public:
-    explicit MainWidnow(QWidget *parent = nullptr);
-protected:
-    bool eventFilter(QObject *obj, QEvent *event) override;
-    void paintEvent(QPaintEvent *event)override;
-signals:
 
+}
 
-private slots:
-    void showClickedPage();
+void GridBlurEffectWidget::paintEvent(QPaintEvent *event)
+{
+   Q_UNUSED(event);
+   QPainter painter(this);
+   painter.setRenderHint(QPainter::Antialiasing, true);
+   QImageReader image(":/assets/images/rect.png");
+   image.setScaledSize(QSize(m_width,m_height));
+   painter.drawPixmap(rect().x()+m_x,rect().y()+m_y,QPixmap::fromImageReader(&image));
+}
 
-private:
-   void initUI();
-
-private:
-   DStackedWidget *m_stackedWidget;
-   DTitlebar *m_titlebar;
-   MainPage *m_mainPage;
-   GameWindow *m_gameWindow;
-
-};
-
-#endif // MAINWIDNOW_H

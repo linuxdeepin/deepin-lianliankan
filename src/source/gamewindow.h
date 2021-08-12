@@ -1,22 +1,24 @@
 #ifndef GAMEWINDOW_H
 #define GAMEWINDOW_H
 
+#include "gridblureffectwidget.h"
+
 #include <DMainWindow>
 #include <DProgressBar>
 #include <DButtonBox>
 
 DWIDGET_USE_NAMESPACE
-class GameWindow : public DMainWindow
+class GameWindow : public QWidget
 {
     Q_OBJECT
 public:
     explicit GameWindow(int row,int column,QWidget *parent = nullptr);
 
 signals:
-    void exitWindow();
+//    void exitWindow();
 protected:
-    void closeEvent(QCloseEvent *event)override;
-    void paintEvent(QPaintEvent *event) override;
+//    void closeEvent(QCloseEvent *event)override;
+//    void paintEvent(QPaintEvent *event) override;
 public slots:
 
 private:
