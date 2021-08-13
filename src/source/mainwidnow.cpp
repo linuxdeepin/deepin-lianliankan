@@ -26,9 +26,11 @@
 
 #include <QImageReader>
 #include <QHBoxLayout>
+#include <QTime>
 
 MainWidnow::MainWidnow(QWidget *parent):DMainWindow (parent)
 {
+    initPic();
     initUI();
     initConnect();
 }
@@ -52,6 +54,20 @@ void MainWidnow::initUI()
 void MainWidnow::initConnect()
 {
     connect(m_mainPage, &MainPage::buttonPress, this, &MainWidnow::showClickedPage);
+}
+
+void MainWidnow::initPic()
+{
+//    QTime time;
+//    time.start();
+    for(int i=1;i<13;i++){
+    GameControl::loadPic(GameBtnFlag(i),GameBtnSize::Default);
+    }
+    for (int i=1;i<4;i++) {
+    GameControl::loadPic(GameBtnFlag(-1),GameBtnSize(i));
+    }
+
+//qInfo()<<time.elapsed()<<GameControl::m_picMap.value(qMakePair(GameBtnFlag::ButtonCat,GameBtnSize::Default));
 }
 
 bool MainWidnow::eventFilter(QObject *obj, QEvent *event)

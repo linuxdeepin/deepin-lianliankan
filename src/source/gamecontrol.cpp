@@ -31,6 +31,7 @@ const int m_column = 16;
 const int m_total = 160;
 
 GameBtnFlag GameControl::m_map[12][18];
+QHash<QPair<GameBtnFlag,GameBtnSize>,QPixmap> GameControl::m_picMap;
 
 GameControl::GameControl(QObject *parent)
     : QObject(parent)

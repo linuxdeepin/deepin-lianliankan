@@ -44,8 +44,9 @@ private slots:
 private:
    void initUI();
    void initConnect();
+   void initPic();
 
-   private:
+private:
    DStackedWidget *m_stackedWidget;
    DTitlebar *m_titlebar;
    MainPage *m_mainPage;

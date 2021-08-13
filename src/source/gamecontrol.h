@@ -30,31 +30,32 @@
 #include <QFont>
 #include <QDebug>
 
-class BtnFactory{
+class GameControl : public QObject
+{
+    Q_OBJECT
 public:
-    static GameButton * createBtn(const GameBtnFlag &flag,const GameBtnSize &btnSize ,const GameIconType &iconType,const QString &text=" ",QWidget *parent=nullptr){
-        QFont btnFont;
-        btnFont.setFamily("Noto Sans CJK SC");
-        btnFont.setWeight(QFont::DemiBold);
+    static GameControl& GameInterFace(){
+        static GameControl control;
+        return  control;
+    }
 
-        GameButton *btn=nullptr;
+    static void loadPic(const GameBtnFlag &flag,const GameBtnSize &btnSize ){
+
         QImageReader imageReader;
         QSize scaledSize;
-        QPixmap *btnIcon=nullptr;
 
-        switch (iconType) {
-           case Sound:
+        switch (btnSize) {
+        case Big:
+            scaledSize=QSize(250,135);
             break;
-           case Begin:
+        case Mid:
+            scaledSize=QSize(200,115);
             break;
-           case Reset:
+        case Small:
+            scaledSize=QSize(140,80);
             break;
-           case Hint:
-            break;
-           case Home:
-            break;
-           default:
-            break;
+        default:
+            scaledSize=QSize(50,50);
         }
 
         switch (flag) {
@@ -100,54 +101,13 @@ public:
         default:
             break;
         }
-
-        switch (btnSize) {
-        case Big:
-            btnFont.setPointSize(20);
-            scaledSize=QSize(250,135);
-            break;
-        case Mid:
-            btnFont.setPointSize(16);
-            scaledSize=QSize(200,115);
-            break;
-        case Small:
-            scaledSize=QSize(140,80);
-            break;
-        default:
-            scaledSize=QSize(50,50);
-        }
-
         imageReader.setScaledSize(scaledSize);
-        if(flag==ButtonNormal){
-            if(!btnIcon){
-                btn=new GameButton(QPixmap::fromImageReader(&imageReader),text,parent);
-            }else {
-                btn=new GameButton(QPixmap::fromImageReader(&imageReader),*btnIcon,parent);
-            }
-        }else {
-            btn=new GameButton (QPixmap::fromImageReader(&imageReader),parent);
-        }
-
-        btn->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
-        btn->setFixedSize(scaledSize);
-        btn->setFont(btnFont);
-        return  btn;
+        m_picMap.insert(qMakePair(flag,btnSize),QPixmap::fromImageReader(&imageReader));
     }
-};
-
-
-class GameControl : public QObject
-{
-    Q_OBJECT
-public:
-    static GameControl& GameInterFace(){
-        static GameControl control;
-        return  control;
-    }
-
     void gameBegin(); //游戏开始
     void gameReset();//游戏重置
-    static GameBtnFlag m_map[12][18];
+    static GameBtnFlag m_map[12][18];//游戏地图
+    static QHash<QPair<GameBtnFlag, GameBtnSize>, QPixmap>m_picMap;//图片资源
 signals:
 
 public slots:
@@ -155,6 +115,65 @@ public slots:
 private:
     explicit GameControl(QObject *parent = nullptr);
     void gameShuffle(bool inital);
+};
+
+class BtnFactory{
+public:
+    static GameButton * createBtn(const GameBtnFlag &flag,const GameBtnSize &btnSize ,const GameIconType &iconType,const QString &text=" ",QWidget *parent=nullptr){
+        QFont btnFont;
+        btnFont.setFamily("Noto Sans CJK SC");
+        btnFont.setWeight(QFont::DemiBold);
+
+        QSize size;
+        GameButton *btn=nullptr;
+        QPixmap *btnIcon=nullptr;
+
+        switch (iconType) {
+           case Sound:
+            break;
+           case Begin:
+            break;
+           case Reset:
+            break;
+           case Hint:
+            break;
+           case Home:
+            break;
+           default:
+            break;
+        }
+
+        switch (btnSize) {
+        case Big:
+            btnFont.setPointSize(20);
+            size=QSize(250,135);
+            break;
+        case Mid:
+            btnFont.setPointSize(16);
+            size=QSize(200,115);
+            break;
+        case Small:
+            size=QSize(140,80);
+            break;
+        default:
+            size=QSize(50,50);
+        }
+
+        if(flag==ButtonNormal){
+            if(!btnIcon){
+                btn=new GameButton(GameControl::m_picMap.value(qMakePair(flag,btnSize)) ,text,parent);
+            }else {
+                btn=new GameButton(GameControl::m_picMap.value(qMakePair(flag,btnSize)),*btnIcon,parent);
+            }
+        }else {
+            btn=new GameButton (GameControl::m_picMap.value(qMakePair(flag,btnSize)),parent);
+        }
+
+        btn->setSizePolicy(QSizePolicy::Fixed,QSizePolicy::Fixed);
+        btn->setFixedSize(size);
+        btn->setFont(btnFont);
+        return  btn;
+    }
 };
 
 #endif // GAMECONTROL_H
