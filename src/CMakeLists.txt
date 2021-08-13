@@ -5,8 +5,8 @@ cmake_minimum_required(VERSION 3.9.5)
 set(EXE_NAME deepin-lianliankan)
 project(${EXE_NAME})
 
-# #配置版本号
-# configure_file(environments.h.in environments.h @ONLY)
+# 配置版本号
+configure_file(environments.h.in environments.h @ONLY)
 
 
 # Find the library

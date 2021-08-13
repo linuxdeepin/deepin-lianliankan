@@ -18,6 +18,8 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+#include "environments.h"
+#include "source/mainwidnow.h"
 
 #include <DApplication>
 #include <DMainWindow>
@@ -37,7 +39,6 @@
 #include <QGraphicsRectItem>
 #include <QButtonGroup>
 
-#include "source/mainwidnow.h"
 DWIDGET_USE_NAMESPACE
 DCORE_USE_NAMESPACE
 
@@ -48,9 +49,9 @@ int main(int argc, char *argv[])
     a.setAttribute(Qt::AA_UseHighDpiPixmaps);
     a.setAutoActivateWindows(true);
     a.loadTranslator();
+    a.setApplicationVersion(VERSION);
     a.setOrganizationName("deepin");
     a.setApplicationName("deepin-lianliankan");
-    a.setApplicationVersion("1.0");
     a.setProductIcon(QIcon(":/assets/images/deepin-lianliankan.svg"));
     a.setProductName(DApplication::translate("Main", "LianLianKan"));
     a.setApplicationDescription(DApplication::translate("Main", "Lianliankan is a puzzle game."));
