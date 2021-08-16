@@ -11,10 +11,12 @@
         <file>assets/images/panda.png</file>
         <file>assets/images/pig.png</file>
         <file>assets/images/rabbit.png</file>
-        <file>assets/images/rect.png</file>
         <file>assets/images/sheep.png</file>
         <file>assets/images/snake.png</file>
         <file>assets/images/tiger.png</file>
         <file>assets/images/deepin-lianliankan.svg</file>
+        <file>assets/images/bigRect.png</file>
+        <file>assets/images/smallRect.png</file>
+        <file>assets/images/midRect.png</file>
     </qresource>
 </RCC>

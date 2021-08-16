@@ -21,7 +21,7 @@
 #ifndef GAMEPAGE_H
 #define GAMEPAGE_H
 
-#include <DProgressBar>
+#include "gameprogressbar.h"
 
 #include <QGridLayout>
 
@@ -37,11 +37,7 @@ public slots:
 private:
     void initUI();
 private:
-    DProgressBar *m_progress;
-    QGridLayout *m_gridLayout;
-
-private:
-    void addBtn();
+    GameProgressBar *m_progress;
 };
 
 #endif // GAMEPAGE_H

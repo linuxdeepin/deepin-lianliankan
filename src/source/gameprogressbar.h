@@ -18,36 +18,24 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#include "gameblureffectwidget.h"
+#ifndef GAMEPROGRESSBAR_H
+#define GAMEPROGRESSBAR_H
 
-#include <QPainter>
-#include <QtMath>
-#include <QImageReader>
-#include <QDebug>
+#include <DColoredProgressBar>
 
-GameBlurEffectWidget::GameBlurEffectWidget(const GameBtnSize &size, QWidget *parent)
-    : DBlurEffectWidget(parent)
-    , m_sizeFlag(size)
+DWIDGET_USE_NAMESPACE
+class GameProgressBar : public DColoredProgressBar
 {
+    Q_OBJECT
+public:
+    explicit GameProgressBar(QWidget *parent = nullptr);
 
-}
+protected:
+    void paintEvent(QPaintEvent *e) override;
+    void initStyleOption(QStyleOptionProgressBar *option) const;
+signals:
 
-void GameBlurEffectWidget::paintEvent(QPaintEvent *event)
-{
-   Q_UNUSED(event);
-   QPainter painter(this);
-   painter.setRenderHint(QPainter::Antialiasing, true);
-   QPixmap pic;
-   switch (m_sizeFlag) {
-   case Big:
-       pic.load(":/assets/images/bigRect.png");
-       break;
-   case Mid:
-       pic.load(":/assets/images/midRect.png");
-       break;
-   default:
-       pic.load(":/assets/images/smallRect.png");
-       break;
-   }
-   painter.drawPixmap(rect(), pic);
-}
+public slots:
+};
+
+#endif // GAMEPROGRESSBAR_H

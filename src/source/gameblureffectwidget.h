@@ -21,6 +21,8 @@
 #ifndef GAMEBLUREFFECTWIDGET_H
 #define GAMEBLUREFFECTWIDGET_H
 
+#include "global.h"
+
 #include <DBlurEffectWidget>
 
 DWIDGET_USE_NAMESPACE
@@ -28,7 +30,7 @@ class GameBlurEffectWidget : public DBlurEffectWidget
 {
     Q_OBJECT
 public:
-    explicit GameBlurEffectWidget(const QSize &size, QWidget *parent = nullptr);
+    explicit GameBlurEffectWidget(const GameBtnSize &size, QWidget *parent = nullptr);
 
 protected:
     void paintEvent(QPaintEvent *event)override;
@@ -37,7 +39,7 @@ signals:
 public slots:
 
 private:
-    QSize m_size;
+    GameBtnSize m_sizeFlag;
 };
 
 #endif // GAMEBLUREFFECTWIDGET_H

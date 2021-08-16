@@ -50,7 +50,7 @@ void MainPage::initUI()
     m_btnGrp->addButton(advanceBtn);
     m_btnGrp->setExclusive(true);
 
-    GameBlurEffectWidget *switchFrame = new GameBlurEffectWidget(QSize(FRAMEWH, FRAMEHH), this);
+    GameBlurEffectWidget *switchFrame = new GameBlurEffectWidget(GameBtnSize::Mid, this);
     QVBoxLayout *frameLayout=new QVBoxLayout;
     frameLayout->addWidget(primaryBtn);
     frameLayout->addSpacing(-20);
