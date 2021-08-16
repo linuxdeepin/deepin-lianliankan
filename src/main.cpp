@@ -58,8 +58,13 @@ int main(int argc, char *argv[])
     a.setApplicationDisplayName(QCoreApplication::translate("Main", "LianLianKan"));
     a.setProductName(QCoreApplication::translate("Main", "LianLianKan"));
 
+    //单例模式
+    if (!a.setSingleInstance(a.applicationName()))
+        exit(-1);
+
     DLogManager::registerConsoleAppender();
     DLogManager::registerFileAppender();
+    DApplicationSettings saveTheme;
 
     MainWidnow w;
     w.titlebar()->setIcon(QIcon(":/assets/images/deepin-lianliankan.svg"));
