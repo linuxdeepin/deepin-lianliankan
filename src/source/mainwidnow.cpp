@@ -109,7 +109,19 @@ void MainWidnow::paintEvent(QPaintEvent *event)
     DWidget::paintEvent(event);
 }
 
-void MainWidnow::showClickedPage()
+void MainWidnow::showClickedPage(int id)
 {
+    switch (id) {
+    case 1:
+        m_gamePage->setInitalTime(320);
+        break;
+    case 2:
+        m_gamePage->setInitalTime(160);
+        break;
+    default:
+        m_gamePage->setInitalTime(480);
+        break;
+    }
+
     m_stackedWidget->setCurrentWidget(m_gamePage);
 }

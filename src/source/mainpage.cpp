@@ -36,7 +36,7 @@ MainPage::MainPage(QWidget*parent):DWidget (parent)
 {
     controlTest();
     initUI();
-    connect(m_btnGrp, static_cast<void (QButtonGroup::*)(QAbstractButton *)>(&QButtonGroup::buttonPressed), this, &MainPage::buttonPress);
+    connect(m_btnGrp, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonPressed), this, &MainPage::buttonPress);
 }
 
 void MainPage::initUI()
@@ -45,9 +45,10 @@ void MainPage::initUI()
     GameButton *primaryBtn=BtnFactory::createBtn(GameBtnFlag::ButtonNormal,GameBtnSize::Mid,GameIconType::None,tr("初级"),this);
     GameButton *interBtn=BtnFactory::createBtn(GameBtnFlag::ButtonNormal,GameBtnSize::Mid,GameIconType::None,tr("中级"),this);
     GameButton *advanceBtn=BtnFactory::createBtn(GameBtnFlag::ButtonNormal,GameBtnSize::Mid,GameIconType::None,tr("高级"),this);
-    m_btnGrp->addButton(primaryBtn);
-    m_btnGrp->addButton(interBtn);
-    m_btnGrp->addButton(advanceBtn);
+    m_btnGrp->addButton(primaryBtn, 0);
+    m_btnGrp->addButton(interBtn, 1);
+    m_btnGrp->addButton(advanceBtn, 2);
+
     m_btnGrp->setExclusive(true);
 
     GameBlurEffectWidget *switchFrame = new GameBlurEffectWidget(GameBtnSize::Mid, this);

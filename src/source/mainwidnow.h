@@ -39,7 +39,7 @@ protected:
 signals:
 
 private slots:
-    void showClickedPage();
+    void showClickedPage(int id);
 
 private:
    void initUI();

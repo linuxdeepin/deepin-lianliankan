@@ -29,13 +29,15 @@ class GameProgressBar : public DColoredProgressBar
     Q_OBJECT
 public:
     explicit GameProgressBar(QWidget *parent = nullptr);
-
+    void setInintalTime(int time); //初始化时间
 protected:
     void paintEvent(QPaintEvent *e) override;
-    void initStyleOption(QStyleOptionProgressBar *option) const;
 signals:
 
 public slots:
+
+private:
+    qreal m_time = 0;
 };
 
 #endif // GAMEPROGRESSBAR_H

@@ -34,7 +34,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/source/mainpage.cpp" line="65"/>
+        <location filename="../src/source/mainpage.cpp" line="66"/>
         <source>难度选择</source>
         <translation type="unfinished"></translation>
     </message>

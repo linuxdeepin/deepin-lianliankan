@@ -22,8 +22,11 @@
 #define GAMEPAGE_H
 
 #include "gameprogressbar.h"
+#include "gameblureffectwidget.h"
 
 #include <QGridLayout>
+#include <QButtonGroup>
+#include <QTimer>
 
 DWIDGET_USE_NAMESPACE
 class GamePage : public QWidget
@@ -31,13 +34,22 @@ class GamePage : public QWidget
     Q_OBJECT
 public:
     explicit GamePage(QWidget *parent = nullptr);
-
+    void setInitalTime(int time); //设置初始化时间
 public slots:
+    void onBtnControl(int id);
+    void onProgressChanged(int value);
 
 private:
     void initUI();
+    void initConnect();
+
 private:
-    GameProgressBar *m_progress;
+    GameBlurEffectWidget *m_gameFrame; //游戏区域
+    GameProgressBar *m_progress; //进度条
+    QButtonGroup *m_controlGrp; //控制按钮组
+    QTimer *m_timer; //定时器
+    int m_value; //进度值
+    bool m_isStart = false; //开始暂停的控制
 };
 
 #endif // GAMEPAGE_H

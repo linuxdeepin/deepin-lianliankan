@@ -22,6 +22,8 @@
 
 #include <QPainter>
 #include <QFontMetricsF>
+#include <QDebug>
+#include <QMouseEvent>
 
 GameButton::GameButton(const QPixmap &pic, const QString &text, QWidget *parent):QAbstractButton(parent),m_pic(pic),m_text(text)
 {
@@ -63,4 +65,10 @@ void GameButton::paintEvent(QPaintEvent *e)
         qreal textY = (rect().height() - fontHeight - fontHeight / 2) / 2;
         p.drawText(QRectF(textX, textY, fontWidth, fontHeight), m_text);
     }
+}
+
+void GameButton::mousePressEvent(QMouseEvent *e)
+{
+    qInfo() << e->pos();
+    return QAbstractButton::mousePressEvent(e);
 }

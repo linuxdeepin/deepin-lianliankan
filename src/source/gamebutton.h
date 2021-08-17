@@ -41,7 +41,9 @@ public slots:
 
 protected:
    void paintEvent(QPaintEvent *event) override;
-private:
+   void mousePressEvent(QMouseEvent *e) override;
+
+   private:
    void initUI();
    void initIcon(GameBtnFlag flag);
 private:

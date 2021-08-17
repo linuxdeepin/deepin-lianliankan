@@ -38,7 +38,7 @@ private:
     QButtonGroup *m_btnGrp;
 
 signals:
-    void buttonPress(QAbstractButton *);
+    void buttonPress(int id);
 };
 
 #endif // MAINPAGE_H
