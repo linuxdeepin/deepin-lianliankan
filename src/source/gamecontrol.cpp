@@ -48,6 +48,11 @@ void GameControl::gameReset()
     gameShuffle(false);
 }
 
+bool GameControl::gameSearch(const QPoint &startPos, const QPoint &endPos)
+{
+    return bfs(startPos, endPos);
+}
+
 void GameControl::gameShuffle(bool inital)
 {
     QVector<GameBtnFlag> btnVector; //洗牌容器
@@ -85,4 +90,8 @@ void GameControl::gameShuffle(bool inital)
             }
         }
     }
+}
+
+bool GameControl::bfs(const QPoint &startPos, const QPoint &endPos)
+{
 }

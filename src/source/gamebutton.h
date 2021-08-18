@@ -35,6 +35,10 @@ public:
     explicit GameButton(const QPixmap &pic,QWidget*parent=nullptr);
     void setFont(const QFont &font);
     void setLocation(int x, int y);
+    inline const QPoint location() const
+    {
+        return QPoint(m_rowIndex, m_columnIndex);
+    }
 signals:
 
 public slots:
@@ -45,14 +49,19 @@ protected:
 
    private:
    void initUI();
-   void initIcon(GameBtnFlag flag);
-private:
+   //   void initIcon(const GameBtnFlag &flag);
+   void setBtnMode(const GameBtnType &type);
+   void drawRect(QPainter &p);
+
+   private:
    QPixmap m_pic;//按钮背景图
    QPixmap m_icon;//按钮图标
    QString m_text;//按钮文字
    QFont  m_font; //按钮字体
    int m_rowIndex; //行
    int m_columnIndex; //列
+   bool m_pressd = false; //判读按钮是否点击
+   GameBtnType m_btnType; //按钮样式类型
 };
 
 #endif // GAMEBUTTON_H

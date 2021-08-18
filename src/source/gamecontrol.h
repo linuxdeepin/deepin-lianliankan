@@ -106,6 +106,7 @@ public:
     }
     void gameBegin(); //游戏开始
     void gameReset();//游戏重置
+    bool gameSearch(const QPoint &startPos, const QPoint &endPos); //寻路
     static GameBtnFlag m_map[12][18];//游戏地图
     static QHash<QPair<GameBtnFlag, GameBtnSize>, QPixmap>m_picMap;//图片资源
 signals:
@@ -115,6 +116,7 @@ public slots:
 private:
     explicit GameControl(QObject *parent = nullptr);
     void gameShuffle(bool inital);
+    bool bfs(const QPoint &startPos, const QPoint &endPos);
 };
 
 class BtnFactory{

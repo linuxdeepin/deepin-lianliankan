@@ -54,6 +54,7 @@ void GamePage::initUI()
     m_gameFrame->setEnabled(false);
     gameBtngridLayout->setContentsMargins(20, 10, 20, 35);
 
+    m_animalGrp = new QButtonGroup(this);
     GameControl::GameInterFace().gameBegin();
     for (int i = 1; i < ROW + 1; i++) {
         for (int j = 1; j < COLUMN + 1; j++) {
@@ -67,6 +68,7 @@ void GamePage::initUI()
             GameButton *gameBtn = BtnFactory::createBtn(GameControl::m_map[i][j], Default, None);
             gameBtn->setLocation(i, j);
             gameBtn->setGraphicsEffect(shadowEffect);
+            m_animalGrp->addButton(gameBtn);
             gameBtngridLayout->addWidget(gameBtn, i - 1, j - 1);
         }
     }
@@ -113,7 +115,8 @@ void GamePage::initUI()
 
 void GamePage::initConnect()
 {
-    QObject::connect(m_controlGrp, QOverload<int>::of(&QButtonGroup::buttonClicked), this, &GamePage::onBtnControl);
+    QObject::connect(m_controlGrp, QOverload<int>::of(&QButtonGroup::buttonClicked), this, &GamePage::onControlBtnControl);
+    QObject::connect(m_animalGrp, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked), this, &GamePage::onAnimalBtnControl);
     QObject::connect(m_progress, &GameProgressBar::valueChanged, this, &GamePage::onProgressChanged);
     QObject::connect(m_timer, &QTimer::timeout, this, [&] {
         m_value--;
@@ -121,7 +124,7 @@ void GamePage::initConnect()
     });
 }
 
-void GamePage::onBtnControl(int id)
+void GamePage::onControlBtnControl(int id)
 {
     switch (id) {
     case 0: {
@@ -138,6 +141,17 @@ void GamePage::onBtnControl(int id)
         }
         break;
     }
+    }
+}
+
+void GamePage::onAnimalBtnControl(QAbstractButton *btn)
+{
+    int vecCount = m_locationVec.count();
+    if (vecCount == 2) {
+        m_locationVec.clear();
+    } else {
+        GameButton *gameBtn = dynamic_cast<GameButton *>(btn);
+        m_locationVec.append(gameBtn->location());
     }
 }
 

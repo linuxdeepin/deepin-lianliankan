@@ -24,18 +24,32 @@
 #include <QFontMetricsF>
 #include <QDebug>
 #include <QMouseEvent>
+#include <QtMath>
 
-GameButton::GameButton(const QPixmap &pic, const QString &text, QWidget *parent):QAbstractButton(parent),m_pic(pic),m_text(text)
+GameButton::GameButton(const QPixmap &pic, const QString &text, QWidget *parent)
+    : QAbstractButton(parent)
+    , m_pic(pic)
+    , m_text(text)
+    , m_btnType(OnlyPic)
 {
-
+    setBtnMode(GameBtnType::TextOnPic);
 }
 
-GameButton::GameButton(const QPixmap &pic, const QPixmap &icon, QWidget *parent):QAbstractButton(parent),m_pic(pic),m_icon(icon)
+GameButton::GameButton(const QPixmap &pic, const QPixmap &icon, QWidget *parent)
+    : QAbstractButton(parent)
+    , m_pic(pic)
+    , m_icon(icon)
+    , m_btnType(OnlyPic)
 {
+    setBtnMode(GameBtnType::IconOnPic);
 }
 
-GameButton::GameButton(const QPixmap &pic, QWidget *parent):QAbstractButton(parent),m_pic(pic)
+GameButton::GameButton(const QPixmap &pic, QWidget *parent)
+    : QAbstractButton(parent)
+    , m_pic(pic)
+    , m_btnType(OnlyPic)
 {
+    setBtnMode(GameBtnType::OnlyPic);
 }
 
 void GameButton::setFont(const QFont &font)
@@ -55,7 +69,9 @@ void GameButton::paintEvent(QPaintEvent *e)
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing, true);
     p.drawPixmap(rect(),m_pic);
-    if(m_text!=" "){
+    switch (m_btnType) {
+    case TextOnPic: {
+        //绘制文字按钮
         QFontMetricsF mertic(m_font);
         qreal fontHeight = mertic.height();
         qreal fontWidth = mertic.width(m_text);
@@ -64,11 +80,62 @@ void GameButton::paintEvent(QPaintEvent *e)
         qreal textX = (rect().width() - fontWidth) / 2;
         qreal textY = (rect().height() - fontHeight - fontHeight / 2) / 2;
         p.drawText(QRectF(textX, textY, fontWidth, fontHeight), m_text);
+        break;
+    }
+    case IconOnPic: {
+        break;
+    }
+    default: {
+        //绘制游戏动物按钮
+        //点击状态
+        if (m_pressd) {
+            drawRect(p);
+        }
+
+        break;
+    }
+    }
+    if (m_text != " ") {
+    } else {
+        if (m_pressd) {
+        }
     }
 }
 
 void GameButton::mousePressEvent(QMouseEvent *e)
 {
-    qInfo() << e->pos();
+    if (e->button() != Qt::LeftButton) {
+        e->ignore();
+        return;
+    }
+
+    if (hitButton(e->pos())) {
+        m_pressd = true;
+        e->accept();
+    } else {
+        m_pressd = false;
+        e->ignore();
+    }
+
     return QAbstractButton::mousePressEvent(e);
+}
+
+void GameButton::setBtnMode(const GameBtnType &type)
+{
+    m_btnType = type;
+}
+
+void GameButton::drawRect(QPainter &p)
+{
+    qreal rectX = rect().x();
+    qreal rectY = rect().y();
+    qreal rectWidth = rect().width();
+    qreal rectHeight = rect().height();
+    QColor color(Qt::yellow);
+    for (int i = 0; i < 10; i++) {
+        color.setAlpha(static_cast<int>(120 - qSqrt(i) * 40));
+        p.setPen(color);
+        // 圆角阴影边框;
+        p.drawRoundedRect(QRectF(rectX, rectY + i * 1, rectWidth, rectHeight - i * 1 - i * 1), 11, 11);
+    }
 }

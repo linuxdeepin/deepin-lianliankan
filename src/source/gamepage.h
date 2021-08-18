@@ -27,6 +27,7 @@
 #include <QGridLayout>
 #include <QButtonGroup>
 #include <QTimer>
+#include <QVector>
 
 DWIDGET_USE_NAMESPACE
 class GamePage : public QWidget
@@ -36,9 +37,9 @@ public:
     explicit GamePage(QWidget *parent = nullptr);
     void setInitalTime(int time); //设置初始化时间
 public slots:
-    void onBtnControl(int id);
+    void onControlBtnControl(int id);
+    void onAnimalBtnControl(QAbstractButton *btn);
     void onProgressChanged(int value);
-
 private:
     void initUI();
     void initConnect();
@@ -46,8 +47,10 @@ private:
 private:
     GameBlurEffectWidget *m_gameFrame; //游戏区域
     GameProgressBar *m_progress; //进度条
+    QButtonGroup *m_animalGrp; //游戏动物按钮组
     QButtonGroup *m_controlGrp; //控制按钮组
     QTimer *m_timer; //定时器
+    QVector<QPoint> m_locationVec; //按钮地址容器
     int m_value; //进度值
     bool m_isStart = false; //开始暂停的控制
 };

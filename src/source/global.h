@@ -27,10 +27,13 @@
 #define ROW 10
 #define COLUMN 16
 
+typedef struct {
+} GameNode;
+
 //主界面/游戏界面背景圆角
 #define FRAMERADIUS 18
 
-//游戏所有按钮类型
+//游戏按钮背景类型
 enum GameBtnFlag {
     ButtonNormal = -1,
     ButtonBlank,
@@ -48,7 +51,7 @@ enum GameBtnFlag {
     ButtonPanda
 };
 
-//游戏所有按钮类型大小
+//游戏按钮大小类型
 enum GameBtnSize{
     Default=0,
     Big,
@@ -64,5 +67,12 @@ enum GameIconType{
     Reset,
     Hint,
     Home
+};
+
+//游戏按钮样式类型
+enum GameBtnType {
+    TextOnPic = 0,
+    OnlyPic,
+    IconOnPic
 };
 #endif // GLOBAL_H
