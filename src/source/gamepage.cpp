@@ -20,7 +20,6 @@
 */
 #include "gamepage.h"
 #include "gamecontrol.h"
-#include "gamebutton.h"
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -55,6 +54,7 @@ void GamePage::initUI()
     gameBtngridLayout->setContentsMargins(20, 10, 20, 35);
 
     m_animalGrp = new QButtonGroup(this);
+    m_animalGrp->setExclusive(true);
     GameControl::GameInterFace().gameBegin();
     for (int i = 1; i < ROW + 1; i++) {
         for (int j = 1; j < COLUMN + 1; j++) {
@@ -115,8 +115,8 @@ void GamePage::initUI()
 
 void GamePage::initConnect()
 {
-    QObject::connect(m_controlGrp, QOverload<int>::of(&QButtonGroup::buttonClicked), this, &GamePage::onControlBtnControl);
-    QObject::connect(m_animalGrp, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonClicked), this, &GamePage::onAnimalBtnControl);
+    QObject::connect(m_controlGrp, QOverload<int>::of(&QButtonGroup::buttonPressed), this, &GamePage::onControlBtnControl);
+    QObject::connect(m_animalGrp, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonPressed), this, &GamePage::onAnimalBtnControl);
     QObject::connect(m_progress, &GameProgressBar::valueChanged, this, &GamePage::onProgressChanged);
     QObject::connect(m_timer, &QTimer::timeout, this, [&] {
         m_value--;
@@ -146,12 +146,28 @@ void GamePage::onControlBtnControl(int id)
 
 void GamePage::onAnimalBtnControl(QAbstractButton *btn)
 {
+    GameButton *gameBtn = dynamic_cast<GameButton *>(btn);
+
     int vecCount = m_locationVec.count();
-    if (vecCount == 2) {
-        m_locationVec.clear();
+    if (vecCount == 1) {
+        GameButton *firstBtn = m_locationVec.first();
+        if (gameBtn->pos() == firstBtn->pos())
+            return;
+        bool res = GameControl::GameInterFace().gameSearch(firstBtn->location(), gameBtn->location());
+        if (res) {
+            GameControl::m_map[gameBtn->location().x()][gameBtn->location().y()] = GameBtnFlag::ButtonBlank;
+            GameControl::m_map[firstBtn->location().x()][firstBtn->location().y()] = GameBtnFlag::ButtonBlank;
+            gameBtn->setBtnMode(GameBtnType::NoneType);
+            firstBtn->setBtnMode(GameBtnType::NoneType);
+            m_locationVec.clear();
+        } else {
+            firstBtn->setPressed(false);
+            m_locationVec.append(gameBtn);
+            m_locationVec.pop_front();
+        }
+
     } else {
-        GameButton *gameBtn = dynamic_cast<GameButton *>(btn);
-        m_locationVec.append(gameBtn->location());
+        m_locationVec.append(gameBtn);
     }
 }
 

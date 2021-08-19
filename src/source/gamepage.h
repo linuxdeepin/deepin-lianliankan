@@ -23,6 +23,7 @@
 
 #include "gameprogressbar.h"
 #include "gameblureffectwidget.h"
+#include "gamebutton.h"
 
 #include <QGridLayout>
 #include <QButtonGroup>
@@ -50,7 +51,7 @@ private:
     QButtonGroup *m_animalGrp; //游戏动物按钮组
     QButtonGroup *m_controlGrp; //控制按钮组
     QTimer *m_timer; //定时器
-    QVector<QPoint> m_locationVec; //按钮地址容器
+    QVector<GameButton *> m_locationVec; //按钮地址容器
     int m_value; //进度值
     bool m_isStart = false; //开始暂停的控制
 };

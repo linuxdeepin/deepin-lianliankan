@@ -39,6 +39,8 @@ public:
     {
         return QPoint(m_rowIndex, m_columnIndex);
     }
+    void setBtnMode(const GameBtnType &type);
+    void setPressed(bool isPressd);
 signals:
 
 public slots:
@@ -50,7 +52,7 @@ protected:
    private:
    void initUI();
    //   void initIcon(const GameBtnFlag &flag);
-   void setBtnMode(const GameBtnType &type);
+
    void drawRect(QPainter &p);
 
    private:

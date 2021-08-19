@@ -108,6 +108,7 @@ public:
     void gameReset();//游戏重置
     bool gameSearch(const QPoint &startPos, const QPoint &endPos); //寻路
     static GameBtnFlag m_map[12][18];//游戏地图
+    static bool m_vis[12][18]; //记录是否重复
     static QHash<QPair<GameBtnFlag, GameBtnSize>, QPixmap>m_picMap;//图片资源
 signals:
 

@@ -109,6 +109,11 @@ void MainWidnow::paintEvent(QPaintEvent *event)
     DWidget::paintEvent(event);
 }
 
+void MainWidnow::mouseMoveEvent(QMouseEvent *event)
+{
+    Q_UNUSED(event);
+}
+
 void MainWidnow::showClickedPage(int id)
 {
     switch (id) {

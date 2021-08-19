@@ -30,18 +30,16 @@ GameButton::GameButton(const QPixmap &pic, const QString &text, QWidget *parent)
     : QAbstractButton(parent)
     , m_pic(pic)
     , m_text(text)
-    , m_btnType(OnlyPic)
+    , m_btnType(TextOnPic)
 {
-    setBtnMode(GameBtnType::TextOnPic);
 }
 
 GameButton::GameButton(const QPixmap &pic, const QPixmap &icon, QWidget *parent)
     : QAbstractButton(parent)
     , m_pic(pic)
     , m_icon(icon)
-    , m_btnType(OnlyPic)
+    , m_btnType(IconOnPic)
 {
-    setBtnMode(GameBtnType::IconOnPic);
 }
 
 GameButton::GameButton(const QPixmap &pic, QWidget *parent)
@@ -49,7 +47,6 @@ GameButton::GameButton(const QPixmap &pic, QWidget *parent)
     , m_pic(pic)
     , m_btnType(OnlyPic)
 {
-    setBtnMode(GameBtnType::OnlyPic);
 }
 
 void GameButton::setFont(const QFont &font)
@@ -66,6 +63,8 @@ void GameButton::setLocation(int x, int y)
 void GameButton::paintEvent(QPaintEvent *e)
 {
     Q_UNUSED(e);
+    if (m_btnType == NoneType)
+        return;
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing, true);
     p.drawPixmap(rect(),m_pic);
@@ -104,6 +103,7 @@ void GameButton::paintEvent(QPaintEvent *e)
 
 void GameButton::mousePressEvent(QMouseEvent *e)
 {
+    //qInfo()<<"mouseEvent";
     if (e->button() != Qt::LeftButton) {
         e->ignore();
         return;
@@ -123,6 +123,13 @@ void GameButton::mousePressEvent(QMouseEvent *e)
 void GameButton::setBtnMode(const GameBtnType &type)
 {
     m_btnType = type;
+    update();
+}
+
+void GameButton::setPressed(bool isPressd)
+{
+    m_pressd = isPressd;
+    update();
 }
 
 void GameButton::drawRect(QPainter &p)

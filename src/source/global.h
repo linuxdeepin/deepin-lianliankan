@@ -27,9 +27,6 @@
 #define ROW 10
 #define COLUMN 16
 
-typedef struct {
-} GameNode;
-
 //主界面/游戏界面背景圆角
 #define FRAMERADIUS 18
 
@@ -73,6 +70,17 @@ enum GameIconType{
 enum GameBtnType {
     TextOnPic = 0,
     OnlyPic,
-    IconOnPic
+    IconOnPic,
+    NoneType
 };
+
+//游戏地图结点
+struct GameNode {
+    int direction; //移动方向
+    int rowIndex; //行
+    int columnIndex; //列
+    int turnNum; //转弯次数
+    GameNode *prev; //前一个结点
+};
+
 #endif // GLOBAL_H

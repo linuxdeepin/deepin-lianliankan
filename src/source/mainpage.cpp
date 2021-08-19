@@ -34,7 +34,8 @@
 
 MainPage::MainPage(QWidget*parent):DWidget (parent)
 {
-    controlTest();
+    //    controlTest();
+    setMouseTracking(false);
     initUI();
     connect(m_btnGrp, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonPressed), this, &MainPage::buttonPress);
 }
@@ -78,10 +79,8 @@ void MainPage::initUI()
 
 void MainPage::controlTest()
 {
-    //        QTime t;
-    //        t.start();
-    //        GameControl::GameInterFace().gameBegin();
-
-    //        GameControl::GameInterFace().gameReset();
-    //        qInfo() << "elapsed::" << t.elapsed();
+    QTime t;
+    t.start();
+    GameControl::GameInterFace().gameBegin();
+    qInfo() << "elapsed::" << t.elapsed();
 }

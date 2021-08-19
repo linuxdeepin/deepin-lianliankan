@@ -20,6 +20,8 @@
 */
 #include "gamecontrol.h"
 
+#include <QQueue>
+
 #include <algorithm>
 #include <chrono>
 #include <random>
@@ -31,6 +33,7 @@ const int m_column = 16;
 const int m_total = 160;
 
 GameBtnFlag GameControl::m_map[12][18];
+bool GameControl::m_vis[12][18];
 QHash<QPair<GameBtnFlag,GameBtnSize>,QPixmap> GameControl::m_picMap;
 
 GameControl::GameControl(QObject *parent)
@@ -94,4 +97,62 @@ void GameControl::gameShuffle(bool inital)
 
 bool GameControl::bfs(const QPoint &startPos, const QPoint &endPos)
 {
+    memset(m_vis, false, sizeof(m_vis));
+    GameBtnFlag startFlag = m_map[startPos.x()][startPos.y()];
+    GameBtnFlag endFlag = m_map[endPos.x()][endPos.y()];
+    if (startFlag != endFlag)
+        return false;
+
+    QQueue<GameNode> quene;
+    GameNode startNode, tmpNode;
+    startNode.rowIndex = startPos.x();
+    startNode.columnIndex = startPos.y();
+    startNode.direction = -1;
+    startNode.turnNum = -1;
+    m_vis[startNode.rowIndex][startNode.columnIndex] = true;
+    int dir[4][2] = {{0, 1}, {0, -1}, {-1, 0}, {1, 0}};
+    quene.enqueue(startNode);
+    while (!quene.isEmpty()) {
+        GameNode popNode = quene.first();
+        quene.pop_front();
+
+        if (popNode.rowIndex == endPos.x() && popNode.columnIndex == endPos.y()) {
+            //qInfo()<<popNode.rowIndex<<popNode.columnIndex<<popNode.direction<<popNode.turnNum<<"lastNode";
+            return popNode.turnNum <= 2;
+        }
+
+        for (int i = 0; i < 4; i++) {
+            tmpNode = popNode;
+            m_vis[tmpNode.rowIndex][tmpNode.columnIndex] = true;
+            tmpNode.rowIndex += dir[i][0];
+            tmpNode.columnIndex += dir[i][1];
+            //qInfo()<<tmpNode.rowIndex<<tmpNode.columnIndex<<"index";
+            int endRow = endPos.x();
+            int endColumn = endPos.y();
+            GameBtnFlag tmpFlag = m_map[tmpNode.rowIndex][tmpNode.columnIndex];
+            //qInfo()<<tmpFlag<<"1111";
+            bool coordinateValid = tmpNode.rowIndex >= 0 && tmpNode.rowIndex <= 11 && tmpNode.columnIndex >= 0 && tmpNode.columnIndex <= 17;
+            // qInfo()<<coordinateValid<<m_vis[tmpNode.rowIndex][tmpNode.columnIndex]<<"2222";
+            if (coordinateValid && (tmpFlag == ButtonBlank || (tmpNode.rowIndex == endRow && tmpNode.columnIndex == endColumn)) && m_vis[tmpNode.rowIndex][tmpNode.columnIndex] == false) {
+                tmpNode.prev = &popNode;
+
+                if (tmpNode.direction != i) {
+                    if (tmpNode.turnNum + 1 <= 2) {
+                        tmpNode.turnNum++;
+                        tmpNode.direction = i;
+                        // qInfo()<< tmpNode.rowIndex<< tmpNode.columnIndex<< tmpNode.direction<< tmpNode.turnNum<<" tmpNode";
+                        quene.enqueue(tmpNode);
+                    } else {
+                    }
+
+                } else {
+                    tmpNode.direction = i;
+                    //qInfo()<< tmpNode.rowIndex<< tmpNode.columnIndex<< tmpNode.direction<< tmpNode.turnNum<<" dirNode";
+                    quene.enqueue(tmpNode);
+                }
+            }
+        }
+    }
+    //qInfo()<<"false";
+    return false;
 }
