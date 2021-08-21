@@ -36,7 +36,7 @@ public:
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
     void paintEvent(QPaintEvent *event)override;
-    void mouseMoveEvent(QMouseEvent *event) override;
+
 signals:
 
 private slots:
@@ -50,8 +50,9 @@ private:
 private:
    DStackedWidget *m_stackedWidget;
    DTitlebar *m_titlebar;
-   MainPage *m_mainPage;
-   GamePage *m_gamePage;
+   MainPage *m_mainPage; //主页面
+   GamePage *m_gamePage; //游戏页面
+   bool firstGame = true; //判断是否为第一次游戏
 };
 
 #endif // MAINWIDNOW_H

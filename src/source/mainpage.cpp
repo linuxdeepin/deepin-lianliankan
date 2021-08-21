@@ -84,3 +84,8 @@ void MainPage::controlTest()
     GameControl::GameInterFace().gameBegin();
     qInfo() << "elapsed::" << t.elapsed();
 }
+
+void MainPage::mouseMoveEvent(QMouseEvent *event)
+{
+    Q_UNUSED(event);
+}

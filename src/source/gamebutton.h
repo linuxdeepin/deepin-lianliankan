@@ -35,6 +35,7 @@ public:
     explicit GameButton(const QPixmap &pic,QWidget*parent=nullptr);
     void setFont(const QFont &font);
     void setLocation(int x, int y);
+    void updatePic(const QPixmap &pic); //刷新按钮
     inline const QPoint location() const
     {
         return QPoint(m_rowIndex, m_columnIndex);
@@ -51,7 +52,6 @@ protected:
 
    private:
    void initUI();
-   //   void initIcon(const GameBtnFlag &flag);
 
    void drawRect(QPainter &p);
 

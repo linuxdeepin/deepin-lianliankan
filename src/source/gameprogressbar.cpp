@@ -38,6 +38,7 @@ void GameProgressBar::setInintalTime(int time)
 
 void GameProgressBar::paintEvent(QPaintEvent *e)
 {
+    Q_UNUSED(e);
     QPainter painter(this);
     qreal rectX = rect().x();
     qreal rectY = rect().y();

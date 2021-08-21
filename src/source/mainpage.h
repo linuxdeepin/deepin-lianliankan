@@ -30,15 +30,17 @@ class MainPage: public DWidget
     Q_OBJECT
 public:
     MainPage(QWidget *parent = nullptr);
+signals:
+    void buttonPress(int id);
+
+protected:
+    void mouseMoveEvent(QMouseEvent *event) override;
+
 private:
     void initUI();
     void controlTest();
-
 private:
     QButtonGroup *m_btnGrp;
-
-signals:
-    void buttonPress(int id);
 };
 
 #endif // MAINPAGE_H

@@ -21,14 +21,8 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
-#define ICONWIDTH 50
-#define ICONHEIGHT 50
-
 #define ROW 10
 #define COLUMN 16
-
-//主界面/游戏界面背景圆角
-#define FRAMERADIUS 18
 
 //游戏按钮背景类型
 enum GameBtnFlag {
@@ -80,7 +74,6 @@ struct GameNode {
     int rowIndex; //行
     int columnIndex; //列
     int turnNum; //转弯次数
-    GameNode *prev; //前一个结点
 };
 
 #endif // GLOBAL_H

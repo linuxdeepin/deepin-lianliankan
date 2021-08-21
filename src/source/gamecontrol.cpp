@@ -31,9 +31,11 @@
 const int m_row = 10;
 const int m_column = 16;
 const int m_total = 160;
+const int INF = 0x3f3f3f3f;
 
 GameBtnFlag GameControl::m_map[12][18];
-bool GameControl::m_vis[12][18];
+int GameControl::m_minTurn[12][18];
+QPoint GameControl::m_pathMap[12][18];
 QHash<QPair<GameBtnFlag,GameBtnSize>,QPixmap> GameControl::m_picMap;
 
 GameControl::GameControl(QObject *parent)
@@ -53,7 +55,7 @@ void GameControl::gameReset()
 
 bool GameControl::gameSearch(const QPoint &startPos, const QPoint &endPos)
 {
-    return bfs(startPos, endPos);
+    return gameBfs(startPos, endPos);
 }
 
 void GameControl::gameShuffle(bool inital)
@@ -66,7 +68,6 @@ void GameControl::gameShuffle(bool inital)
                 btnVector.append(m_map[i][j]);
             }
         }
-        memset(m_map, GameBtnFlag(0), sizeof(m_map));
     } else {
         //初始化数据
         for (int i = 0; i < m_total; i += 14) {
@@ -95,59 +96,60 @@ void GameControl::gameShuffle(bool inital)
     }
 }
 
-bool GameControl::bfs(const QPoint &startPos, const QPoint &endPos)
+bool GameControl::gameBfs(const QPoint &startPos, const QPoint &endPos)
 {
-    memset(m_vis, false, sizeof(m_vis));
+    memset(m_minTurn, INF, sizeof(m_minTurn));
+    memset(m_pathMap, 0, sizeof(m_pathMap));
     GameBtnFlag startFlag = m_map[startPos.x()][startPos.y()];
     GameBtnFlag endFlag = m_map[endPos.x()][endPos.y()];
+    //如果开始点和结束点的值不相等,直接返回false
     if (startFlag != endFlag)
         return false;
 
     QQueue<GameNode> quene;
-    GameNode startNode, tmpNode;
+    GameNode startNode, popNode, tmpNode;
     startNode.rowIndex = startPos.x();
     startNode.columnIndex = startPos.y();
     startNode.direction = -1;
-    startNode.turnNum = -1;
-    m_vis[startNode.rowIndex][startNode.columnIndex] = true;
+    startNode.turnNum = 0;
     int dir[4][2] = {{0, 1}, {0, -1}, {-1, 0}, {1, 0}};
     quene.enqueue(startNode);
     while (!quene.isEmpty()) {
-        GameNode popNode = quene.first();
+        popNode = quene.first();
         quene.pop_front();
 
+        //判读是否是找到最后的点且是否转弯次数大于三次,如果大于,则返回false,反之,返回true.
         if (popNode.rowIndex == endPos.x() && popNode.columnIndex == endPos.y()) {
-            //qInfo()<<popNode.rowIndex<<popNode.columnIndex<<popNode.direction<<popNode.turnNum<<"lastNode";
             return popNode.turnNum <= 2;
         }
-
         for (int i = 0; i < 4; i++) {
-            tmpNode = popNode;
-            m_vis[tmpNode.rowIndex][tmpNode.columnIndex] = true;
-            tmpNode.rowIndex += dir[i][0];
-            tmpNode.columnIndex += dir[i][1];
-            //qInfo()<<tmpNode.rowIndex<<tmpNode.columnIndex<<"index";
+            int newRowIndex = popNode.rowIndex + dir[i][0];
+            int newColumnIndex = popNode.columnIndex + dir[i][1];
             int endRow = endPos.x();
             int endColumn = endPos.y();
-            GameBtnFlag tmpFlag = m_map[tmpNode.rowIndex][tmpNode.columnIndex];
-            //qInfo()<<tmpFlag<<"1111";
-            bool coordinateValid = tmpNode.rowIndex >= 0 && tmpNode.rowIndex <= 11 && tmpNode.columnIndex >= 0 && tmpNode.columnIndex <= 17;
-            // qInfo()<<coordinateValid<<m_vis[tmpNode.rowIndex][tmpNode.columnIndex]<<"2222";
-            if (coordinateValid && (tmpFlag == ButtonBlank || (tmpNode.rowIndex == endRow && tmpNode.columnIndex == endColumn)) && m_vis[tmpNode.rowIndex][tmpNode.columnIndex] == false) {
-                tmpNode.prev = &popNode;
+            GameBtnFlag tmpFlag = m_map[newRowIndex][newColumnIndex];
 
-                if (tmpNode.direction != i) {
-                    if (tmpNode.turnNum + 1 <= 2) {
-                        tmpNode.turnNum++;
-                        tmpNode.direction = i;
-                        // qInfo()<< tmpNode.rowIndex<< tmpNode.columnIndex<< tmpNode.direction<< tmpNode.turnNum<<" tmpNode";
-                        quene.enqueue(tmpNode);
-                    } else {
-                    }
-
-                } else {
+            if (newRowIndex >= 0 && newRowIndex <= 11 && newColumnIndex >= 0 && newColumnIndex <= 17 && (tmpFlag == ButtonBlank || (newRowIndex == endRow && newColumnIndex == endColumn))) {
+                tmpNode.rowIndex = newRowIndex;
+                tmpNode.columnIndex = newColumnIndex;
+                //队首元素的方向任意(-1)或队首元素的方向与当前方向相同，trunNum不变
+                if (popNode.direction == -1 || popNode.direction == i) {
                     tmpNode.direction = i;
-                    //qInfo()<< tmpNode.rowIndex<< tmpNode.columnIndex<< tmpNode.direction<< tmpNode.turnNum<<" dirNode";
+                    tmpNode.turnNum = popNode.turnNum;
+                } else //否则，trunNum加1
+                {
+                    tmpNode.direction = i;
+                    tmpNode.turnNum = popNode.turnNum + 1;
+                }
+
+                //如果方向转换超过两次,不进入队列,可以去掉一部分重复检查
+                if (tmpNode.turnNum > 2)
+                    continue;
+
+                //保证转弯次数最少
+                if (tmpNode.turnNum <= m_minTurn[tmpNode.rowIndex][tmpNode.columnIndex]) {
+                    m_pathMap[tmpNode.rowIndex][tmpNode.columnIndex] = QPoint(popNode.rowIndex, popNode.columnIndex);
+                    m_minTurn[tmpNode.rowIndex][tmpNode.columnIndex] = tmpNode.turnNum;
                     quene.enqueue(tmpNode);
                 }
             }

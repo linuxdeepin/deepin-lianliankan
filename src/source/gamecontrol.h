@@ -29,6 +29,7 @@
 #include <QImageReader>
 #include <QFont>
 #include <QDebug>
+#include <QMap>
 
 class GameControl : public QObject
 {
@@ -108,7 +109,8 @@ public:
     void gameReset();//游戏重置
     bool gameSearch(const QPoint &startPos, const QPoint &endPos); //寻路
     static GameBtnFlag m_map[12][18];//游戏地图
-    static bool m_vis[12][18]; //记录是否重复
+    static int m_minTurn[12][18]; //记录最小转弯数
+    static QPoint m_pathMap[12][18]; //通路坐标
     static QHash<QPair<GameBtnFlag, GameBtnSize>, QPixmap>m_picMap;//图片资源
 signals:
 
@@ -116,8 +118,8 @@ public slots:
 
 private:
     explicit GameControl(QObject *parent = nullptr);
-    void gameShuffle(bool inital);
-    bool bfs(const QPoint &startPos, const QPoint &endPos);
+    void gameShuffle(bool inital); //游戏洗牌
+    bool gameBfs(const QPoint &startPos, const QPoint &endPos); //游戏寻路
 };
 
 class BtnFactory{

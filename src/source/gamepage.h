@@ -37,13 +37,25 @@ class GamePage : public QWidget
 public:
     explicit GamePage(QWidget *parent = nullptr);
     void setInitalTime(int time); //设置初始化时间
+    void beginGame(); //开始游戏
+    void resetGame(); //重置游戏
+signals:
+    void backToMainPage();
 public slots:
     void onControlBtnControl(int id);
     void onAnimalBtnControl(QAbstractButton *btn);
     void onProgressChanged(int value);
+
+protected:
+    void mouseMoveEvent(QMouseEvent *event) override;
+
 private:
     void initUI();
     void initConnect();
+    void initGameBtn(); //初始化游戏按钮
+    void setBtnEnabled(bool isEnabled); //是否按钮可以点击
+    void shadowBtn(GameButton *btn); //游戏按钮阴影处理
+    void updateBtn(); //刷新按钮
 
 private:
     GameBlurEffectWidget *m_gameFrame; //游戏区域
@@ -51,9 +63,12 @@ private:
     QButtonGroup *m_animalGrp; //游戏动物按钮组
     QButtonGroup *m_controlGrp; //控制按钮组
     QTimer *m_timer; //定时器
-    QVector<GameButton *> m_locationVec; //按钮地址容器
+    QVector<GameButton *> m_locationVec; //点击按钮容器
+    QVector<QPoint> m_pathVec; //通路坐标组
     int m_value; //进度值
     bool m_isStart = false; //开始暂停的控制
+
+    QGridLayout *m_gameBtngridLayout; //游戏按钮布局
 };
 
 #endif // GAMEPAGE_H

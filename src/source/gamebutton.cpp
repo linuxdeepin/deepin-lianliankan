@@ -60,9 +60,21 @@ void GameButton::setLocation(int x, int y)
     m_columnIndex = y;
 }
 
+void GameButton::updatePic(const QPixmap &pic)
+{
+    //更新图标类型
+    setBtnMode(OnlyPic);
+    //更新按下状态
+    m_pressd = false;
+    //更新图片资源
+    m_pic = pic;
+    update();
+}
+
 void GameButton::paintEvent(QPaintEvent *e)
 {
     Q_UNUSED(e);
+    //消失的情况下直接返回不绘制,消失.
     if (m_btnType == NoneType)
         return;
     QPainter p(this);
@@ -94,11 +106,11 @@ void GameButton::paintEvent(QPaintEvent *e)
         break;
     }
     }
-    if (m_text != " ") {
-    } else {
-        if (m_pressd) {
-        }
-    }
+    //    if (m_text != " ") {
+    //    } else {
+    //        if (m_pressd) {
+    //        }
+    //    }
 }
 
 void GameButton::mousePressEvent(QMouseEvent *e)

@@ -25,6 +25,7 @@
 #include <QVBoxLayout>
 #include <QGraphicsDropShadowEffect>
 #include <QDebug>
+#include <QTime>
 
 GamePage::GamePage(QWidget *parent)
     : QWidget(parent)
@@ -41,47 +42,43 @@ void GamePage::setInitalTime(int time)
     m_progress->setInintalTime(time);
 }
 
+void GamePage::beginGame()
+{
+    GameControl::GameInterFace().gameBegin();
+    updateBtn();
+}
+
+void GamePage::resetGame()
+{
+    GameControl::GameInterFace().gameReset();
+    updateBtn();
+}
+
 void GamePage::initUI()
 {
     QVBoxLayout *mainLayout = new QVBoxLayout;
     QHBoxLayout *gameFrameLayout = new QHBoxLayout;
     QVBoxLayout *controlBtnLayout = new QVBoxLayout;
-    QGridLayout *gameBtngridLayout = new QGridLayout;
+    m_gameBtngridLayout = new QGridLayout;
 
     m_gameFrame = new GameBlurEffectWidget(GameBtnSize::Big, this);
     m_gameFrame->setMinimumSize(835, 516);
-    m_gameFrame->setEnabled(false);
-    gameBtngridLayout->setContentsMargins(20, 10, 20, 35);
 
+    m_gameBtngridLayout->setContentsMargins(20, 10, 20, 35);
     m_animalGrp = new QButtonGroup(this);
     m_animalGrp->setExclusive(true);
-    GameControl::GameInterFace().gameBegin();
-    for (int i = 1; i < ROW + 1; i++) {
-        for (int j = 1; j < COLUMN + 1; j++) {
-            //游戏按钮阴影处理
-            QGraphicsDropShadowEffect *shadowEffect = new QGraphicsDropShadowEffect(this);
-            shadowEffect->setOffset(0, 2);
-            QColor shadowColor(0, 0, 0);
-            shadowColor.setAlphaF(0.5);
-            shadowEffect->setColor(shadowColor);
-            shadowEffect->setBlurRadius(4);
-            GameButton *gameBtn = BtnFactory::createBtn(GameControl::m_map[i][j], Default, None);
-            gameBtn->setLocation(i, j);
-            gameBtn->setGraphicsEffect(shadowEffect);
-            m_animalGrp->addButton(gameBtn);
-            gameBtngridLayout->addWidget(gameBtn, i - 1, j - 1);
-        }
-    }
-    m_gameFrame->setLayout(gameBtngridLayout);
+    initGameBtn(); //初始化游戏按钮
+    m_gameFrame->setLayout(m_gameBtngridLayout);
 
     GameBlurEffectWidget *controlFrame = new GameBlurEffectWidget(GameBtnSize::Small, this);
     controlFrame->setMinimumSize(175, 516);
+
     m_controlGrp = new QButtonGroup(controlFrame);
-    GameButton *beginBtn = BtnFactory::createBtn(ButtonNormal, Small, None);
-    GameButton *resetBtn = BtnFactory::createBtn(ButtonNormal, Small, None);
-    GameButton *hintBtn = BtnFactory::createBtn(ButtonNormal, Small, None);
-    GameButton *soundBtn = BtnFactory::createBtn(ButtonNormal, Small, None);
-    GameButton *homeBtn = BtnFactory::createBtn(ButtonNormal, Small, None);
+    GameButton *beginBtn = BtnFactory::createBtn(ButtonNormal, Small, None, "开始/暂停");
+    GameButton *resetBtn = BtnFactory::createBtn(ButtonNormal, Small, None, "重置");
+    GameButton *hintBtn = BtnFactory::createBtn(ButtonNormal, Small, None, "提示");
+    GameButton *soundBtn = BtnFactory::createBtn(ButtonNormal, Small, None, "音效");
+    GameButton *homeBtn = BtnFactory::createBtn(ButtonNormal, Small, None, "主页面");
     controlBtnLayout->addWidget(beginBtn);
     controlBtnLayout->addSpacing(-15);
     controlBtnLayout->addWidget(resetBtn);
@@ -106,10 +103,10 @@ void GamePage::initUI()
 
     m_progress = new GameProgressBar(this);
     m_progress->setFixedSize(816, 49);
-    qInfo() << m_progress->minimum() << m_progress->maximum();
     mainLayout->addLayout(gameFrameLayout);
     mainLayout->addWidget(m_progress);
     mainLayout->setContentsMargins(15, 86, 15, 43);
+    setBtnEnabled(false);
     this->setLayout(mainLayout);
 }
 
@@ -124,21 +121,101 @@ void GamePage::initConnect()
     });
 }
 
+void GamePage::initGameBtn()
+{
+    GameControl::GameInterFace().gameBegin();
+    for (int i = 0; i < ROW; i++) {
+        for (int j = 0; j < COLUMN; j++) {
+            GameButton *gameBtn = BtnFactory::createBtn(GameControl::m_map[i + 1][j + 1], Default, None);
+            //游戏按钮阴影处理
+            shadowBtn(gameBtn);
+            gameBtn->setLocation(i + 1, j + 1);
+            m_animalGrp->addButton(gameBtn);
+            m_gameBtngridLayout->addWidget(gameBtn, i, j);
+        }
+    }
+}
+
+void GamePage::setBtnEnabled(bool isEnabled)
+{
+    //设置可点击状态
+    m_gameFrame->setEnabled(isEnabled);
+    for (QAbstractButton *btn : m_controlGrp->buttons()) {
+        //开始按钮和返回主页面按钮保持可点击状态
+        if (btn == m_controlGrp->button(0) || btn == m_controlGrp->button(4))
+            continue;
+        btn->setEnabled(isEnabled);
+    }
+}
+
+void GamePage::shadowBtn(GameButton *btn)
+{
+    //按钮阴影处理
+    QGraphicsDropShadowEffect *shadowEffect = new QGraphicsDropShadowEffect(this);
+    shadowEffect->setOffset(0, 2);
+    QColor shadowColor(0, 0, 0);
+    shadowColor.setAlphaF(0.5);
+    shadowEffect->setColor(shadowColor);
+    shadowEffect->setBlurRadius(4);
+    btn->setGraphicsEffect(shadowEffect);
+}
+
+void GamePage::updateBtn()
+{
+    int index = 0;
+    //遍历更新打乱后按钮的状态
+    for (int i = 0; i < ROW; i++) {
+        for (int j = 0; j < COLUMN; j++) {
+            GameButton *gameBtn = dynamic_cast<GameButton *>(m_gameBtngridLayout->itemAt(index)->widget());
+            if (!gameBtn) {
+                qWarning() << "Btn is Null";
+                return;
+            }
+            //qInfo() << GameControl::m_map[i + 1][j + 1] << "row" << i + 1 << "column" << j + 1;
+            gameBtn->updatePic(GameControl::m_picMap.value(qMakePair(GameControl::m_map[i + 1][j + 1], Default)));
+            index++;
+        }
+    }
+}
+
 void GamePage::onControlBtnControl(int id)
 {
     switch (id) {
     case 0: {
         if (!m_isStart) {
-            m_gameFrame->setEnabled(true);
+            //点击开始后,设置相关按钮可点击,定时器开始
+            setBtnEnabled(true);
             m_timer->start();
             m_isStart = true;
             //更改图标状态
         } else {
-            m_gameFrame->setEnabled(false);
+            //点击暂停后,设置相关按钮不可点击,定时器暂停
+            setBtnEnabled(false);
             m_timer->stop();
             m_isStart = false;
             //更改图标状态
         }
+        break;
+    }
+    case 1: {
+        //重置游戏
+        resetGame();
+        break;
+    }
+    case 2: {
+        //judge判断
+        break;
+    }
+    case 3: {
+        //音效开关
+        break;
+    }
+    default: {
+        //返回主页面
+        Q_EMIT backToMainPage();
+        setBtnEnabled(false);
+        m_timer->stop();
+        m_isStart = false;
         break;
     }
     }
@@ -146,29 +223,62 @@ void GamePage::onControlBtnControl(int id)
 
 void GamePage::onAnimalBtnControl(QAbstractButton *btn)
 {
+    QTime time;
+    time.start();
     GameButton *gameBtn = dynamic_cast<GameButton *>(btn);
+    if (!gameBtn) {
+        qWarning() << "Btn is Null";
+        return;
+    }
 
     int vecCount = m_locationVec.count();
+    //count为1,点击第第二按钮
     if (vecCount == 1) {
         GameButton *firstBtn = m_locationVec.first();
+        //如果两个按钮坐标相同,不做任何操作
         if (gameBtn->pos() == firstBtn->pos())
             return;
+        //判断搜索结果
         bool res = GameControl::GameInterFace().gameSearch(firstBtn->location(), gameBtn->location());
+        //如果符合规则
         if (res) {
+            int endX = gameBtn->location().x();
+            int endY = gameBtn->location().y();
+            int startX = firstBtn->location().x();
+            int startY = firstBtn->location().y();
+            int rowIndex = endX;
+            int columnIndex = endY;
+            //保存通路路径,为了绘制通路路线
+            while (rowIndex != startX || columnIndex != startY) {
+                QPoint index = GameControl::m_pathMap[rowIndex][columnIndex];
+                m_pathVec.append(index);
+                rowIndex = index.x();
+                columnIndex = index.y();
+            }
+            // qInfo()<<m_pathVec;
+            //清除通路容器
+            m_pathVec.clear();
+            //更新地图
             GameControl::m_map[gameBtn->location().x()][gameBtn->location().y()] = GameBtnFlag::ButtonBlank;
             GameControl::m_map[firstBtn->location().x()][firstBtn->location().y()] = GameBtnFlag::ButtonBlank;
+            //将成功图标消失
             gameBtn->setBtnMode(GameBtnType::NoneType);
             firstBtn->setBtnMode(GameBtnType::NoneType);
+            //清除按钮容器
             m_locationVec.clear();
         } else {
+            //如果不成功,取消按钮选中状态
             firstBtn->setPressed(false);
+            //添加当前选中按钮,pop前一个按钮
             m_locationVec.append(gameBtn);
             m_locationVec.pop_front();
         }
 
     } else {
+        //点击第一个按钮,增加一个按钮
         m_locationVec.append(gameBtn);
     }
+    qInfo() << time.elapsed();
 }
 
 void GamePage::onProgressChanged(int value)
@@ -177,4 +287,9 @@ void GamePage::onProgressChanged(int value)
         m_timer->stop();
         //显示失败结果
     }
+}
+
+void GamePage::mouseMoveEvent(QMouseEvent *event)
+{
+    Q_UNUSED(event);
 }

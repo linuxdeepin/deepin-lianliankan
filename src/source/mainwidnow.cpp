@@ -54,6 +54,9 @@ void MainWidnow::initUI()
 void MainWidnow::initConnect()
 {
     connect(m_mainPage, &MainPage::buttonPress, this, &MainWidnow::showClickedPage);
+    connect(m_gamePage, &GamePage::backToMainPage, this, [&] {
+        m_stackedWidget->setCurrentWidget(m_mainPage);
+    });
 }
 
 void MainWidnow::initPic()
@@ -109,11 +112,6 @@ void MainWidnow::paintEvent(QPaintEvent *event)
     DWidget::paintEvent(event);
 }
 
-void MainWidnow::mouseMoveEvent(QMouseEvent *event)
-{
-    Q_UNUSED(event);
-}
-
 void MainWidnow::showClickedPage(int id)
 {
     switch (id) {
@@ -127,6 +125,9 @@ void MainWidnow::showClickedPage(int id)
         m_gamePage->setInitalTime(480);
         break;
     }
+    if (!firstGame)
+        m_gamePage->beginGame();
 
+    firstGame = false;
     m_stackedWidget->setCurrentWidget(m_gamePage);
 }
