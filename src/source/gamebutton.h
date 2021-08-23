@@ -49,6 +49,7 @@ public slots:
 protected:
    void paintEvent(QPaintEvent *event) override;
    void mousePressEvent(QMouseEvent *e) override;
+   void mouseReleaseEvent(QMouseEvent *e) override;
 
    private:
    void initUI();
@@ -62,7 +63,8 @@ protected:
    QFont  m_font; //按钮字体
    int m_rowIndex; //行
    int m_columnIndex; //列
-   bool m_pressd = false; //判读按钮是否点击
+   bool m_gameBtnPressd = false; //判读游戏按钮是否点击
+   bool m_cotrolBtnPressd = false; //判读控制按钮是否点击
    GameBtnType m_btnType; //按钮样式类型
 };
 

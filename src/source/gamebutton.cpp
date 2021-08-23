@@ -65,7 +65,7 @@ void GameButton::updatePic(const QPixmap &pic)
     //更新图标类型
     setBtnMode(OnlyPic);
     //更新按下状态
-    m_pressd = false;
+    m_gameBtnPressd = false;
     //更新图片资源
     m_pic = pic;
     update();
@@ -91,6 +91,10 @@ void GameButton::paintEvent(QPaintEvent *e)
         qreal textX = (rect().width() - fontWidth) / 2;
         qreal textY = (rect().height() - fontHeight - fontHeight / 2) / 2;
         p.drawText(QRectF(textX, textY, fontWidth, fontHeight), m_text);
+        //控制按钮测试效果,较随意
+        if (m_cotrolBtnPressd) {
+            drawRect(p);
+        }
         break;
     }
     case IconOnPic: {
@@ -99,7 +103,7 @@ void GameButton::paintEvent(QPaintEvent *e)
     default: {
         //绘制游戏动物按钮
         //点击状态
-        if (m_pressd) {
+        if (m_gameBtnPressd) {
             drawRect(p);
         }
 
@@ -122,14 +126,29 @@ void GameButton::mousePressEvent(QMouseEvent *e)
     }
 
     if (hitButton(e->pos())) {
-        m_pressd = true;
+        if (m_btnType == OnlyPic) {
+            m_gameBtnPressd = true;
+        } else {
+            m_cotrolBtnPressd = true;
+        }
+
         e->accept();
     } else {
-        m_pressd = false;
+        if (m_btnType == OnlyPic) {
+            m_gameBtnPressd = false;
+        } else {
+            m_cotrolBtnPressd = false;
+        }
         e->ignore();
     }
 
     return QAbstractButton::mousePressEvent(e);
+}
+
+void GameButton::mouseReleaseEvent(QMouseEvent *e)
+{
+    m_cotrolBtnPressd = false;
+    QAbstractButton::mouseReleaseEvent(e);
 }
 
 void GameButton::setBtnMode(const GameBtnType &type)
@@ -140,7 +159,7 @@ void GameButton::setBtnMode(const GameBtnType &type)
 
 void GameButton::setPressed(bool isPressd)
 {
-    m_pressd = isPressd;
+    m_gameBtnPressd = isPressd;
     update();
 }
 

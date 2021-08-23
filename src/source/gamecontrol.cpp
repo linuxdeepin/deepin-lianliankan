@@ -53,6 +53,42 @@ void GameControl::gameReset()
     gameShuffle(false);
 }
 
+QPair<bool, QList<QPoint>> GameControl::gameJudge()
+{
+    QList<QPoint> pointList;
+    int rowOffset = 0;
+    int columnOffset = 0;
+    for (int i = 1; i < m_row + 1; i++) {
+        for (int j = 1; j < m_column + 1; j++) {
+            while (i + rowOffset != m_row + 1) {
+                if (j + columnOffset == m_column) {
+                    columnOffset = 1 - j;
+                    rowOffset++;
+                    //qInfo()<<"trun"<<columnOffset<<rowOffset;
+                } else {
+                    columnOffset++;
+                }
+
+                if (rowOffset != m_row - i + 1) {
+                    //                  qInfo()<<QPoint(i,j)<<QPoint(i+rowOffset,j+columnOffset);
+                    QPoint startPoint = QPoint(i, j);
+                    QPoint endPoint = QPoint(i + rowOffset, j + columnOffset);
+                    bool res = gameBfs(startPoint, endPoint);
+                    if (res) {
+                        pointList.append(startPoint);
+                        pointList.append(endPoint);
+                        return qMakePair(true, pointList);
+                    }
+                    //qInfo()<<QPoint(i,j)<<QPoint(i+rowOffset,j+columnOffset)<<rowOffset<<columnOffset;
+                }
+            }
+            columnOffset = 0;
+            rowOffset = 0;
+        }
+    }
+    return qMakePair(false, pointList);
+}
+
 bool GameControl::gameSearch(const QPoint &startPos, const QPoint &endPos)
 {
     return gameBfs(startPos, endPos);
@@ -105,7 +141,8 @@ bool GameControl::gameBfs(const QPoint &startPos, const QPoint &endPos)
     //如果开始点和结束点的值不相等,直接返回false
     if (startFlag != endFlag)
         return false;
-
+    if (startFlag == ButtonBlank)
+        return false;
     QQueue<GameNode> quene;
     GameNode startNode, popNode, tmpNode;
     startNode.rowIndex = startPos.x();

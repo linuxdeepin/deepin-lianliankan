@@ -2,7 +2,7 @@
 cmake_minimum_required(VERSION 3.9.5)
 
 #设置项目名称
-set(EXE_NAME deepin-lianliankan)
+set(EXE_NAME com.deepin.lianliankan)
 project(${EXE_NAME})
 
 # 配置版本号
@@ -15,6 +15,7 @@ find_package(PkgConfig REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5LinguistTools REQUIRED)
 find_package(DtkWidget REQUIRED)
+find_package(Qt5 COMPONENTS Multimedia REQUIRED)
 pkg_search_module(DtkWidget REQUIRED dtkwidget)
 
 #lupdate start
@@ -61,9 +62,9 @@ target_link_libraries(${EXE_NAME}
 
 # Install files
 set(CMAKE_INSTALL_PREFIX /usr)
-install(FILES ${APP_QM_FILES} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/deepin-lianliankan/translations)
-install(FILES assets/deepin-lianliankan.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
-install(FILES assets/images/deepin-lianliankan.svg
+install(FILES ${APP_QM_FILES} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/com.deepin.lianliankan/translations)
+install(FILES assets/com.deepin.lianliankan.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
+install(FILES assets/images/com.deepin.lianliankan.svg
             DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps/)
 install(TARGETS ${EXE_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
 #install(DIRECTORY assets/deepin-log-viewer DESTINATION /usr/share/deepin-manual/manual-assets/application/)

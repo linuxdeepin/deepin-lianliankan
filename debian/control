@@ -1,11 +1,11 @@
-Source: deepin-lianliankan
+Source: com.deepin.lianliankan
 Section: utils
 Priority: optional
 Maintainer: Packages <deepin@deepin.com>
-Build-Depends: debhelper (>= 11),cmake, pkg-config, qtbase5-dev, qtchooser (>= 55-gc9562a1-1~),qt5-qmake, libdtkwidget-dev, qttools5-dev-tools, libqt5svg5-dev, qttools5-dev,libgtest-dev, libgmock-dev 
+Build-Depends: debhelper (>= 11),cmake, pkg-config, qtbase5-dev, qtchooser (>= 55-gc9562a1-1~),qt5-qmake, libdtkwidget-dev, qttools5-dev-tools, libqt5svg5-dev, qttools5-dev,libgtest-dev, libgmock-dev, qtmultimedia5-dev
 Standards-Version: 4.1.3
 
-Package: deepin-lianliankan
+Package: com.deepin.lianliankan
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description:Lianliankan is a puzzle game.

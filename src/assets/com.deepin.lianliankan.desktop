@@ -1,0 +1,11 @@
+[Desktop Entry]
+Categories=Qt
+Exec=/usr/bin/com.deepin.lianliankan %F
+GenericName=LianLianKan
+Icon=com.deepin.lianliankan
+Keywords=lianliankan;game;deepin;
+Name=com.deepin.lianliankan
+StartupNotify=true
+TryExec=/usr/bin/com.deepin.lianliankan
+Type=Application
+X-Deepin-Vendor=user-custom

@@ -14,9 +14,9 @@
         <file>assets/images/sheep.png</file>
         <file>assets/images/snake.png</file>
         <file>assets/images/tiger.png</file>
-        <file>assets/images/deepin-lianliankan.svg</file>
         <file>assets/images/bigRect.png</file>
         <file>assets/images/smallRect.png</file>
         <file>assets/images/midRect.png</file>
+        <file>assets/images/com.deepin.lianliankan.svg</file>
     </qresource>
 </RCC>

@@ -54,6 +54,16 @@ void GamePage::resetGame()
     updateBtn();
 }
 
+bool GamePage::judgeGame()
+{
+    QPair<bool, QList<QPoint>> res = GameControl::GameInterFace().gameJudge();
+    if (res.first) {
+        m_hintPoint = res.second;
+        return true;
+    }
+    return false;
+}
+
 void GamePage::initUI()
 {
     QVBoxLayout *mainLayout = new QVBoxLayout;
@@ -140,6 +150,7 @@ void GamePage::setBtnEnabled(bool isEnabled)
 {
     //设置可点击状态
     m_gameFrame->setEnabled(isEnabled);
+    m_isStart = isEnabled;
     for (QAbstractButton *btn : m_controlGrp->buttons()) {
         //开始按钮和返回主页面按钮保持可点击状态
         if (btn == m_controlGrp->button(0) || btn == m_controlGrp->button(4))
@@ -186,13 +197,11 @@ void GamePage::onControlBtnControl(int id)
             //点击开始后,设置相关按钮可点击,定时器开始
             setBtnEnabled(true);
             m_timer->start();
-            m_isStart = true;
             //更改图标状态
         } else {
             //点击暂停后,设置相关按钮不可点击,定时器暂停
             setBtnEnabled(false);
             m_timer->stop();
-            m_isStart = false;
             //更改图标状态
         }
         break;
@@ -204,6 +213,29 @@ void GamePage::onControlBtnControl(int id)
     }
     case 2: {
         //judge判断
+        //如果判断有可以连接成功的按钮
+        if (judgeGame()) {
+            //获取游戏提示坐标,设置按钮提示状态
+            if (!m_locationVec.isEmpty()) {
+                int rowIndex = m_locationVec.first()->location().x();
+                int columnIndex = m_locationVec.first()->location().y();
+                GameButton *gameBtn = dynamic_cast<GameButton *>(m_gameBtngridLayout->itemAt((rowIndex - 1) * 16 + columnIndex - 1)->widget());
+                if (!gameBtn) {
+                    qWarning() << "Btn is Null";
+                    return;
+                }
+                gameBtn->setPressed(false);
+            }
+            for (QPoint pos : m_hintPoint) {
+                //qInfo()<<pos;
+                GameButton *gameBtn = dynamic_cast<GameButton *>(m_gameBtngridLayout->itemAt((pos.x() - 1) * 16 + pos.y() - 1)->widget());
+                if (!gameBtn) {
+                    qWarning() << "Btn is Null";
+                    return;
+                }
+                gameBtn->setPressed(true);
+            }
+        }
         break;
     }
     case 3: {
@@ -215,7 +247,6 @@ void GamePage::onControlBtnControl(int id)
         Q_EMIT backToMainPage();
         setBtnEnabled(false);
         m_timer->stop();
-        m_isStart = false;
         break;
     }
     }
@@ -266,6 +297,9 @@ void GamePage::onAnimalBtnControl(QAbstractButton *btn)
             firstBtn->setBtnMode(GameBtnType::NoneType);
             //清除按钮容器
             m_locationVec.clear();
+            //如果当前是死局,打乱布局,重新生成
+            if (!judgeGame())
+                resetGame();
         } else {
             //如果不成功,取消按钮选中状态
             firstBtn->setPressed(false);
@@ -278,7 +312,7 @@ void GamePage::onAnimalBtnControl(QAbstractButton *btn)
         //点击第一个按钮,增加一个按钮
         m_locationVec.append(gameBtn);
     }
-    qInfo() << time.elapsed();
+    //    qInfo() << time.elapsed();
 }
 
 void GamePage::onProgressChanged(int value)

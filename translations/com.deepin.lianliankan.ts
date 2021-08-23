@@ -19,22 +19,22 @@
 <context>
     <name>MainPage</name>
     <message>
-        <location filename="../src/source/mainpage.cpp" line="45"/>
+        <location filename="../src/source/mainpage.cpp" line="46"/>
         <source>初级</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/source/mainpage.cpp" line="46"/>
+        <location filename="../src/source/mainpage.cpp" line="47"/>
         <source>中级</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/source/mainpage.cpp" line="47"/>
+        <location filename="../src/source/mainpage.cpp" line="48"/>
         <source>高级</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/source/mainpage.cpp" line="66"/>
+        <location filename="../src/source/mainpage.cpp" line="67"/>
         <source>难度选择</source>
         <translation type="unfinished"></translation>
     </message>

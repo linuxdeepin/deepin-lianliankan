@@ -39,6 +39,7 @@ public:
     void setInitalTime(int time); //设置初始化时间
     void beginGame(); //开始游戏
     void resetGame(); //重置游戏
+    bool judgeGame(); //判断游戏
 signals:
     void backToMainPage();
 public slots:
@@ -60,15 +61,16 @@ private:
 private:
     GameBlurEffectWidget *m_gameFrame; //游戏区域
     GameProgressBar *m_progress; //进度条
+    QGridLayout *m_gameBtngridLayout; //游戏按钮布局
     QButtonGroup *m_animalGrp; //游戏动物按钮组
     QButtonGroup *m_controlGrp; //控制按钮组
     QTimer *m_timer; //定时器
     QVector<GameButton *> m_locationVec; //点击按钮容器
     QVector<QPoint> m_pathVec; //通路坐标组
+    QList<QPoint> m_hintPoint; //提示按钮坐标
     int m_value; //进度值
     bool m_isStart = false; //开始暂停的控制
 
-    QGridLayout *m_gameBtngridLayout; //游戏按钮布局
 };
 
 #endif // GAMEPAGE_H

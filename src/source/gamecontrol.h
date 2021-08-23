@@ -107,6 +107,7 @@ public:
     }
     void gameBegin(); //游戏开始
     void gameReset();//游戏重置
+    QPair<bool, QList<QPoint>> gameJudge(); //游戏判断
     bool gameSearch(const QPoint &startPos, const QPoint &endPos); //寻路
     static GameBtnFlag m_map[12][18];//游戏地图
     static int m_minTurn[12][18]; //记录最小转弯数

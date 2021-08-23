@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
     a.loadTranslator();
     a.setApplicationVersion(VERSION);
     a.setOrganizationName("deepin");
-    a.setApplicationName("deepin-lianliankan");
+    a.setApplicationName("com.deepin.lianliankan");
     a.setProductIcon(QIcon(":/assets/images/deepin-lianliankan.svg"));
     a.setProductName(DApplication::translate("Main", "LianLianKan"));
     a.setApplicationDescription(DApplication::translate("Main", "Lianliankan is a puzzle game."));
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
     DApplicationSettings saveTheme;
 
     MainWidnow w;
-    w.titlebar()->setIcon(QIcon(":/assets/images/deepin-lianliankan.svg"));
+    w.titlebar()->setIcon(QIcon(":/assets/images/com.deepin.lianliankan.svg"));
     // 设置标题，宽度不够会隐藏标题文字
     w.setFixedSize(QSize(1024,768));
     Dtk::Widget::moveToCenter(&w);
