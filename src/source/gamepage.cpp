@@ -183,7 +183,15 @@ void GamePage::updateBtn()
                 return;
             }
             //qInfo() << GameControl::m_map[i + 1][j + 1] << "row" << i + 1 << "column" << j + 1;
-            gameBtn->updatePic(GameControl::m_picMap.value(qMakePair(GameControl::m_map[i + 1][j + 1], Default)));
+            //更新完按钮图片需要更新按钮的类型
+            GameBtnFlag btnFlag = GameControl::m_map[i + 1][j + 1];
+            if (btnFlag == ButtonBlank) {
+                gameBtn->setBtnMode(NoneType);
+            } else {
+                gameBtn->setBtnMode(OnlyPic);
+            }
+
+            gameBtn->updatePic(GameControl::m_picMap.value(qMakePair(btnFlag, Default)));
             index++;
         }
     }

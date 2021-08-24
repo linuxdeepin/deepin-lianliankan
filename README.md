@@ -1,7 +1,7 @@
 ## deepin-lianliankan
 Lianliankan is an easy-to-play puzzle game with cute interface and countdown timer.
 
-练练看是一款规则简单容易上手、游戏速度节奏快、画面清晰可爱的益智类小游戏。
+连连看是一款规则简单容易上手、游戏速度节奏快、画面清晰可爱的益智类小游戏。
 
 #### Core
 The GUI is based on [DTK](https://github.com/linuxdeepin/dtkwidget), Qt (Supported >= 5.12).

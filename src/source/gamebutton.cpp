@@ -62,8 +62,6 @@ void GameButton::setLocation(int x, int y)
 
 void GameButton::updatePic(const QPixmap &pic)
 {
-    //更新图标类型
-    setBtnMode(OnlyPic);
     //更新按下状态
     m_gameBtnPressd = false;
     //更新图片资源
