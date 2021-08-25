@@ -35,9 +35,8 @@
 MainPage::MainPage(QWidget*parent):DWidget (parent)
 {
     //        controlTest();
-    setMouseTracking(false);
     initUI();
-    connect(m_btnGrp, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonPressed), this, &MainPage::buttonPress);
+    initConnect();
 }
 
 void MainPage::initUI()
@@ -66,15 +65,21 @@ void MainPage::initUI()
 
     GameButton *swithBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Big, GameIconType::None, tr("难度选择"), this);
     swithBtn->setGeometry(393,80,250,135);
-    GameButton *soundBtn=BtnFactory::createBtn(GameBtnFlag::ButtonNormal,GameBtnSize::Small,GameIconType::Sound);
-    soundBtn->setParent(this);
-    soundBtn->setGeometry(854,569,140,80);
+    m_soundBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Small, GameIconType::Sound);
+    m_soundBtn->setParent(this);
+    m_soundBtn->setGeometry(854, 569, 140, 80);
 
     //    创建游戏按钮
     //    GameButton*testBtn=BtnFactory::createBtn(GameBtnFlag::ButtonBlank,GameBtnSize::Default,GameIconType::None);
     //    testBtn->setParent(this);
     //    testBtn->setGeometry(213,569,50,50);
     //    qInfo()<<testBtn->geometry();
+}
+
+void MainPage::initConnect()
+{
+    connect(m_btnGrp, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonPressed), this, &MainPage::buttonPress);
+    connect(m_soundBtn, &GameButton::pressed, this, &MainPage::soundSwitch);
 }
 
 void MainPage::controlTest()

@@ -138,11 +138,10 @@ bool GameControl::gameBfs(const QPoint &startPos, const QPoint &endPos)
     memset(m_pathMap, 0, sizeof(m_pathMap));
     GameBtnFlag startFlag = m_map[startPos.x()][startPos.y()];
     GameBtnFlag endFlag = m_map[endPos.x()][endPos.y()];
-    //如果开始点和结束点的值不相等,直接返回false
-    if (startFlag != endFlag)
+    //如果开始点和结束点的值不相等或者两个空白值,直接返回false
+    if (startFlag != endFlag || startFlag == ButtonBlank)
         return false;
-    if (startFlag == ButtonBlank)
-        return false;
+
     QQueue<GameNode> quene;
     GameNode startNode, popNode, tmpNode;
     startNode.rowIndex = startPos.x();

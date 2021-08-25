@@ -24,6 +24,7 @@
 #include <QHBoxLayout>
 #include <QVBoxLayout>
 #include <QGraphicsDropShadowEffect>
+#include <QtMultimedia/QSound>
 #include <QDebug>
 #include <QTime>
 
@@ -32,6 +33,10 @@ GamePage::GamePage(QWidget *parent)
 {
     m_timer = new QTimer(this);
     m_timer->setInterval(1000);
+    QSound *serachSuccess = new QSound(":/assets/Sound/ConnectSuccess.wav", this);
+    QSound *serachFailed = new QSound(":/assets/Sound/ConnectFailed.wav", this);
+    m_soundMap.insert("success", serachSuccess);
+    m_soundMap.insert("failed", serachFailed);
     initUI();
     initConnect();
 }
@@ -40,6 +45,16 @@ void GamePage::setInitalTime(int time)
 {
     m_value = time;
     m_progress->setInintalTime(time);
+}
+
+void GamePage::setSoundSwitch(bool isOpen)
+{
+    m_soundSwitch = isOpen;
+}
+
+bool GamePage::soundSwitch() const
+{
+    return m_soundSwitch;
 }
 
 void GamePage::beginGame()
@@ -52,6 +67,36 @@ void GamePage::resetGame()
 {
     GameControl::GameInterFace().gameReset();
     updateBtn();
+}
+
+void GamePage::hintGame()
+{
+    //judge判断
+    //如果判断有可以连接成功的按钮
+    if (judgeGame()) {
+        //获取游戏提示坐标,设置按钮提示状态
+        //取消已选中按钮的选中状态
+        if (!m_locationVec.isEmpty()) {
+            int rowIndex = m_locationVec.first()->location().x();
+            int columnIndex = m_locationVec.first()->location().y();
+            GameButton *gameBtn = dynamic_cast<GameButton *>(m_gameBtngridLayout->itemAt((rowIndex - 1) * 16 + columnIndex - 1)->widget());
+            if (!gameBtn) {
+                qWarning() << "Btn is Null";
+                return;
+            }
+            gameBtn->setPressed(false);
+        }
+        //设置提示效果
+        for (QPoint pos : m_hintPoint) {
+            //qInfo()<<pos;
+            GameButton *gameBtn = dynamic_cast<GameButton *>(m_gameBtngridLayout->itemAt((pos.x() - 1) * 16 + pos.y() - 1)->widget());
+            if (!gameBtn) {
+                qWarning() << "Btn is Null";
+                return;
+            }
+            gameBtn->setPressed(true);
+        }
+    }
 }
 
 bool GamePage::judgeGame()
@@ -197,6 +242,52 @@ void GamePage::updateBtn()
     }
 }
 
+void GamePage::successAction(GameButton *preBtn, GameButton *currentBtn)
+{
+    int endX = currentBtn->location().x();
+    int endY = currentBtn->location().y();
+    int startX = preBtn->location().x();
+    int startY = preBtn->location().y();
+    int rowIndex = endX;
+    int columnIndex = endY;
+    //保存通路路径,为了绘制通路路线
+    while (rowIndex != startX || columnIndex != startY) {
+        QPoint index = GameControl::m_pathMap[rowIndex][columnIndex];
+        m_pathVec.append(index);
+        rowIndex = index.x();
+        columnIndex = index.y();
+    }
+    // qInfo()<<m_pathVec;
+    //清除通路容器
+    m_pathVec.clear();
+    //连线成功音效
+    if (m_soundSwitch)
+        m_soundMap.value("success")->play();
+    //更新地图
+    GameControl::m_map[currentBtn->location().x()][currentBtn->location().y()] = GameBtnFlag::ButtonBlank;
+    GameControl::m_map[preBtn->location().x()][preBtn->location().y()] = GameBtnFlag::ButtonBlank;
+    //将成功图标消失
+    currentBtn->setBtnMode(GameBtnType::NoneType);
+    preBtn->setBtnMode(GameBtnType::NoneType);
+    //清除按钮容器
+    m_locationVec.clear();
+    //如果当前是死局,打乱布局,重新生成
+    if (!judgeGame())
+        resetGame();
+}
+
+void GamePage::failedAction(GameButton *preBtn, GameButton *currentBtn)
+{
+    //连线失败音效
+    if (m_soundSwitch)
+        m_soundMap.value("failed")->play();
+    //如果不成功,取消按钮选中状态
+    preBtn->setPressed(false);
+    //添加当前选中按钮,pop前一个按钮
+    m_locationVec.append(currentBtn);
+    m_locationVec.pop_front();
+}
+
 void GamePage::onControlBtnControl(int id)
 {
     switch (id) {
@@ -220,34 +311,13 @@ void GamePage::onControlBtnControl(int id)
         break;
     }
     case 2: {
-        //judge判断
-        //如果判断有可以连接成功的按钮
-        if (judgeGame()) {
-            //获取游戏提示坐标,设置按钮提示状态
-            if (!m_locationVec.isEmpty()) {
-                int rowIndex = m_locationVec.first()->location().x();
-                int columnIndex = m_locationVec.first()->location().y();
-                GameButton *gameBtn = dynamic_cast<GameButton *>(m_gameBtngridLayout->itemAt((rowIndex - 1) * 16 + columnIndex - 1)->widget());
-                if (!gameBtn) {
-                    qWarning() << "Btn is Null";
-                    return;
-                }
-                gameBtn->setPressed(false);
-            }
-            for (QPoint pos : m_hintPoint) {
-                //qInfo()<<pos;
-                GameButton *gameBtn = dynamic_cast<GameButton *>(m_gameBtngridLayout->itemAt((pos.x() - 1) * 16 + pos.y() - 1)->widget());
-                if (!gameBtn) {
-                    qWarning() << "Btn is Null";
-                    return;
-                }
-                gameBtn->setPressed(true);
-            }
-        }
+        //游戏提示
+        hintGame();
         break;
     }
     case 3: {
         //音效开关
+        setSoundSwitch(!m_soundSwitch);
         break;
     }
     default: {
@@ -265,8 +335,8 @@ void GamePage::onAnimalBtnControl(QAbstractButton *btn)
     QTime time;
     time.start();
     GameButton *gameBtn = dynamic_cast<GameButton *>(btn);
-    if (!gameBtn) {
-        qWarning() << "Btn is Null";
+    if (!gameBtn || gameBtn->btnMode() == GameBtnType::NoneType) {
+        qWarning() << "btn is illegal";
         return;
     }
 
@@ -281,39 +351,9 @@ void GamePage::onAnimalBtnControl(QAbstractButton *btn)
         bool res = GameControl::GameInterFace().gameSearch(firstBtn->location(), gameBtn->location());
         //如果符合规则
         if (res) {
-            int endX = gameBtn->location().x();
-            int endY = gameBtn->location().y();
-            int startX = firstBtn->location().x();
-            int startY = firstBtn->location().y();
-            int rowIndex = endX;
-            int columnIndex = endY;
-            //保存通路路径,为了绘制通路路线
-            while (rowIndex != startX || columnIndex != startY) {
-                QPoint index = GameControl::m_pathMap[rowIndex][columnIndex];
-                m_pathVec.append(index);
-                rowIndex = index.x();
-                columnIndex = index.y();
-            }
-            // qInfo()<<m_pathVec;
-            //清除通路容器
-            m_pathVec.clear();
-            //更新地图
-            GameControl::m_map[gameBtn->location().x()][gameBtn->location().y()] = GameBtnFlag::ButtonBlank;
-            GameControl::m_map[firstBtn->location().x()][firstBtn->location().y()] = GameBtnFlag::ButtonBlank;
-            //将成功图标消失
-            gameBtn->setBtnMode(GameBtnType::NoneType);
-            firstBtn->setBtnMode(GameBtnType::NoneType);
-            //清除按钮容器
-            m_locationVec.clear();
-            //如果当前是死局,打乱布局,重新生成
-            if (!judgeGame())
-                resetGame();
+            successAction(firstBtn, gameBtn);
         } else {
-            //如果不成功,取消按钮选中状态
-            firstBtn->setPressed(false);
-            //添加当前选中按钮,pop前一个按钮
-            m_locationVec.append(gameBtn);
-            m_locationVec.pop_front();
+            failedAction(firstBtn, gameBtn);
         }
 
     } else {

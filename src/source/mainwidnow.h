@@ -40,7 +40,7 @@ protected:
 signals:
 
 private slots:
-    void showClickedPage(int id);
+    void onShowClickedPage(int id);
 
 private:
    void initUI();
@@ -52,7 +52,8 @@ private:
    DTitlebar *m_titlebar;
    MainPage *m_mainPage; //主页面
    GamePage *m_gamePage; //游戏页面
-   bool firstGame = true; //判断是否为第一次游戏
+   bool m_firstGame = true; //判断是否为第一次游戏
+   bool m_soundSwtich = true; //保存音效开关设置
 };
 
 #endif // MAINWIDNOW_H

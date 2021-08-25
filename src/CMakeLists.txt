@@ -58,6 +58,7 @@ target_include_directories(${EXE_NAME} PUBLIC ${DtkWidget_INCLUDE_DIRS} ${OBJECT
 target_link_libraries(${EXE_NAME}
     ${DtkWidget_LIBRARIES}
     ${Qt5Widgets_LIBRARIES}
+    Qt5::Multimedia
 )
 
 # Install files

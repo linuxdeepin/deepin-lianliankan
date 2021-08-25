@@ -33,11 +33,11 @@
 #include <QPropertyAnimation>
 #include <QDate>
 #include <QLayout>
-
 #include <QGraphicsView>
 #include <QGraphicsItem>
 #include <QGraphicsRectItem>
 #include <QButtonGroup>
+#include <QTime>
 
 DWIDGET_USE_NAMESPACE
 DCORE_USE_NAMESPACE
@@ -66,11 +66,14 @@ int main(int argc, char *argv[])
     DLogManager::registerFileAppender();
     DApplicationSettings saveTheme;
 
+    //    QTime t;
+    //    t.start();
     MainWidnow w;
     w.titlebar()->setIcon(QIcon(":/assets/images/com.deepin.lianliankan.svg"));
     // 设置标题，宽度不够会隐藏标题文字
     w.setFixedSize(QSize(1024,768));
     Dtk::Widget::moveToCenter(&w);
     w.show();
+    //    qInfo()<<t.elapsed()<<"time";
     return a.exec();
 }

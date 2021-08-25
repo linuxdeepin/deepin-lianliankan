@@ -27,7 +27,7 @@
 #include <QtMath>
 
 GameButton::GameButton(const QPixmap &pic, const QString &text, QWidget *parent)
-    : QAbstractButton(parent)
+    : QPushButton(parent)
     , m_pic(pic)
     , m_text(text)
     , m_btnType(TextOnPic)
@@ -35,7 +35,7 @@ GameButton::GameButton(const QPixmap &pic, const QString &text, QWidget *parent)
 }
 
 GameButton::GameButton(const QPixmap &pic, const QPixmap &icon, QWidget *parent)
-    : QAbstractButton(parent)
+    : QPushButton(parent)
     , m_pic(pic)
     , m_icon(icon)
     , m_btnType(IconOnPic)
@@ -43,7 +43,7 @@ GameButton::GameButton(const QPixmap &pic, const QPixmap &icon, QWidget *parent)
 }
 
 GameButton::GameButton(const QPixmap &pic, QWidget *parent)
-    : QAbstractButton(parent)
+    : QPushButton(parent)
     , m_pic(pic)
     , m_btnType(OnlyPic)
 {
@@ -129,7 +129,8 @@ void GameButton::mousePressEvent(QMouseEvent *e)
         } else {
             m_cotrolBtnPressd = true;
         }
-
+        //        qInfo()<<m_isClicked;
+        //        Q_EMIT controlBtnClicked(m_isClicked);
         e->accept();
     } else {
         if (m_btnType == OnlyPic) {
@@ -140,13 +141,13 @@ void GameButton::mousePressEvent(QMouseEvent *e)
         e->ignore();
     }
 
-    return QAbstractButton::mousePressEvent(e);
+    return QPushButton::mousePressEvent(e);
 }
 
 void GameButton::mouseReleaseEvent(QMouseEvent *e)
 {
     m_cotrolBtnPressd = false;
-    QAbstractButton::mouseReleaseEvent(e);
+    return QPushButton::mouseReleaseEvent(e);
 }
 
 void GameButton::setBtnMode(const GameBtnType &type)
@@ -159,6 +160,11 @@ void GameButton::setPressed(bool isPressd)
 {
     m_gameBtnPressd = isPressd;
     update();
+}
+
+GameBtnType GameButton::btnMode() const
+{
+    return m_btnType;
 }
 
 void GameButton::drawRect(QPainter &p)

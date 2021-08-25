@@ -53,7 +53,12 @@ void MainWidnow::initUI()
 
 void MainWidnow::initConnect()
 {
-    connect(m_mainPage, &MainPage::buttonPress, this, &MainWidnow::showClickedPage);
+    connect(m_mainPage, &MainPage::buttonPress, this, &MainWidnow::onShowClickedPage);
+    //主页面音效按钮控制
+    connect(m_mainPage, &MainPage::soundSwitch, this, [&] {
+        m_gamePage->setSoundSwitch(!m_gamePage->soundSwitch());
+    });
+    //游戏页面主页面按钮返回主页面
     connect(m_gamePage, &GamePage::backToMainPage, this, [&] {
         m_stackedWidget->setCurrentWidget(m_mainPage);
     });
@@ -112,7 +117,7 @@ void MainWidnow::paintEvent(QPaintEvent *event)
     DWidget::paintEvent(event);
 }
 
-void MainWidnow::showClickedPage(int id)
+void MainWidnow::onShowClickedPage(int id)
 {
     switch (id) {
     case 1:
@@ -125,9 +130,9 @@ void MainWidnow::showClickedPage(int id)
         m_gamePage->setInitalTime(480);
         break;
     }
-    if (!firstGame)
+    if (!m_firstGame)
         m_gamePage->beginGame();
 
-    firstGame = false;
+    m_firstGame = false;
     m_stackedWidget->setCurrentWidget(m_gamePage);
 }

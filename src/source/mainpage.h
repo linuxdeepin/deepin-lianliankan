@@ -24,6 +24,7 @@
 #include <DWidget>
 #include <QButtonGroup>
 
+class GameButton;
 DWIDGET_USE_NAMESPACE
 class MainPage: public DWidget
 {
@@ -31,16 +32,19 @@ class MainPage: public DWidget
 public:
     MainPage(QWidget *parent = nullptr);
 signals:
-    void buttonPress(int id);
+    void buttonPress(int id); //难度按钮选择
+    void soundSwitch(); //音效按钮点击
 
 protected:
     void mouseMoveEvent(QMouseEvent *event) override;
 
 private:
     void initUI();
+    void initConnect();
     void controlTest();
 private:
     QButtonGroup *m_btnGrp;
+    GameButton *m_soundBtn;
 };
 
 #endif // MAINPAGE_H

@@ -18,5 +18,7 @@
         <file>assets/images/smallRect.png</file>
         <file>assets/images/midRect.png</file>
         <file>assets/images/com.deepin.lianliankan.svg</file>
+        <file>assets/Sound/ConnectSuccess.wav</file>
+        <file>assets/Sound/ConnectFailed.wav</file>
     </qresource>
 </RCC>

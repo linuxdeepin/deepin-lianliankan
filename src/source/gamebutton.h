@@ -25,7 +25,7 @@
 #include <DPushButton>
 
 DWIDGET_USE_NAMESPACE
-class GameButton : public QAbstractButton
+class GameButton : public QPushButton
 {
     Q_OBJECT
 
@@ -33,17 +33,16 @@ public:
     explicit GameButton(const QPixmap &pic,const QString &text,QWidget *parent = nullptr);
     explicit GameButton(const QPixmap &pic,const QPixmap &icon,QWidget*parent=nullptr);
     explicit GameButton(const QPixmap &pic,QWidget*parent=nullptr);
-    void setFont(const QFont &font);
-    void setLocation(int x, int y);
+    void setFont(const QFont &font); //设置字体
+    void setLocation(int x, int y); //设置坐标
     void updatePic(const QPixmap &pic); //刷新按钮
     inline const QPoint location() const
     {
         return QPoint(m_rowIndex, m_columnIndex);
     }
-    void setBtnMode(const GameBtnType &type);
-    void setPressed(bool isPressd);
-signals:
-
+    void setBtnMode(const GameBtnType &type); //设置按钮类型
+    void setPressed(bool isPressd); //设置按下
+    GameBtnType btnMode() const; //按钮类型
 public slots:
 
 protected:
@@ -54,7 +53,7 @@ protected:
    private:
    void initUI();
 
-   void drawRect(QPainter &p);
+   void drawRect(QPainter &p); //绘制阴影
 
    private:
    QPixmap m_pic;//按钮背景图
