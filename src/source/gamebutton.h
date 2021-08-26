@@ -51,9 +51,8 @@ protected:
    void mouseReleaseEvent(QMouseEvent *e) override;
 
    private:
-   void initUI();
-
    void drawRect(QPainter &p); //绘制阴影
+   void drawBackdrop(QPainter &p); //绘制背景
 
    private:
    QPixmap m_pic;//按钮背景图

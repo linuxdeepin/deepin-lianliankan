@@ -72,11 +72,14 @@ void GameButton::updatePic(const QPixmap &pic)
 void GameButton::paintEvent(QPaintEvent *e)
 {
     Q_UNUSED(e);
-    //消失的情况下直接返回不绘制,消失.
-    if (m_btnType == NoneType)
-        return;
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing, true);
+    //消失的情况消失相匹配元素.
+    if (m_btnType == NoneType) {
+        drawBackdrop(p);
+        return;
+    }
+
     p.drawPixmap(rect(),m_pic);
     switch (m_btnType) {
     case TextOnPic: {
@@ -100,19 +103,14 @@ void GameButton::paintEvent(QPaintEvent *e)
     }
     default: {
         //绘制游戏动物按钮
-        //点击状态
+        //绘制背景
+        drawBackdrop(p);
         if (m_gameBtnPressd) {
             drawRect(p);
         }
-
         break;
     }
     }
-    //    if (m_text != " ") {
-    //    } else {
-    //        if (m_pressd) {
-    //        }
-    //    }
 }
 
 void GameButton::mousePressEvent(QMouseEvent *e)
@@ -180,4 +178,15 @@ void GameButton::drawRect(QPainter &p)
         // 圆角阴影边框;
         p.drawRoundedRect(QRectF(rectX, rectY + i * 1, rectWidth, rectHeight - i * 1 - i * 1), 11, 11);
     }
+}
+
+void GameButton::drawBackdrop(QPainter &p)
+{
+    QColor bgColor("#386635");
+    p.setBrush(bgColor);
+    p.setOpacity(0.15);
+    QPen pen;
+    pen.setWidth(0);
+    p.setPen(pen);
+    p.drawRoundRect(this->rect().x() + 3, this->rect().y() + 5, 42, 42, 40, 40);
 }
