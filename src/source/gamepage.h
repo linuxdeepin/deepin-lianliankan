@@ -69,6 +69,7 @@ private:
     void updateBtn(); //刷新按钮
     void successAction(GameButton *prebtn, GameButton *currentbtn); //连接失败设置
     void failedAction(GameButton *prebtn, GameButton *currentbtn); //连接失败设置
+    void popDialog(); //弹出关闭弹窗
 
 private:
     GameBlurEffectWidget *m_gameFrame; //游戏区域

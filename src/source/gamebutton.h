@@ -35,6 +35,7 @@ public:
     explicit GameButton(const QPixmap &pic,QWidget*parent=nullptr);
     void setFont(const QFont &font); //设置字体
     void setLocation(int x, int y); //设置坐标
+    void setControlBtnPressed(bool pressed);
     void updatePic(const QPixmap &pic); //刷新按钮
     inline const QPoint location() const
     {

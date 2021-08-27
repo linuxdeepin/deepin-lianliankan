@@ -19,11 +19,10 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "gameprogressbar.h"
+#include "gamecontrol.h"
 
-#include <QStylePainter>
-#include <QStyleOptionProgressBar>
 #include <QDebug>
-#include <QImageReader>
+#include <QPainter>
 
 GameProgressBar::GameProgressBar(QWidget *parent)
     : DColoredProgressBar(parent)
@@ -45,13 +44,16 @@ void GameProgressBar::paintEvent(QPaintEvent *e)
     //    reader.setScaledSize(QSize(816,60));
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
-    qreal rectX = rect().x();
-    qreal rectY = rect().y();
-    qreal rectWidth = rect().width();
-    qreal rectHeight = rect().height();
+    QPixmap pic = GameControl::m_picMap.value(qMakePair(ProgressBack, Default));
+    painter.drawPixmap(rect(), pic);
+    qreal rectX = rect().x() + 6;
+
+    qreal rectY = rect().y() + 1;
+    qreal rectWidth = rect().width() - 11;
+    qreal rectHeight = rect().height() - 15;
     qreal value = this->value();
     qreal proportion = value / m_time;
-    //   qInfo()<<rectX<<rectY<<rectWidth<<rectHeight;
+
     //设置渐变填充颜色
     QLinearGradient linearGradient(QPointF(rectX, rectY), QPointF(rectX + rectWidth, rectY + rectHeight)); //线性渐变
     linearGradient.setColorAt(0.2, QColor("#F66610")); //插入颜色
@@ -60,17 +62,17 @@ void GameProgressBar::paintEvent(QPaintEvent *e)
     linearGradient.setColorAt(0.98, QColor("#FFD273"));
     linearGradient.setSpread(QGradient::RepeatSpread); //指定渐变区域以外的区域的扩散方式
 
-    // 进度条外框,固定的路径
-    QPainterPath path;
-    painter.setPen(QColor("#FFFFFF"));
-    path.setFillRule(Qt::WindingFill);
-    path.moveTo(rectX + rectHeight / 2, rectY);
-    path.lineTo(rectX + rectWidth - rectHeight / 2, rectY);
-    path.arcTo(QRectF(rectX + rectWidth - rectHeight, rectY, rectHeight, rectHeight), 90, -180);
-    path.lineTo(rectX + rectHeight / 2, rectY + rectHeight);
-    path.arcTo(QRectF(rectX + rectHeight, rectY + rectHeight, -rectHeight, -rectHeight), 90, -180);
-    painter.drawPath(path);
-    //   painter.drawPixmap(QRect(rect().x(),rect().y(),816,60),QPixmap::fromImageReader(&reader));
+    //    // 进度条外框,固定的路径
+    //    QPainterPath path;
+    //    painter.setPen(QColor("#FFFFFF"));
+    //    path.setFillRule(Qt::WindingFill);
+    //    path.moveTo(rectX + rectHeight / 2, rectY);
+    //    path.lineTo(rectX + rectWidth - rectHeight / 2, rectY);
+    //    path.arcTo(QRectF(rectX + rectWidth - rectHeight, rectY, rectHeight, rectHeight), 90, -180);
+    //    path.lineTo(rectX + rectHeight / 2, rectY + rectHeight);
+    //    path.arcTo(QRectF(rectX + rectHeight, rectY + rectHeight, -rectHeight, -rectHeight), 90, -180);
+    //    painter.drawPath(path);
+    //    //   painter.drawPixmap(QRect(rect().x(),rect().y(),816,60),QPixmap::fromImageReader(&reader));
 
     //  绘制动态填充状态,若为开始,使用线性渐变作为画刷填满整个路径,若是0,忽略此段绘制
     if (proportion != 0.000) {
@@ -83,18 +85,30 @@ void GameProgressBar::paintEvent(QPaintEvent *e)
         painter.fillPath(fillPath, linearGradient);
     }
 
-    //绘制倒计时
+    // 绘制倒计时
     QFont textFont;
+    //阴影字体
+    QFont BackFont;
     const QString &text = QString::number(value) + "s";
     textFont.setFamily("Noto Sans CJK SC");
     textFont.setWeight(QFont::DemiBold);
     textFont.setPointSize(16);
+    BackFont.setFamily("Noto Sans CJK SC");
+    BackFont.setWeight(QFont::DemiBold);
+    BackFont.setPointSize(16);
     QFontMetricsF mertic(textFont);
     qreal merticWidth = mertic.width(text);
     qreal merticHeight = mertic.height();
+    //绘制字体阴影效果
+    QColor shadowColor(0, 0, 0);
+    shadowColor.setAlphaF(0.50);
+    painter.setPen(shadowColor);
+    painter.setFont(BackFont);
+    painter.drawText(QRectF(rectWidth / 2 - merticWidth / 2, rectHeight / 2 - merticHeight / 2 + 2, merticWidth, merticHeight), text);
+    //绘制字体
+    painter.setPen(QColor("#FFFFFF"));
     painter.setFont(textFont);
     painter.drawText(QRectF(rectWidth / 2 - merticWidth / 2, rectHeight / 2 - merticHeight / 2, merticWidth, merticHeight), text);
-
     //阴影
 
     //        path.moveTo()

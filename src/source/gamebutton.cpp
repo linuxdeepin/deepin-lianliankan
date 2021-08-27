@@ -60,6 +60,11 @@ void GameButton::setLocation(int x, int y)
     m_columnIndex = y;
 }
 
+void GameButton::setControlBtnPressed(bool pressed)
+{
+    m_cotrolBtnPressd = pressed;
+}
+
 void GameButton::updatePic(const QPixmap &pic)
 {
     //更新按下状态
@@ -84,13 +89,25 @@ void GameButton::paintEvent(QPaintEvent *e)
     switch (m_btnType) {
     case TextOnPic: {
         //绘制文字按钮
+        //阴影字体
+        QFont shadowFont;
+        shadowFont.setFamily("Noto Sans CJK SC");
+        shadowFont.setWeight(QFont::DemiBold);
+        shadowFont.setPointSize(m_font.pointSize());
+        QColor shadowColor(0, 0, 0);
+        shadowColor.setAlphaF(0.50);
+
         QFontMetricsF mertic(m_font);
         qreal fontHeight = mertic.height();
         qreal fontWidth = mertic.width(m_text);
-        p.setFont(m_font);
-        p.setPen(QColor("#FFFFFF"));
         qreal textX = (rect().width() - fontWidth) / 2;
         qreal textY = (rect().height() - fontHeight - fontHeight / 2) / 2;
+        p.setFont(shadowFont);
+        p.setPen(shadowColor);
+        //绘制阴影字体
+        p.drawText(QRectF(textX, textY + 2, fontWidth, fontHeight), m_text);
+        p.setFont(m_font);
+        p.setPen(QColor("#FFFFFF"));
         p.drawText(QRectF(textX, textY, fontWidth, fontHeight), m_text);
         //控制按钮测试效果,较随意
         if (m_cotrolBtnPressd) {

@@ -116,10 +116,11 @@ public:
             fileName = ":/assets/images/smallRect.png";
             break;
         case MainBack:
-            scaledSize = QSize(1024, 768);
+            scaledSize = QSize(1024, 718);
             fileName = ":/assets/images/background.png";
             break;
         case ProgressBack:
+            scaledSize = QSize(816, 60);
             fileName = ":/assets/images/progressback.png";
             break;
         case VictoryPic:
@@ -189,6 +190,7 @@ public:
             size=QSize(200,115);
             break;
         case Small:
+            btnFont.setPointSize(10);
             size=QSize(140,80);
             break;
         case Over:

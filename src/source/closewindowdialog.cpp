@@ -41,9 +41,6 @@ void CloseWindowDialog::initUI()
 {
     //set icon
     setIcon(QIcon::fromTheme("dialog-warning"));
-    //set dialog attribute
-    setAttribute(Qt::WA_DeleteOnClose);
-
     m_detailLabel = new DLabel(this);
 //    DFontSizeManager::instance()->bind(m_detailLabel, DFontSizeManager::T6, QFont::Medium);
     m_detailLabel->setWordWrap(true);

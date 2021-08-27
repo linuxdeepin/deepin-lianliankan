@@ -20,6 +20,7 @@
 */
 #include "gamepage.h"
 #include "gamecontrol.h"
+#include "closewindowdialog.h"
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -29,6 +30,7 @@
 #include <QTime>
 #include <QGraphicsBlurEffect>
 #include <QGraphicsColorizeEffect>
+#include <QMessageBox>
 
 GamePage::GamePage(QWidget *parent)
     : QWidget(parent)
@@ -125,7 +127,7 @@ void GamePage::initUI()
     m_gameBtngridLayout = new QGridLayout;
 
     m_gameFrame = new GameBlurEffectWidget(GameBtnSize::Big, this);
-    m_gameFrame->setMinimumSize(835, 516);
+    m_gameFrame->setFixedSize(835, 542);
 
     m_gameBtngridLayout->setContentsMargins(20, 10, 20, 35);
     m_animalGrp = new QButtonGroup(this);
@@ -134,7 +136,7 @@ void GamePage::initUI()
     m_gameFrame->setLayout(m_gameBtngridLayout);
 
     GameBlurEffectWidget *controlFrame = new GameBlurEffectWidget(GameBtnSize::Small, this);
-    controlFrame->setMinimumSize(175, 516);
+    controlFrame->setFixedSize(175, 542);
 
     m_controlGrp = new QButtonGroup(controlFrame);
     GameButton *beginBtn = BtnFactory::createBtn(ButtonNormal, Small, None, "开始/暂停");
@@ -167,10 +169,10 @@ void GamePage::initUI()
     gameFrameLayout->addWidget(controlFrame);
 
     m_progress = new GameProgressBar(this);
-    m_progress->setFixedSize(816, 42);
+    m_progress->setFixedSize(816, 60);
     mainLayout->addLayout(gameFrameLayout);
     mainLayout->addWidget(m_progress);
-    mainLayout->setContentsMargins(15, 86, 15, 43);
+    mainLayout->setContentsMargins(15, 86, 15, 25);
     setBtnEnabled(false);
     this->setLayout(mainLayout);
 //    //初始化加载界面
@@ -309,6 +311,29 @@ void GamePage::failedAction(GameButton *preBtn, GameButton *currentBtn)
     m_locationVec.pop_front();
 }
 
+void GamePage::popDialog()
+{
+    CloseWindowDialog *dialog = new CloseWindowDialog(this);
+    //    int dialogY = (this->height()-dialog->height())/2 + this->y();
+    //    int dialogX = (this->width()-dialog->width())/2 + this->x();
+    //    dialog->setGeometry(dialogX, dialogY, dialog->width(),dialog->height());
+    //    dialog->setMinimumWidth(390);
+    dialog->exec();
+
+    if (dialog->result() == QMessageBox::Ok) {
+        //返回主页面
+        Q_EMIT backToMainPage();
+        setBtnEnabled(false);
+        m_timer->stop();
+    }
+    GameButton *btn = dynamic_cast<GameButton *>(m_controlGrp->button(4));
+    if (!btn) {
+        return;
+    }
+    btn->setControlBtnPressed(false);
+    dialog->done(0);
+}
+
 void GamePage::onControlBtnControl(int id)
 {
     switch (id) {
@@ -342,10 +367,8 @@ void GamePage::onControlBtnControl(int id)
         break;
     }
     default: {
-        //返回主页面
-        Q_EMIT backToMainPage();
-        setBtnEnabled(false);
-        m_timer->stop();
+        //弹出关闭弹窗
+        popDialog();
         break;
     }
     }
