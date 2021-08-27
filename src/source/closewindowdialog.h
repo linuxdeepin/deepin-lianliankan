@@ -18,27 +18,41 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef GAMEBLUREFFECTWIDGET_H
-#define GAMEBLUREFFECTWIDGET_H
+#ifndef CLOSEWINDOWDIALOG_H
+#define CLOSEWINDOWDIALOG_H
 
 #include "global.h"
 
-#include <DBlurEffectWidget>
+#include <DDialog>
+#include <DLabel>
 
 DWIDGET_USE_NAMESPACE
-class GameBlurEffectWidget : public QWidget
+class CloseWindowDialog : public DDialog
 {
     Q_OBJECT
-public:
-    explicit GameBlurEffectWidget(const GameBtnSize &size, QWidget *parent = nullptr);
-protected:
-    void paintEvent(QPaintEvent *event)override;
-signals:
 
-public slots:
+public:
+    CloseWindowDialog(QWidget *parent = nullptr);
+    /**
+     * @brief result Get standard button enum result
+     * @return Standard button enum result
+     */
+    inline int result() { return m_result; }
+    /**
+     * @brief setResult Set standard button enum result
+     * @param r Standard button enum result
+     */
+    inline void setResult(int r) { m_result = r; }
+private:
+    void initUI();
 
 private:
-    GameBtnSize m_sizeFlag;
+    DLabel *m_detailLabel;
+    int m_result {0};
+
+public slots:
+    void onButtonClicked(int index, const QString &text);
+
 };
 
-#endif // GAMEBLUREFFECTWIDGET_H
+#endif // CLOSEWINDOWDIALOG_H

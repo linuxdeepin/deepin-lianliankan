@@ -21,5 +21,7 @@
         <file>assets/Sound/ConnectSuccess.wav</file>
         <file>assets/Sound/ConnectFailed.wav</file>
         <file>assets/images/progressback.png</file>
+        <file>assets/images/failed.png</file>
+        <file>assets/images/victory.png</file>
     </qresource>
 </RCC>

@@ -27,6 +27,8 @@
 #include <QtMultimedia/QSound>
 #include <QDebug>
 #include <QTime>
+#include <QGraphicsBlurEffect>
+#include <QGraphicsColorizeEffect>
 
 GamePage::GamePage(QWidget *parent)
     : QWidget(parent)
@@ -44,6 +46,7 @@ GamePage::GamePage(QWidget *parent)
 void GamePage::setInitalTime(int time)
 {
     m_value = time;
+    m_timeRecord = time;
     m_progress->setInintalTime(time);
 }
 
@@ -148,11 +151,13 @@ void GamePage::initUI()
     controlBtnLayout->addWidget(soundBtn);
     controlBtnLayout->addStretch();
     controlBtnLayout->addWidget(homeBtn);
+
     m_controlGrp->addButton(beginBtn, 0);
     m_controlGrp->addButton(resetBtn, 1);
     m_controlGrp->addButton(hintBtn, 2);
     m_controlGrp->addButton(soundBtn, 3);
     m_controlGrp->addButton(homeBtn, 4);
+
     controlBtnLayout->setAlignment(Qt::AlignHCenter);
     controlBtnLayout->setContentsMargins(0, 25, 0, 25);
     controlFrame->setLayout(controlBtnLayout);
@@ -168,7 +173,12 @@ void GamePage::initUI()
     mainLayout->setContentsMargins(15, 86, 15, 43);
     setBtnEnabled(false);
     this->setLayout(mainLayout);
+//    //初始化加载界面
+//    m_gameOverPage = new GameoverBlurEffectWidget(GameOverType::Victory, this);
+//    m_gameOverPage->setFixedSize(QSize(1024,718));
+//    m_gameOverPage->hide();
 }
+
 
 void GamePage::initConnect()
 {
@@ -381,7 +391,16 @@ void GamePage::onProgressChanged(int value)
         //无了!
         //显示失败结果,发送失败信号
         emit sigResult(false);
+        m_isStart = false;
     }
+}
+
+void GamePage::reGame()
+{
+    setBtnEnabled(false);
+    GameControl::GameInterFace().gameBegin();
+    setInitalTime(m_timeRecord);
+    updateBtn();
 }
 
 void GamePage::mouseMoveEvent(QMouseEvent *event)

@@ -23,6 +23,7 @@
 
 #include "gameprogressbar.h"
 #include "gameblureffectwidget.h"
+#include "gameoverblureffectwidget.h"
 #include "gamebutton.h"
 
 #include <QGridLayout>
@@ -41,13 +42,16 @@ public:
     void setSoundSwitch(bool isOpen); //设置音效开关
     bool soundSwitch() const; //音效开关
     void beginGame(); //开始游戏
+
 signals:
     void backToMainPage();
     void sigResult(bool res);
+
 public slots:
     void onControlBtnControl(int id);
     void onAnimalBtnControl(QAbstractButton *btn);
     void onProgressChanged(int value);
+    void reGame();
 
 protected:
     void mouseMoveEvent(QMouseEvent *event) override;
@@ -80,6 +84,7 @@ private:
     int m_value; //进度值
     bool m_isStart = false; //开始暂停的控制
     bool m_soundSwitch = true; //音效开关控制
+    int m_timeRecord;//记录难度时间
 };
 
 #endif // GAMEPAGE_H

@@ -56,6 +56,9 @@ public:
         case Small:
             scaledSize=QSize(140,80);
             break;
+        case Over:
+            scaledSize=QSize(175,100);
+            break;
         default:
             scaledSize=QSize(50,50);
         }
@@ -116,8 +119,16 @@ public:
             scaledSize = QSize(1024, 768);
             fileName = ":/assets/images/background.png";
             break;
-        default:
+        case ProgressBack:
             fileName = ":/assets/images/progressback.png";
+            break;
+        case VictoryPic:
+            scaledSize = QSize(370, 300);
+            fileName = ":/assets/images/victory.png";
+            break;
+        default:
+            scaledSize = QSize(280, 300);
+            fileName = ":/assets/images/failed.png";
             break;
         }
         QPixmap pic = Utils::getDpiPixmap(scaledSize, fileName, widget);
@@ -179,6 +190,10 @@ public:
             break;
         case Small:
             size=QSize(140,80);
+            break;
+        case Over:
+            btnFont.setPointSize(16);
+            size=QSize(175,100);
             break;
         default:
             size=QSize(50,50);

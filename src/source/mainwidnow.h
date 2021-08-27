@@ -24,29 +24,34 @@
 #include "mainpage.h"
 #include "gamepage.h"
 #include "utils.h"
+#include "gameblureffectwidget.h"
+#include "gameoverblureffectwidget.h"
 
 #include <DMainWindow>
 #include <DStackedWidget>
-
 DWIDGET_USE_NAMESPACE
 class MainWidnow : public DMainWindow
 {
     Q_OBJECT
 public:
     explicit MainWidnow(QWidget *parent = nullptr);
+
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
     void paintEvent(QPaintEvent *event)override;
+    void closeEvent(QCloseEvent *event) override;
 
 signals:
 
 private slots:
     void onShowClickedPage(int id);
+    void showFinishPage(bool res);
 
 private:
    void initUI();
    void initConnect();
    void initPic();
+   void initOverWindowConnect();
 
 private:
    DStackedWidget *m_stackedWidget;
@@ -55,6 +60,7 @@ private:
    GamePage *m_gamePage; //游戏页面
    bool m_firstGame = true; //判断是否为第一次游戏
    bool m_soundSwtich = true; //保存音效开关设置
+   GameoverBlurEffectWidget *m_gameOverPage;
 };
 
 #endif // MAINWIDNOW_H

@@ -44,7 +44,9 @@ enum GameBtnFlag {
     MidRect, //主页面矩形框
     SmallRect, //游戏页面右侧矩形框
     MainBack, //游戏背景图
-    ProgressBack //进度条背景
+    ProgressBack, //进度条背景
+    VictoryPic, //胜利背景图
+    FailedPic //失败背景图
 };
 
 //游戏按钮大小类型||图片大小
@@ -52,7 +54,8 @@ enum GameBtnSize{
     Default=0,
     Big,
     Mid,
-    Small
+    Small,
+    Over
 };
 
 //游戏图标类型
@@ -79,6 +82,17 @@ struct GameNode {
     int rowIndex; //行
     int columnIndex; //列
     int turnNum; //转弯次数
+};
+
+//游戏结束界面
+enum GameOverType{
+    Victory,
+    Failed
+};
+//关闭弹窗按钮
+enum CloseButtonType{
+    ignore = 0,
+    close
 };
 
 #endif // GLOBAL_H
