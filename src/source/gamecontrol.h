@@ -23,6 +23,7 @@
 
 #include "global.h"
 #include "gamebutton.h"
+#include "utils.h"
 
 #include <QObject>
 #include <QMap>
@@ -40,9 +41,9 @@ public:
         return  control;
     }
 
-    static void loadPic(const GameBtnFlag &flag,const GameBtnSize &btnSize ){
-
-        QImageReader imageReader;
+    static void loadPic(const GameBtnFlag &flag, const GameBtnSize &btnSize, DWidget *widget)
+    {
+        QString fileName;
         QSize scaledSize;
 
         switch (btnSize) {
@@ -61,54 +62,72 @@ public:
 
         switch (flag) {
         case ButtonNormal:
-            imageReader.setFileName(":/assets/images/normal.svg");
+            fileName = ":/assets/images/normal.svg";
             break;
         case ButtonCow:
-            imageReader.setFileName(":/assets/images/cow.png");
+            fileName = ":/assets/images/cow.png";
             break;
         case ButtonTiger:
-            imageReader.setFileName(":/assets/images/tiger.png");
+            fileName = ":/assets/images/tiger.png";
             break;
         case ButtonRabbit:
-            imageReader.setFileName(":/assets/images/rabbit.png");
+            fileName = ":/assets/images/rabbit.png";
             break;
         case ButtonSnake:
-            imageReader.setFileName(":/assets/images/snake.png");
+            fileName = ":/assets/images/snake.png";
             break;
         case ButtonHorse:
-            imageReader.setFileName(":/assets/images/horse.png");
+            fileName = ":/assets/images/horse.png";
             break;
         case ButtonSheep:
-            imageReader.setFileName(":/assets/images/sheep.png");
+            fileName = ":/assets/images/sheep.png";
             break;
         case ButtonDog:
-            imageReader.setFileName(":/assets/images/dog.png");
+            fileName = ":/assets/images/dog.png";
             break;
         case ButtonPig:
-            imageReader.setFileName(":/assets/images/pig.png");
+            fileName = ":/assets/images/pig.png";
             break;
         case ButtonCat:
-            imageReader.setFileName(":/assets/images/cat.png");
+            fileName = ":/assets/images/cat.png";
             break;
         case ButtonLion:
-            imageReader.setFileName(":/assets/images/lion.png");
+            fileName = ":/assets/images/lion.png";
             break;
         case ButtonFox:
-            imageReader.setFileName(":/assets/images/fox.png");
+            fileName = ":/assets/images/fox.png";
             break;
         case ButtonPanda:
-            imageReader.setFileName(":/assets/images/panda.png");
+            fileName = ":/assets/images/panda.png";
+            break;
+        case BigRect:
+            scaledSize = QSize(835, 542);
+            fileName = ":/assets/images/bigRect.png";
+            break;
+        case MidRect:
+            scaledSize = QSize(480, 515);
+            fileName = ":/assets/images/midRect.png";
+            break;
+        case SmallRect:
+            scaledSize = QSize(175, 542);
+            fileName = ":/assets/images/smallRect.png";
+            break;
+        case MainBack:
+            scaledSize = QSize(1024, 768);
+            fileName = ":/assets/images/background.png";
             break;
         default:
+            fileName = ":/assets/images/progressback.png";
             break;
         }
-        imageReader.setScaledSize(scaledSize);
-        m_picMap.insert(qMakePair(flag,btnSize),QPixmap::fromImageReader(&imageReader));
+        QPixmap pic = Utils::getDpiPixmap(scaledSize, fileName, widget);
+        m_picMap.insert(qMakePair(flag, btnSize), pic);
     }
     void gameBegin(); //游戏开始
     void gameReset();//游戏重置
     QPair<bool, QList<QPoint>> gameJudge(); //游戏判断
     bool gameSearch(const QPoint &startPos, const QPoint &endPos); //寻路
+    bool gameJudgeVictory(); //判断是否胜利
     static GameBtnFlag m_map[12][18];//游戏地图
     static int m_minTurn[12][18]; //记录最小转弯数
     static QPoint m_pathMap[12][18]; //通路坐标

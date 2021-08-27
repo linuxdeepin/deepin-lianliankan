@@ -94,6 +94,17 @@ bool GameControl::gameSearch(const QPoint &startPos, const QPoint &endPos)
     return gameBfs(startPos, endPos);
 }
 
+bool GameControl::gameJudgeVictory()
+{
+    for (int i = 1; i < m_row + 1; i++) {
+        for (int j = 1; j < m_column + 1; j++) {
+            if (m_map[i][j] != ButtonBlank)
+                return false;
+        }
+    }
+    return true;
+}
+
 void GameControl::gameShuffle(bool inital)
 {
     QVector<GameBtnFlag> btnVector; //洗牌容器

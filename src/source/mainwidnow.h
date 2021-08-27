@@ -23,6 +23,7 @@
 
 #include "mainpage.h"
 #include "gamepage.h"
+#include "utils.h"
 
 #include <DMainWindow>
 #include <DStackedWidget>

@@ -109,6 +109,11 @@ bool GamePage::judgeGame()
     return false;
 }
 
+bool GamePage::judgeVictory()
+{
+    return GameControl::GameInterFace().gameJudgeVictory();
+}
+
 void GamePage::initUI()
 {
     QVBoxLayout *mainLayout = new QVBoxLayout;
@@ -157,7 +162,7 @@ void GamePage::initUI()
     gameFrameLayout->addWidget(controlFrame);
 
     m_progress = new GameProgressBar(this);
-    m_progress->setFixedSize(816, 49);
+    m_progress->setFixedSize(816, 42);
     mainLayout->addLayout(gameFrameLayout);
     mainLayout->addWidget(m_progress);
     mainLayout->setContentsMargins(15, 86, 15, 43);
@@ -271,6 +276,12 @@ void GamePage::successAction(GameButton *preBtn, GameButton *currentBtn)
     preBtn->setBtnMode(GameBtnType::NoneType);
     //清除按钮容器
     m_locationVec.clear();
+    //判断游戏是否胜利,如果胜利,发送成功信号
+    if (judgeVictory()) {
+        //游戏胜利啦!
+        emit sigResult(true);
+    }
+
     //如果当前是死局,打乱布局,重新生成
     if (!judgeGame())
         resetGame();
@@ -367,7 +378,9 @@ void GamePage::onProgressChanged(int value)
 {
     if (value == 0) {
         m_timer->stop();
-        //显示失败结果
+        //无了!
+        //显示失败结果,发送失败信号
+        emit sigResult(false);
     }
 }
 

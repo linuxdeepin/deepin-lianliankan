@@ -3,7 +3,7 @@
 *
 * Author:     linxun <linxun@uniontech.com>
 *
-* Maintainer: zhangdingwen <zhangdingwen@uniontech.com>
+* Maintainer: linxun <linxun@uniontech.com>
 *
 * This program is free software: you can redistribute it and/or modify
 * it under the terms of the GNU General Public License as published by
@@ -18,28 +18,21 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef GAMEBLUREFFECTWIDGET_H
-#define GAMEBLUREFFECTWIDGET_H
-
+#ifndef UTIL_H
+#define UTIL_H
 #include "global.h"
 
-#include <DBlurEffectWidget>
+#include <DWidget>
+
+#include <QObject>
+#include <QPixmap>
 
 DWIDGET_USE_NAMESPACE
-class GameBlurEffectWidget : public QWidget
+
+class Utils
 {
-    Q_OBJECT
 public:
-    explicit GameBlurEffectWidget(const GameBtnSize &size, QWidget *parent = nullptr);
-
-protected:
-    void paintEvent(QPaintEvent *event)override;
-signals:
-
-public slots:
-
-private:
-    GameBtnSize m_sizeFlag;
+    static QPixmap getDpiPixmap(QSize size, const QString filename, DWidget *w);
 };
 
-#endif // GAMEBLUREFFECTWIDGET_H
+#endif // UTIL_H

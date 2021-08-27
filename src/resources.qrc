@@ -20,5 +20,6 @@
         <file>assets/images/com.deepin.lianliankan.svg</file>
         <file>assets/Sound/ConnectSuccess.wav</file>
         <file>assets/Sound/ConnectFailed.wav</file>
+        <file>assets/images/progressback.png</file>
     </qresource>
 </RCC>

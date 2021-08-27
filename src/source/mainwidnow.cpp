@@ -66,13 +66,14 @@ void MainWidnow::initConnect()
 
 void MainWidnow::initPic()
 {
-//    QTime time;
-//    time.start();
-    for(int i=1;i<13;i++){
-    GameControl::loadPic(GameBtnFlag(i),GameBtnSize::Default);
+    //    QTime time;
+    //    time.start();
+    //加载图片
+    for (int i = 1; i < 18; i++) {
+        GameControl::loadPic(GameBtnFlag(i), GameBtnSize::Default, this);
     }
     for (int i=1;i<4;i++) {
-    GameControl::loadPic(GameBtnFlag(-1),GameBtnSize(i));
+        GameControl::loadPic(GameBtnFlag(-1), GameBtnSize(i), this);
     }
 
 //qInfo()<<time.elapsed()<<GameControl::m_picMap.value(qMakePair(GameBtnFlag::ButtonCat,GameBtnSize::Default));
@@ -108,12 +109,8 @@ void MainWidnow::paintEvent(QPaintEvent *event)
     //绘制背景图片
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing, true);
-    QImageReader imageReader(":/assets/images/background.png");
-    QSize backgroundSize;
-    backgroundSize.setWidth(rect().width());
-    backgroundSize.setHeight(rect().height()-m_titlebar->rect().height());
-    imageReader.setScaledSize(backgroundSize);
-    p.drawPixmap(rect().x(),rect().y()+m_titlebar->rect().height(),QPixmap::fromImageReader(&imageReader));
+    QPixmap pic = GameControl::m_picMap.value(qMakePair(MainBack, Default));
+    p.drawPixmap(rect().x(), rect().y() + m_titlebar->rect().height(), pic);
     DWidget::paintEvent(event);
 }
 

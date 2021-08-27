@@ -43,6 +43,7 @@ public:
     void beginGame(); //开始游戏
 signals:
     void backToMainPage();
+    void sigResult(bool res);
 public slots:
     void onControlBtnControl(int id);
     void onAnimalBtnControl(QAbstractButton *btn);
@@ -58,6 +59,7 @@ private:
     void resetGame(); //重置游戏
     void hintGame(); //提示游戏
     bool judgeGame(); //判断游戏
+    bool judgeVictory(); //判断游戏是否胜利;
     void setBtnEnabled(bool isEnabled); //是否按钮可以点击
     void shadowBtn(GameButton *btn); //游戏按钮阴影处理
     void updateBtn(); //刷新按钮

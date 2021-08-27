@@ -23,6 +23,7 @@
 #include <QStylePainter>
 #include <QStyleOptionProgressBar>
 #include <QDebug>
+#include <QImageReader>
 
 GameProgressBar::GameProgressBar(QWidget *parent)
     : DColoredProgressBar(parent)
@@ -39,14 +40,18 @@ void GameProgressBar::setInintalTime(int time)
 void GameProgressBar::paintEvent(QPaintEvent *e)
 {
     Q_UNUSED(e);
+    //    QImageReader reader;
+    //    reader.setFileName(":/assets/images/progressback.png");
+    //    reader.setScaledSize(QSize(816,60));
     QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing, true);
     qreal rectX = rect().x();
     qreal rectY = rect().y();
     qreal rectWidth = rect().width();
     qreal rectHeight = rect().height();
     qreal value = this->value();
     qreal proportion = value / m_time;
-
+    //   qInfo()<<rectX<<rectY<<rectWidth<<rectHeight;
     //设置渐变填充颜色
     QLinearGradient linearGradient(QPointF(rectX, rectY), QPointF(rectX + rectWidth, rectY + rectHeight)); //线性渐变
     linearGradient.setColorAt(0.2, QColor("#F66610")); //插入颜色
@@ -55,9 +60,8 @@ void GameProgressBar::paintEvent(QPaintEvent *e)
     linearGradient.setColorAt(0.98, QColor("#FFD273"));
     linearGradient.setSpread(QGradient::RepeatSpread); //指定渐变区域以外的区域的扩散方式
 
-    //进度条外框,固定的路径
+    // 进度条外框,固定的路径
     QPainterPath path;
-    painter.setRenderHint(QPainter::Antialiasing, true);
     painter.setPen(QColor("#FFFFFF"));
     path.setFillRule(Qt::WindingFill);
     path.moveTo(rectX + rectHeight / 2, rectY);
@@ -66,8 +70,9 @@ void GameProgressBar::paintEvent(QPaintEvent *e)
     path.lineTo(rectX + rectHeight / 2, rectY + rectHeight);
     path.arcTo(QRectF(rectX + rectHeight, rectY + rectHeight, -rectHeight, -rectHeight), 90, -180);
     painter.drawPath(path);
+    //   painter.drawPixmap(QRect(rect().x(),rect().y(),816,60),QPixmap::fromImageReader(&reader));
 
-    //绘制动态填充状态,若为开始,使用线性渐变作为画刷填满整个路径,若是0,忽略此段绘制
+    //  绘制动态填充状态,若为开始,使用线性渐变作为画刷填满整个路径,若是0,忽略此段绘制
     if (proportion != 0.000) {
         QPainterPath fillPath;
         fillPath.moveTo(rectX + rectHeight / 2, rectY);

@@ -19,6 +19,7 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "gameblureffectwidget.h"
+#include "gamecontrol.h"
 
 #include <QPainter>
 #include <QtMath>
@@ -26,7 +27,7 @@
 #include <QDebug>
 
 GameBlurEffectWidget::GameBlurEffectWidget(const GameBtnSize &size, QWidget *parent)
-    : DBlurEffectWidget(parent)
+    : QWidget(parent)
     , m_sizeFlag(size)
 {
 
@@ -40,13 +41,13 @@ void GameBlurEffectWidget::paintEvent(QPaintEvent *event)
    QPixmap pic;
    switch (m_sizeFlag) {
    case Big:
-       pic.load(":/assets/images/bigRect.png");
+       pic = GameControl::m_picMap.value(qMakePair(BigRect, Default));
        break;
    case Mid:
-       pic.load(":/assets/images/midRect.png");
+       pic = GameControl::m_picMap.value(qMakePair(MidRect, Default));
        break;
    default:
-       pic.load(":/assets/images/smallRect.png");
+       pic = GameControl::m_picMap.value(qMakePair(SmallRect, Default));
        break;
    }
    painter.drawPixmap(rect(), pic);

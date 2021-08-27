@@ -24,7 +24,7 @@
 #define ROW 10
 #define COLUMN 16
 
-//游戏按钮背景类型
+//游戏按钮背景类型||游戏图片类型
 enum GameBtnFlag {
     ButtonNormal = -1,
     ButtonBlank,
@@ -39,10 +39,15 @@ enum GameBtnFlag {
     ButtonCat,
     ButtonLion,
     ButtonFox,
-    ButtonPanda
+    ButtonPanda,
+    BigRect, //游戏页面左侧矩形框
+    MidRect, //主页面矩形框
+    SmallRect, //游戏页面右侧矩形框
+    MainBack, //游戏背景图
+    ProgressBack //进度条背景
 };
 
-//游戏按钮大小类型
+//游戏按钮大小类型||图片大小
 enum GameBtnSize{
     Default=0,
     Big,
