@@ -19,7 +19,7 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "mainwidnow.h"
+#include "mainwindow.h"
 #include "gamecontrol.h"
 #include "closewindowdialog.h"
 
@@ -33,14 +33,14 @@
 #include <QDebug>
 #include <QCloseEvent>
 
-MainWidnow::MainWidnow(QWidget *parent):DMainWindow (parent)
+MainWindow::MainWindow(QWidget *parent):DMainWindow (parent)
 {
     initPic();
     initUI();
     initConnect();
 }
 
-void MainWidnow::initUI()
+void MainWindow::initUI()
 {
    m_titlebar=titlebar();
    m_titlebar->installEventFilter(this);
@@ -56,9 +56,9 @@ void MainWidnow::initUI()
    setCentralWidget(m_stackedWidget);
 }
 
-void MainWidnow::initConnect()
+void MainWindow::initConnect()
 {
-    connect(m_mainPage, &MainPage::buttonPress, this, &MainWidnow::onShowClickedPage);
+    connect(m_mainPage, &MainPage::buttonPress, this, &MainWindow::onShowClickedPage);
     //主页面音效按钮控制
     connect(m_mainPage, &MainPage::soundSwitch, this, [&] {
         m_gamePage->setSoundSwitch(!m_gamePage->soundSwitch());
@@ -67,10 +67,13 @@ void MainWidnow::initConnect()
     connect(m_gamePage, &GamePage::backToMainPage, this, [&] {
         m_stackedWidget->setCurrentWidget(m_mainPage);
     });
-    connect(m_gamePage, &GamePage::sigResult, this, &MainWidnow::showFinishPage);
+    connect(m_gamePage, &GamePage::sigResult, this, &MainWindow::showFinishPage);
+    connect(m_gamePage, &GamePage::setGameStated, this, [ = ](bool state){
+        m_gameState = state;
+    });
 }
 
-void MainWidnow::initPic()
+void MainWindow::initPic()
 {
     //    QTime time;
     //    time.start();
@@ -85,7 +88,7 @@ void MainWidnow::initPic()
     //qInfo()<<time.elapsed()<<GameControl::m_picMap.value(qMakePair(GameBtnFlag::ButtonCat,GameBtnSize::Default));
 }
 
-void MainWidnow::initOverWindowConnect()
+void MainWindow::initOverWindowConnect()
 {
     connect(m_gameOverPage, &GameoverBlurEffectWidget::backToMainPage, this, [&] {
         m_gameOverPage->hide();
@@ -101,7 +104,12 @@ void MainWidnow::initOverWindowConnect()
     connect(m_gameOverPage, &GameoverBlurEffectWidget::reGame, m_gamePage, &GamePage::reGame);
 }
 
-bool MainWidnow::eventFilter(QObject *obj, QEvent *event)
+void MainWindow::handleQuit()
+{
+    close();
+}
+
+bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 {
     //对titlebar透明度进行处理
     if(obj==m_titlebar){
@@ -126,7 +134,7 @@ bool MainWidnow::eventFilter(QObject *obj, QEvent *event)
     return  DMainWindow::eventFilter(obj,event);
 }
 
-void MainWidnow::paintEvent(QPaintEvent *event)
+void MainWindow::paintEvent(QPaintEvent *event)
 {
     //绘制背景图片
     QPainter p(this);
@@ -136,22 +144,26 @@ void MainWidnow::paintEvent(QPaintEvent *event)
     DWidget::paintEvent(event);
 }
 
-void MainWidnow::closeEvent(QCloseEvent *event)
+void MainWindow::closeEvent(QCloseEvent *event)
 {
-    CloseWindowDialog *dialog = new CloseWindowDialog(this);
-    int dialogY = (this->height()-dialog->height())/2 + this->y();
-    int dialogX = (this->width()-dialog->width())/2 + this->x();
-    dialog->setGeometry(dialogX, dialogY, dialog->width(),dialog->height());
-    dialog->setMinimumWidth(390);
-    dialog->exec();
-    if (dialog->result() == QMessageBox::Ok) {
-        event->accept();
+    if (m_gameState) {
+        CloseWindowDialog *dialog = new CloseWindowDialog(this);
+        int dialogY = (this->height()-dialog->height())/2 + this->y();
+        int dialogX = (this->width()-dialog->width())/2 + this->x();
+        dialog->setGeometry(dialogX, dialogY, dialog->width(),dialog->height());
+        dialog->setMinimumWidth(390);
+        dialog->exec();
+        if (dialog->result() == QMessageBox::Ok) {
+            event->accept();
+        } else {
+            event->ignore();
+        }
     } else {
-        event->ignore();
+        event->accept();
     }
 }
 
-void MainWidnow::onShowClickedPage(int id)
+void MainWindow::onShowClickedPage(int id)
 {
     switch (id) {
     case 1:
@@ -178,8 +190,9 @@ void MainWidnow::onShowClickedPage(int id)
     m_gameOverPage->show();
 }
 
-void MainWidnow::showFinishPage(bool res)
+void MainWindow::showFinishPage(bool res)
 {
+    m_gameState = false;
     QString text = "";
     if (!res) {
         GameoverBlurEffectWidget::m_overType = GameOverType::Failed;

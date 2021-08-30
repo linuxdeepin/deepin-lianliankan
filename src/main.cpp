@@ -19,7 +19,8 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "environments.h"
-#include "source/mainwidnow.h"
+#include "source/mainwindow.h"
+#include "source/lianliankanapplication.h"
 
 #include <DApplication>
 #include <DMainWindow>
@@ -45,7 +46,7 @@ DCORE_USE_NAMESPACE
 int main(int argc, char *argv[])
 {
     QGuiApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
-    DApplication a(argc, argv);
+    LianLianKanApplication a(argc, argv);
     a.setAttribute(Qt::AA_UseHighDpiPixmaps);
     a.setAutoActivateWindows(true);
     a.loadTranslator();
@@ -68,7 +69,7 @@ int main(int argc, char *argv[])
 
     //            QTime t;
     //            t.start();
-    MainWidnow w;
+    MainWindow w;
     w.titlebar()->setIcon(QIcon(":/assets/images/com.deepin.lianliankan.svg"));
     // 设置标题，宽度不够会隐藏标题文字
     w.setFixedSize(QSize(1024,768));

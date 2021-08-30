@@ -46,6 +46,7 @@ public:
 signals:
     void backToMainPage();
     void sigResult(bool res);
+    void setGameStated(bool state);
 
 public slots:
     void onControlBtnControl(int id);
@@ -86,6 +87,7 @@ private:
     bool m_isStart = false; //开始暂停的控制
     bool m_soundSwitch = true; //音效开关控制
     int m_timeRecord;//记录难度时间
+    bool m_gameStart = false;//记录游戏开始状态
 };
 
 #endif // GAMEPAGE_H

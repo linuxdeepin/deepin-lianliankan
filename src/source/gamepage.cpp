@@ -50,6 +50,7 @@ void GamePage::setInitalTime(int time)
     m_value = time;
     m_timeRecord = time;
     m_progress->setInintalTime(time);
+    m_gameStart = false;
 }
 
 void GamePage::setSoundSwitch(bool isOpen)
@@ -291,7 +292,7 @@ void GamePage::successAction(GameButton *preBtn, GameButton *currentBtn)
     //判断游戏是否胜利,如果胜利,发送成功信号
     if (judgeVictory()) {
         //游戏胜利啦!
-        emit sigResult(true);
+        Q_EMIT sigResult(true);
     }
 
     //如果当前是死局,打乱布局,重新生成
@@ -325,6 +326,7 @@ void GamePage::popDialog()
         Q_EMIT backToMainPage();
         setBtnEnabled(false);
         m_timer->stop();
+        Q_EMIT setGameStated(false);
     }
     GameButton *btn = dynamic_cast<GameButton *>(m_controlGrp->button(4));
     if (!btn) {
@@ -339,9 +341,12 @@ void GamePage::onControlBtnControl(int id)
     switch (id) {
     case 0: {
         if (!m_isStart) {
+            m_gameStart = true;
             //点击开始后,设置相关按钮可点击,定时器开始
             setBtnEnabled(true);
             m_timer->start();
+            //设置游戏状态开始
+            Q_EMIT setGameStated(true);
             //更改图标状态
         } else {
             //点击暂停后,设置相关按钮不可点击,定时器暂停
@@ -368,7 +373,11 @@ void GamePage::onControlBtnControl(int id)
     }
     default: {
         //弹出关闭弹窗
-        popDialog();
+        if (m_gameStart) {
+            popDialog();
+        } else {
+            Q_EMIT backToMainPage();
+        }
         break;
     }
     }
@@ -413,7 +422,7 @@ void GamePage::onProgressChanged(int value)
         m_timer->stop();
         //无了!
         //显示失败结果,发送失败信号
-        emit sigResult(false);
+        Q_EMIT sigResult(false);
         m_isStart = false;
     }
 }

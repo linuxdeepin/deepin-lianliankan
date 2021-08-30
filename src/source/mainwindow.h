@@ -18,8 +18,8 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
-#ifndef MAINWIDNOW_H
-#define MAINWIDNOW_H
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
 #include "mainpage.h"
 #include "gamepage.h"
@@ -30,11 +30,11 @@
 #include <DMainWindow>
 #include <DStackedWidget>
 DWIDGET_USE_NAMESPACE
-class MainWidnow : public DMainWindow
+class MainWindow : public DMainWindow
 {
     Q_OBJECT
 public:
-    explicit MainWidnow(QWidget *parent = nullptr);
+    explicit MainWindow(QWidget *parent = nullptr);
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
@@ -53,6 +53,9 @@ private:
    void initPic();
    void initOverWindowConnect();
 
+public:
+   void handleQuit();
+
 private:
    DStackedWidget *m_stackedWidget;
    DTitlebar *m_titlebar;
@@ -60,7 +63,8 @@ private:
    GamePage *m_gamePage; //游戏页面
    bool m_firstGame = true; //判断是否为第一次游戏
    bool m_soundSwtich = true; //保存音效开关设置
-   GameoverBlurEffectWidget *m_gameOverPage;
+   GameoverBlurEffectWidget *m_gameOverPage;//结算界面模糊蒙版
+   bool m_gameState = false;//判断游戏是否开始
 };
 
-#endif // MAINWIDNOW_H
+#endif // MAINWINDOW_H
