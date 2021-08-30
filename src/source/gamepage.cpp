@@ -292,6 +292,8 @@ void GamePage::successAction(GameButton *preBtn, GameButton *currentBtn)
     //判断游戏是否胜利,如果胜利,发送成功信号
     if (judgeVictory()) {
         //游戏胜利啦!
+        m_timer->stop();
+        m_isStart = false;
         Q_EMIT sigResult(true);
     }
 
