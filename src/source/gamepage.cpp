@@ -21,6 +21,7 @@
 #include "gamepage.h"
 #include "gamecontrol.h"
 #include "closewindowdialog.h"
+#include "gamelinescene.h"
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
@@ -31,6 +32,10 @@
 #include <QGraphicsBlurEffect>
 #include <QGraphicsColorizeEffect>
 #include <QMessageBox>
+#include <QFrame>
+#include <QTime>
+
+bool GamePage::m_isConnect = false;
 
 
 GamePage::GamePage(QWidget *parent)
@@ -177,10 +182,12 @@ void GamePage::initUI()
     mainLayout->setContentsMargins(15, 86, 15, 25);
     setBtnEnabled(false);
     this->setLayout(mainLayout);
-//    //初始化加载界面
-//    m_gameOverPage = new GameoverBlurEffectWidget(GameOverType::Victory, this);
-//    m_gameOverPage->setFixedSize(QSize(1024,718));
-//    m_gameOverPage->hide();
+    m_drawScene = new GameLineScene(this);
+    m_drawScene->setFixedSize(this->parent()->property("size").value<QSize>());
+    //    //初始化加载界面
+    //    m_gameOverPage = new GameoverBlurEffectWidget(GameOverType::Victory, this);
+    //    m_gameOverPage->setFixedSize(QSize(1024,718));
+    //    m_gameOverPage->hide();
 }
 
 
@@ -199,12 +206,14 @@ void GamePage::initConnect()
 void GamePage::initGameBtn()
 {
     GameControl::GameInterFace().gameBegin();
-    for (int i = 0; i < ROW; i++) {
-        for (int j = 0; j < COLUMN; j++) {
+    for (int i = 0; i < GAMEROW; i++) {
+        for (int j = 0; j < GAMECOLUMN; j++) {
             GameButton *gameBtn = BtnFactory::createBtn(GameControl::m_map[i + 1][j + 1], Default, None);
             //游戏按钮阴影处理
             shadowBtn(gameBtn);
             gameBtn->setLocation(i + 1, j + 1);
+            m_btnWidth = gameBtn->width();
+            m_btnHeight = gameBtn->height();
             m_animalGrp->addButton(gameBtn);
             m_gameBtngridLayout->addWidget(gameBtn, i, j);
         }
@@ -240,8 +249,8 @@ void GamePage::updateBtn()
 {
     int index = 0;
     //遍历更新打乱后按钮的状态
-    for (int i = 0; i < ROW; i++) {
-        for (int j = 0; j < COLUMN; j++) {
+    for (int i = 0; i < GAMEROW; i++) {
+        for (int j = 0; j < GAMECOLUMN; j++) {
             GameButton *gameBtn = dynamic_cast<GameButton *>(m_gameBtngridLayout->itemAt(index)->widget());
             if (!gameBtn) {
                 qWarning() << "Btn is Null";
@@ -268,29 +277,44 @@ void GamePage::successAction(GameButton *preBtn, GameButton *currentBtn)
     int endY = currentBtn->location().y();
     int startX = preBtn->location().x();
     int startY = preBtn->location().y();
+    //    qInfo()<<startX<<startY<<endX<<endY;
     int rowIndex = endX;
     int columnIndex = endY;
     //保存通路路径,为了绘制通路路线
     while (rowIndex != startX || columnIndex != startY) {
-        QPoint index = GameControl::m_pathMap[rowIndex][columnIndex];
-        m_pathVec.append(index);
+        const QPoint index = GameControl::m_pathMap[rowIndex][columnIndex];
+        int trun = GameControl::m_dir[rowIndex][columnIndex];
+        m_pathVec.append(qMakePair(trun, index));
         rowIndex = index.x();
         columnIndex = index.y();
     }
-    // qInfo()<<m_pathVec;
+    //qInfo()<<m_pathVec<<m_locationVec;
     //清除通路容器
-    m_pathVec.clear();
+    m_locationVec.append(currentBtn);
+
+    updateConnection();
+
     //连线成功音效
     if (m_soundSwitch)
         m_soundMap.value("success")->play();
     //更新地图
     GameControl::m_map[currentBtn->location().x()][currentBtn->location().y()] = GameBtnFlag::ButtonBlank;
     GameControl::m_map[preBtn->location().x()][preBtn->location().y()] = GameBtnFlag::ButtonBlank;
+
+    //定义一个新的事件循环,等待200ms
+    QEventLoop loop;
+    QTimer::singleShot(200, &loop, SLOT(quit()));
+    loop.exec();
+
     //将成功图标消失
     currentBtn->setBtnMode(GameBtnType::NoneType);
     preBtn->setBtnMode(GameBtnType::NoneType);
+
+    m_drawScene->setMissing();
     //清除按钮容器
     m_locationVec.clear();
+    //清楚路径
+    m_pathVec.clear();
     //判断游戏是否胜利,如果胜利,发送成功信号
     if (judgeVictory()) {
         //游戏胜利啦!
@@ -338,6 +362,198 @@ void GamePage::popDialog()
     }
     btn->setControlBtnPressed(false);
     dialog->done(0);
+}
+
+void GamePage::updateConnection()
+{
+    QVector<QPair<int, QPoint>>::iterator iter;
+    QList<QPointF> pointList;
+
+    //游戏区域原点坐标
+    int framePosX = m_gameFrame->pos().x();
+    int framePosY = m_gameFrame->pos().y();
+    //    qInfo()<<framePosX<<framePosY;
+    //        qInfo()<<m_pathVec;
+    if (m_pathVec.isEmpty())
+        return;
+
+    //获取两个点击按钮的坐标
+    GameButton *gameStartBtn = m_locationVec.first();
+    GameButton *gameEndBtn = m_locationVec.last();
+    GameButton *gameBtn = nullptr;
+    qreal btnStartX = gameStartBtn->pos().x();
+    qreal btnStartY = gameStartBtn->pos().y();
+    qreal btnEndX = gameEndBtn->pos().x();
+    qreal btnEndY = gameEndBtn->pos().y();
+
+//    qInfo() << btnStartX << btnStartY << btnEndX << btnEndY;
+    //如果路径容器种只有一个位置,那就代表两个按钮靠在一起,故单独处理
+    if (m_pathVec.count() == 1) {
+        QPointF posStart(btnStartX + m_btnWidth / 2 + framePosX, btnStartY + m_btnHeight / 2 + framePosY);
+        //连线开始坐标
+        QPointF lineStart = dirCoord(LineType, m_pathVec.first().first, posStart);
+        //获取第二个点击按钮的坐标
+        QPointF posEnd(btnEndX + m_btnWidth / 2 + framePosX, btnEndY + m_btnHeight / 2 + framePosY);
+        //连线结束绘制坐标
+        QPointF lineEnd = dirCoord(LineType, changeDir(m_pathVec.first().first), posEnd);
+
+        pointList.append(posStart);
+        pointList.append(lineStart);
+        pointList.append(lineEnd);
+        pointList.append(posEnd);
+    } else {
+        //如果两个按钮不相邻,根据通路组求具体坐标,绘制通路路线
+        //        qInfo()<<m_pathVec<<(m_pathVec.end()-1)->second;
+        for (iter = m_pathVec.end() - 1; iter >= m_pathVec.begin(); iter--) {
+            QPointF pos;
+            int rowIndex = iter->second.x();
+            int columnIndex = iter->second.y();
+            //qInfo()<<rowIndex<<columnIndex<<iter->first;
+
+            //求通路起点位置
+            if (iter == m_pathVec.end() - 1) {
+                //保存当前转向方向
+                m_dir = iter->first;
+                QPointF startPos = dirCoord(ExplodeType, iter->first, gameStartBtn->pos());
+                QPointF lineStartPos = dirCoord(LineType, iter->first, startPos);
+                //添加爆炸图起点和连线起点
+                pointList.append(startPos);
+                pointList.append(lineStartPos);
+            } else {
+                //记录方向与前面方向不同的转向点
+                if (m_dir != iter->first) {
+                    if (rowIndex < 1) {
+                        //当超越游戏行上边界时,取第一行按钮的坐标
+                        gameBtn = dynamic_cast<GameButton *>(m_gameBtngridLayout->itemAt(columnIndex - 1)->widget());
+                        if (!gameBtn) {
+                            qWarning() << "Btn is Illgel";
+                            return;
+                        }
+                        pos = QPointF(gameBtn->pos().x() + m_btnWidth / 2 + framePosX, gameBtn->pos().y() - m_btnHeight / 2 + framePosY);
+                    } else if (rowIndex > GAMEROW) {
+                        //当超越游戏行下边界时,取最后一行按钮的坐标
+                        gameBtn = dynamic_cast<GameButton *>(m_gameBtngridLayout->itemAt((GAMEROW - 1) * GAMECOLUMN + columnIndex - 1)->widget());
+                        if (!gameBtn) {
+                            qWarning() << "Btn is Illgel";
+                            return;
+                        }
+                        pos = QPointF(gameBtn->pos().x() + m_btnWidth / 2 + framePosX, gameBtn->pos().y() + m_btnHeight + m_btnHeight / 2 + framePosY);
+                    } else if (columnIndex < 1) {
+                        //当超越游戏列左边界时,取第一列按钮的坐标
+                        gameBtn = dynamic_cast<GameButton *>(m_gameBtngridLayout->itemAt((rowIndex - 1) * GAMECOLUMN + columnIndex)->widget());
+                        if (!gameBtn) {
+                            qWarning() << "Btn is Illgel";
+                            return;
+                        }
+                        pos = QPointF(gameBtn->pos().x() - m_btnWidth / 3 + framePosX, gameBtn->pos().y() + m_btnHeight / 2 + framePosY);
+                    } else if (columnIndex > GAMECOLUMN) {
+                        //当超越游戏列右边界时,取最后一列按钮的坐标
+                        gameBtn = dynamic_cast<GameButton *>(m_gameBtngridLayout->itemAt((rowIndex - 1) * GAMECOLUMN + columnIndex - 2)->widget());
+                        if (!gameBtn) {
+                            qWarning() << "Btn is Illgel";
+                            return;
+                        }
+                        pos = QPointF(gameBtn->pos().x() + m_btnWidth + m_btnWidth / 3 + framePosX, gameBtn->pos().y() + m_btnHeight / 2 + framePosY);
+                    } else {
+                        //正常游戏区域按钮的坐标
+                        gameBtn = dynamic_cast<GameButton *>(m_gameBtngridLayout->itemAt((rowIndex - 1) * GAMECOLUMN + columnIndex - 1)->widget());
+                        if (!gameBtn) {
+                            qWarning() << "Btn is Illgel";
+                            return;
+                        }
+                        pos = QPointF(gameBtn->pos().x() + m_btnWidth / 2 + framePosX, gameBtn->pos().y() + m_btnHeight / 2 + framePosY);
+                    }
+                    m_dir = iter->first;
+                    pointList.append(pos);
+                }
+            }
+        }
+        QPointF endPos = dirCoord(ExplodeType, changeDir(m_dir), gameEndBtn->pos());
+        QPointF lineEndPos = dirCoord(LineType, changeDir(m_dir), endPos);
+        pointList.append(lineEndPos);
+        pointList.append(endPos);
+    }
+
+    m_drawScene->setDrawPath(pointList);
+    pointList.clear();
+}
+
+QPointF GamePage::dirCoord(PosType order, int dir, QPointF pos)
+{
+    qreal btnX = pos.x();
+    qreal btnY = pos.y();
+    //游戏区域原点坐标
+    int framePosX = m_gameFrame->pos().x();
+    int framePosY = m_gameFrame->pos().y();
+    int explodePicSize = 5;
+    QPointF dirPos;
+
+    //如果是绘制开始爆炸效果,求爆炸效果图之后的连线开始坐标
+    if (order == LineType) {
+        switch (dir) {
+        //如果为向右方向,右侧坐标
+        case DIR_RIGHT:
+            dirPos = QPointF(btnX + explodePicSize, btnY);
+            break;
+        //如果为向左方向,左侧坐标
+        case DIR_LEFT:
+            dirPos = QPointF(btnX - explodePicSize, btnY);
+            break;
+        //如果为向上方向,上方坐标
+        case DIR_UP:
+            dirPos = QPointF(btnX, btnY - explodePicSize);
+            break;
+        //如果为向下方向,下方坐标
+        default:
+            dirPos = QPointF(btnX, btnY + explodePicSize);
+            break;
+        }
+    } else {
+        //如果不是相邻的两个按钮,需要判断绘制爆炸效果的点
+        switch (dir) {
+        //如果为向右方向,右侧坐标
+        case DIR_RIGHT:
+            dirPos = QPointF(btnX + framePosX + m_btnWidth, btnY + framePosY + m_btnHeight / 2);
+            break;
+        //如果为向左方向,左侧坐标
+        case DIR_LEFT:
+            dirPos = QPointF(btnX + framePosX, btnY + framePosY + m_btnHeight / 2);
+            break;
+        //如果为向上方向,上方坐标
+        case DIR_UP:
+            dirPos = QPointF(btnX + framePosX + m_btnWidth / 2, btnY + framePosY);
+            break;
+        //如果为向下方向,下方坐标
+        default:
+            dirPos = QPointF(btnX + framePosX + m_btnWidth / 2, btnY + m_btnHeight + framePosY);
+            break;
+        }
+    }
+
+    return dirPos;
+}
+
+int GamePage::changeDir(int dir)
+{
+    switch (dir) {
+    //如果为向右方向,左侧坐标
+    case DIR_RIGHT:
+        dir = DIR_LEFT;
+        break;
+    //如果为向左方向,右侧坐标
+    case DIR_LEFT:
+        dir = DIR_RIGHT;
+        break;
+    //如果为向上方向,下方坐标
+    case DIR_UP:
+        dir = DIR_DOWN;
+        break;
+    //如果为向下方向,上方坐标
+    default:
+        dir = DIR_UP;
+        break;
+    }
+    return dir;
 }
 
 void GamePage::onControlBtnControl(int id)
@@ -405,6 +621,7 @@ void GamePage::onAnimalBtnControl(QAbstractButton *btn)
         if (gameBtn->pos() == firstBtn->pos())
             return;
         //判断搜索结果
+        // qInfo()<<firstBtn->location()<<gameBtn->location();
         bool res = GameControl::GameInterFace().gameSearch(firstBtn->location(), gameBtn->location());
         //如果符合规则
         if (res) {

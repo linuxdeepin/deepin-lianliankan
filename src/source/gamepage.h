@@ -32,6 +32,7 @@
 #include <QVector>
 #include <QtMultimedia/QSound>
 
+class GameLineScene;
 DWIDGET_USE_NAMESPACE
 class GamePage : public QWidget
 {
@@ -56,7 +57,6 @@ public slots:
 
 protected:
     void mouseMoveEvent(QMouseEvent *event) override;
-
 private:
     void initUI();
     void initConnect();
@@ -71,8 +71,12 @@ private:
     void successAction(GameButton *prebtn, GameButton *currentbtn); //连接失败设置
     void failedAction(GameButton *prebtn, GameButton *currentbtn); //连接失败设置
     void popDialog(); //弹出关闭弹窗
+    void updateConnection(); //更新连线
+    QPointF dirCoord(PosType order, int dir, QPointF pos); //获取方向坐标
+    int changeDir(int dir); //上下左右方向对应切换
 
 private:
+    static bool m_isConnect; //判断是否连接
     GameBlurEffectWidget *m_gameFrame; //游戏区域
     GameProgressBar *m_progress; //进度条
     QGridLayout *m_gameBtngridLayout; //游戏按钮布局
@@ -81,13 +85,17 @@ private:
     QMap<QString, QSound *> m_soundMap; //游戏音效
     QTimer *m_timer; //定时器
     QVector<GameButton *> m_locationVec; //点击按钮容器
-    QVector<QPoint> m_pathVec; //通路坐标组
+    QVector<QPair<int, QPoint>> m_pathVec; //通路方向坐标
     QList<QPoint> m_hintPoint; //提示按钮坐标
+    GameLineScene *m_drawScene; //连线场景
     int m_value; //进度值
     bool m_isStart = false; //开始暂停的控制
     bool m_soundSwitch = true; //音效开关控制
-    int m_timeRecord;//记录难度时间
     bool m_gameStart = false;//记录游戏开始状态
+    int m_timeRecord;//记录难度时间
+    int m_dir; //路径方向
+    int m_btnWidth; //游戏按钮宽度
+    int m_btnHeight; //游戏按钮高度
 };
 
 #endif // GAMEPAGE_H

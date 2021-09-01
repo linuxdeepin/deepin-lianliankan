@@ -35,6 +35,7 @@ const int INF = 0x3f3f3f3f;
 
 GameBtnFlag GameControl::m_map[12][18];
 int GameControl::m_minTurn[12][18];
+int GameControl::m_dir[12][18];
 QPoint GameControl::m_pathMap[12][18];
 QHash<QPair<GameBtnFlag,GameBtnSize>,QPixmap> GameControl::m_picMap;
 
@@ -73,7 +74,7 @@ QPair<bool, QList<QPoint>> GameControl::gameJudge()
                     //                  qInfo()<<QPoint(i,j)<<QPoint(i+rowOffset,j+columnOffset);
                     QPoint startPoint = QPoint(i, j);
                     QPoint endPoint = QPoint(i + rowOffset, j + columnOffset);
-                    bool res = gameBfs(startPoint, endPoint);
+                    bool res = gameSearch(startPoint, endPoint);
                     if (res) {
                         pointList.append(startPoint);
                         pointList.append(endPoint);
@@ -91,7 +92,11 @@ QPair<bool, QList<QPoint>> GameControl::gameJudge()
 
 bool GameControl::gameSearch(const QPoint &startPos, const QPoint &endPos)
 {
-    return gameBfs(startPos, endPos);
+    //先保证的无交叉覆盖搜索,如果没有通路,再进行交叉覆盖搜索
+    if (!gameBfs(false, startPos, endPos)) {
+        return gameBfs(true, startPos, endPos);
+    }
+    return true;
 }
 
 bool GameControl::gameJudgeVictory()
@@ -143,7 +148,7 @@ void GameControl::gameShuffle(bool inital)
     }
 }
 
-bool GameControl::gameBfs(const QPoint &startPos, const QPoint &endPos)
+bool GameControl::gameBfs(bool isOveride, const QPoint &startPos, const QPoint &endPos)
 {
     memset(m_minTurn, INF, sizeof(m_minTurn));
     memset(m_pathMap, 0, sizeof(m_pathMap));
@@ -193,15 +198,26 @@ bool GameControl::gameBfs(const QPoint &startPos, const QPoint &endPos)
                 if (tmpNode.turnNum > 2)
                     continue;
 
-                //保证转弯次数最少
-                if (tmpNode.turnNum <= m_minTurn[tmpNode.rowIndex][tmpNode.columnIndex]) {
-                    m_pathMap[tmpNode.rowIndex][tmpNode.columnIndex] = QPoint(popNode.rowIndex, popNode.columnIndex);
-                    m_minTurn[tmpNode.rowIndex][tmpNode.columnIndex] = tmpNode.turnNum;
-                    quene.enqueue(tmpNode);
+                //无交叉覆盖搜索
+                if (!isOveride) {
+                    if (tmpNode.turnNum < m_minTurn[tmpNode.rowIndex][tmpNode.columnIndex]) {
+                        m_pathMap[tmpNode.rowIndex][tmpNode.columnIndex] = QPoint(popNode.rowIndex, popNode.columnIndex);
+                        m_minTurn[tmpNode.rowIndex][tmpNode.columnIndex] = tmpNode.turnNum;
+                        m_dir[tmpNode.rowIndex][tmpNode.columnIndex] = tmpNode.direction;
+                        quene.enqueue(tmpNode);
+                    }
+
+                } else {
+                    //交叉覆盖搜索
+                    if (tmpNode.turnNum <= m_minTurn[tmpNode.rowIndex][tmpNode.columnIndex]) {
+                        m_pathMap[tmpNode.rowIndex][tmpNode.columnIndex] = QPoint(popNode.rowIndex, popNode.columnIndex);
+                        m_minTurn[tmpNode.rowIndex][tmpNode.columnIndex] = tmpNode.turnNum;
+                        m_dir[tmpNode.rowIndex][tmpNode.columnIndex] = tmpNode.direction;
+                        quene.enqueue(tmpNode);
+                    }
                 }
             }
         }
     }
-    //qInfo()<<"false";
     return false;
 }

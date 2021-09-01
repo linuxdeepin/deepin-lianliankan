@@ -128,9 +128,12 @@ public:
             scaledSize = QSize(370, 300);
             fileName = ":/assets/images/victory.png";
             break;
-        default:
+        case FailedPic:
             scaledSize = QSize(280, 300);
             fileName = ":/assets/images/failed.png";
+            break;
+        default:
+            fileName = ":/assets/images/explode.png";
             break;
         }
         QPixmap pic = Utils::getDpiPixmap(scaledSize, fileName, widget);
@@ -143,6 +146,7 @@ public:
     bool gameJudgeVictory(); //判断是否胜利
     static GameBtnFlag m_map[12][18];//游戏地图
     static int m_minTurn[12][18]; //记录最小转弯数
+    static int m_dir[12][18]; //记录转弯方向
     static QPoint m_pathMap[12][18]; //通路坐标
     static QHash<QPair<GameBtnFlag, GameBtnSize>, QPixmap>m_picMap;//图片资源
 signals:
@@ -152,7 +156,7 @@ public slots:
 private:
     explicit GameControl(QObject *parent = nullptr);
     void gameShuffle(bool inital); //游戏洗牌
-    bool gameBfs(const QPoint &startPos, const QPoint &endPos); //游戏寻路
+    bool gameBfs(bool isOveride, const QPoint &startPos, const QPoint &endPos); //游戏寻路
 };
 
 class BtnFactory{

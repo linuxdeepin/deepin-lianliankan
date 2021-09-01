@@ -47,6 +47,12 @@ int main(int argc, char *argv[])
 {
     QGuiApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
     LianLianKanApplication a(argc, argv);
+
+    //单例模式
+    if (!DGuiApplicationHelper::instance()->setSingleInstance(a.applicationName(), DGuiApplicationHelper::UserScope)) {
+        a.activeWindow();
+        return 0;
+    }
     a.setAttribute(Qt::AA_UseHighDpiPixmaps);
     a.setAutoActivateWindows(true);
     a.loadTranslator();
@@ -59,10 +65,6 @@ int main(int argc, char *argv[])
     a.setApplicationDisplayName(QCoreApplication::translate("Main", "LianLianKan"));
     a.setProductName(QCoreApplication::translate("Main", "LianLianKan"));
 
-    //单例模式
-    if (!a.setSingleInstance(a.applicationName()))
-        exit(-1);
-
     DLogManager::registerConsoleAppender();
     DLogManager::registerFileAppender();
     DApplicationSettings saveTheme;
@@ -72,7 +74,6 @@ int main(int argc, char *argv[])
     MainWindow w;
     w.titlebar()->setIcon(QIcon(":/assets/images/com.deepin.lianliankan.svg"));
     // 设置标题，宽度不够会隐藏标题文字
-    w.setFixedSize(QSize(1024,768));
     Dtk::Widget::moveToCenter(&w);
     w.show();
     //            qInfo()<<t.elapsed()<<"time";

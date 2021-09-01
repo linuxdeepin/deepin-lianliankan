@@ -21,8 +21,19 @@
 #ifndef GLOBAL_H
 #define GLOBAL_H
 
-#define ROW 10
-#define COLUMN 16
+//游戏行列
+#define GAMEROW 10
+#define GAMECOLUMN 16
+
+//游戏地图行列
+#define GAMEMAPROW 12
+#define GAMEMAPCOLUMN 18
+
+//游戏路径上下左右
+#define DIR_RIGHT 0
+#define DIR_LEFT 1
+#define DIR_UP 2
+#define DIR_DOWN 3
 
 //游戏按钮背景类型||游戏图片类型
 enum GameBtnFlag {
@@ -46,7 +57,8 @@ enum GameBtnFlag {
     MainBack, //游戏背景图
     ProgressBack, //进度条背景
     VictoryPic, //胜利背景图
-    FailedPic //失败背景图
+    FailedPic, //失败背景图
+    ExplodePic //爆炸效果图
 };
 
 //游戏按钮大小类型||图片大小
@@ -93,6 +105,12 @@ enum GameOverType{
 enum CloseButtonType{
     ignore = 0,
     close
+};
+
+//点击按钮排列
+enum PosType {
+    LineType = 0,
+    ExplodeType
 };
 
 #endif // GLOBAL_H

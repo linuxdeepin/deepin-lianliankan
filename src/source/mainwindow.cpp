@@ -42,18 +42,19 @@ MainWindow::MainWindow(QWidget *parent):DMainWindow (parent)
 
 void MainWindow::initUI()
 {
-   m_titlebar=titlebar();
-   m_titlebar->installEventFilter(this);
-   m_titlebar->setBackgroundTransparent(true);
+    this->setFixedSize(QSize(1024, 768));
+    m_titlebar = titlebar();
+    m_titlebar->installEventFilter(this);
+    m_titlebar->setBackgroundTransparent(true);
 
-   m_stackedWidget = new DStackedWidget(this);
-   m_mainPage = new MainPage(m_stackedWidget);
-   m_gamePage = new GamePage();
+    m_stackedWidget = new DStackedWidget(this);
+    m_mainPage = new MainPage(m_stackedWidget);
+    m_gamePage = new GamePage(this);
 
-   m_stackedWidget->addWidget(m_mainPage);
-   m_stackedWidget->addWidget(m_gamePage);
+    m_stackedWidget->addWidget(m_mainPage);
+    m_stackedWidget->addWidget(m_gamePage);
 
-   setCentralWidget(m_stackedWidget);
+    setCentralWidget(m_stackedWidget);
 }
 
 void MainWindow::initConnect()
@@ -78,7 +79,7 @@ void MainWindow::initPic()
     //    QTime time;
     //    time.start();
     //加载图片
-    for (int i = 1; i < 20; i++) {
+    for (int i = 1; i < 21; i++) {
         GameControl::loadPic(GameBtnFlag(i), GameBtnSize::Default, this);
     }
     for (int i=1;i<5;i++) {

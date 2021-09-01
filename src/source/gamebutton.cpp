@@ -132,7 +132,6 @@ void GameButton::paintEvent(QPaintEvent *e)
 
 void GameButton::mousePressEvent(QMouseEvent *e)
 {
-    //qInfo()<<"mouseEvent";
     if (e->button() != Qt::LeftButton) {
         e->ignore();
         return;
