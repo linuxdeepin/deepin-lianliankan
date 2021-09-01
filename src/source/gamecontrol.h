@@ -31,6 +31,7 @@
 #include <QFont>
 #include <QDebug>
 #include <QMap>
+#include <QBitmap>
 
 class GameControl : public QObject
 {
@@ -204,8 +205,15 @@ public:
         if(flag==ButtonNormal){
             if(!btnIcon){
                 btn=new GameButton(GameControl::m_picMap.value(qMakePair(flag,btnSize)) ,text,parent);
+                //修改bug，后面可能有用
+//                QBitmap bitmap = GameControl::m_picMap.value(qMakePair(flag,btnSize)).mask();
+//                int mheight = bitmap.rect().height();
+//                bitmap.rect().setHeight(mheight - 50);
+//                btn->setMask(bitmap);
+
             }else {
                 btn=new GameButton(GameControl::m_picMap.value(qMakePair(flag,btnSize)),*btnIcon,parent);
+//                btn->setMask(GameControl::m_picMap.value(qMakePair(flag,btnSize)).mask());
             }
         }else {
             btn=new GameButton (GameControl::m_picMap.value(qMakePair(flag,btnSize)),parent);

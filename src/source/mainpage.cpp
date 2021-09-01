@@ -31,6 +31,7 @@
 #include <QVBoxLayout>
 #include <QDebug>
 #include <QTime>
+#include <QBitmap>
 
 MainPage::MainPage(QWidget*parent):DWidget (parent)
 {
@@ -64,6 +65,7 @@ void MainPage::initUI()
     switchFrame->setLayout(frameLayout);
 
     GameButton *swithBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Big, GameIconType::None, tr("难度选择"), this);
+    swithBtn->setEnabled(false);
     swithBtn->setGeometry(393,80,250,135);
     m_soundBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Small, GameIconType::Sound, "音效");
     m_soundBtn->setParent(this);

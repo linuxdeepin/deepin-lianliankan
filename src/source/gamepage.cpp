@@ -32,6 +32,7 @@
 #include <QGraphicsColorizeEffect>
 #include <QMessageBox>
 
+
 GamePage::GamePage(QWidget *parent)
     : QWidget(parent)
 {
@@ -191,6 +192,7 @@ void GamePage::initConnect()
     QObject::connect(m_timer, &QTimer::timeout, this, [&] {
         m_value--;
         m_progress->setValue(m_value);
+        m_progress->update();
     });
 }
 
@@ -215,8 +217,8 @@ void GamePage::setBtnEnabled(bool isEnabled)
     m_gameFrame->setEnabled(isEnabled);
     m_isStart = isEnabled;
     for (QAbstractButton *btn : m_controlGrp->buttons()) {
-        //开始按钮和返回主页面按钮保持可点击状态
-        if (btn == m_controlGrp->button(0) || btn == m_controlGrp->button(4))
+        //开始按钮和返回主页面按钮和音效按钮保持可点击状态
+        if (btn == m_controlGrp->button(0) || btn == m_controlGrp->button(4) || btn == m_controlGrp->button(3))
             continue;
         btn->setEnabled(isEnabled);
     }
