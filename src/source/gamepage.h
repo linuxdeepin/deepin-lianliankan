@@ -74,6 +74,7 @@ private:
     void updateConnection(); //更新连线
     QPointF dirCoord(PosType order, int dir, QPointF pos); //获取方向坐标
     int changeDir(int dir); //上下左右方向对应切换
+    void hintBtnflash(GameBtnType type, bool pressAble);//提示按钮闪烁
 
 private:
     static bool m_isConnect; //判断是否连接
@@ -84,11 +85,15 @@ private:
     QButtonGroup *m_controlGrp; //控制按钮组
     QMap<QString, QSound *> m_soundMap; //游戏音效
     QTimer *m_timer; //定时器
+    QTimer *m_hintPicOnTimer;//提示闪烁定时器(展示)
+    QTimer *m_hintPicOffTimer;//提示闪烁定时器(隐藏)
     QVector<GameButton *> m_locationVec; //点击按钮容器
     QVector<QPair<int, QPoint>> m_pathVec; //通路方向坐标
     QList<QPoint> m_hintPoint; //提示按钮坐标
     GameLineScene *m_drawScene; //连线场景
+    QList<GameButton *> m_hintBtn;//提示按钮
     int m_value; //进度值
+    int m_flashCount;//闪烁次数
     bool m_isStart = false; //开始暂停的控制
     bool m_soundSwitch = true; //音效开关控制
     bool m_gameStart = false;//记录游戏开始状态

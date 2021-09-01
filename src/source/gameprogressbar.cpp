@@ -32,7 +32,7 @@ GameProgressBar::GameProgressBar(QWidget *parent)
 void GameProgressBar::setInintalTime(int time)
 {
     m_time = time;
-    setRange(0, time);
+    setRange(0, 0);
     setValue(time);
 }
 

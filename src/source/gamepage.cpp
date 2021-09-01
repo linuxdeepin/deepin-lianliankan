@@ -32,17 +32,23 @@
 #include <QGraphicsBlurEffect>
 #include <QGraphicsColorizeEffect>
 #include <QMessageBox>
+#include <QList>
 #include <QFrame>
 #include <QTime>
 
 bool GamePage::m_isConnect = false;
-
+const int BtnFlashCount = 3;//提示按钮闪烁次数
 
 GamePage::GamePage(QWidget *parent)
     : QWidget(parent)
 {
     m_timer = new QTimer(this);
     m_timer->setInterval(1000);
+    m_hintPicOnTimer = new QTimer(this);
+    m_hintPicOnTimer->setInterval(200);
+    m_hintPicOffTimer = new QTimer(this);
+    m_hintPicOffTimer->setInterval(200);
+    m_flashCount = BtnFlashCount;
     QSound *serachSuccess = new QSound(":/assets/Sound/ConnectSuccess.wav", this);
     QSound *serachFailed = new QSound(":/assets/Sound/ConnectFailed.wav", this);
     m_soundMap.insert("success", serachSuccess);
@@ -99,15 +105,22 @@ void GamePage::hintGame()
             gameBtn->setPressed(false);
         }
         //设置提示效果
+        QList<GameButton *> gameBtnList;
         for (QPoint pos : m_hintPoint) {
             //qInfo()<<pos;
-            GameButton *gameBtn = dynamic_cast<GameButton *>(m_gameBtngridLayout->itemAt((pos.x() - 1) * 16 + pos.y() - 1)->widget());
+            GameButton *gameBtn = dynamic_cast<GameButton *>(m_gameBtngridLayout->itemAt((pos.x() - 1) * 16 + pos.y() - 1)->widget());         
             if (!gameBtn) {
                 qWarning() << "Btn is Null";
                 return;
             }
+            gameBtnList.append(gameBtn);
             gameBtn->setPressed(true);
         }
+        m_hintBtn = gameBtnList;
+        //设置提示按钮闪烁
+        hintBtnflash(GameBtnType::NoneType, false);
+        m_flashCount = BtnFlashCount;
+        m_hintPicOnTimer->start();
     }
 }
 
@@ -198,8 +211,25 @@ void GamePage::initConnect()
     QObject::connect(m_progress, &GameProgressBar::valueChanged, this, &GamePage::onProgressChanged);
     QObject::connect(m_timer, &QTimer::timeout, this, [&] {
         m_value--;
-        m_progress->setValue(m_value);
-        m_progress->update();
+        m_progress->setValue(m_value);  
+    });
+    QObject::connect(m_hintPicOnTimer, &QTimer::timeout, this, [&] {
+        m_hintPicOnTimer->stop();
+        m_flashCount--;
+        this->hintBtnflash(GameBtnType::OnlyPic, false);
+        if(m_flashCount != 0) {
+            m_hintPicOffTimer->start();
+        } else if (m_flashCount == 0) {
+            this->hintBtnflash(GameBtnType::OnlyPic, true);
+            m_hintBtn.at(0)->setPressed(false);
+            m_hintBtn.at(1)->setPressed(false);
+        }
+
+    });
+    QObject::connect(m_hintPicOffTimer, &QTimer::timeout, this, [&] {
+        m_hintPicOffTimer->stop();
+        this->hintBtnflash(GameBtnType::NoneType, false);
+        m_hintPicOnTimer->start();
     });
 }
 
@@ -554,6 +584,16 @@ int GamePage::changeDir(int dir)
         break;
     }
     return dir;
+}
+/**
+ * @brief GamePage::hintBtnflash 设置提示按钮闪烁
+ */
+void GamePage::hintBtnflash(GameBtnType type, bool pressable)
+{
+    m_hintBtn.at(0)->setBtnMode(type);
+    m_hintBtn.at(1)->setBtnMode(type);
+    m_hintBtn.at(0)->setEnabled(pressable);
+    m_hintBtn.at(1)->setEnabled(pressable);
 }
 
 void GamePage::onControlBtnControl(int id)
