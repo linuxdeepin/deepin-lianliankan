@@ -37,6 +37,7 @@ public:
     static GameOverType m_overType;
 protected:
     void paintEvent(QPaintEvent *event)override;
+    void mouseMoveEvent(QMouseEvent *event)override;
 
 private:
     void initUI();

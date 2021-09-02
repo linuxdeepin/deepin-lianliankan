@@ -102,6 +102,7 @@ void GamePage::hintGame()
                 return;
             }
             gameBtn->setPressed(false);
+            m_locationVec.clear();
         }
         //设置提示效果
         QList<GameButton *> gameBtnList;
@@ -196,16 +197,12 @@ void GamePage::initUI()
     this->setLayout(mainLayout);
     m_drawScene = new GameLineScene(this);
     m_drawScene->setFixedSize(this->parent()->property("size").value<QSize>());
-    //    //初始化加载界面
-    //    m_gameOverPage = new GameoverBlurEffectWidget(GameOverType::Victory, this);
-    //    m_gameOverPage->setFixedSize(QSize(1024,718));
-    //    m_gameOverPage->hide();
 }
 
 
 void GamePage::initConnect()
 {
-    QObject::connect(m_controlGrp, QOverload<int>::of(&QButtonGroup::buttonPressed), this, &GamePage::onControlBtnControl);
+    QObject::connect(m_controlGrp, QOverload<int>::of(&QButtonGroup::buttonClicked), this, &GamePage::onControlBtnControl);
     QObject::connect(m_animalGrp, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonPressed), this, &GamePage::onAnimalBtnControl);
     QObject::connect(m_progress, &GameProgressBar::valueChanged, this, &GamePage::onProgressChanged);
     QObject::connect(m_timer, &QTimer::timeout, this, [&] {
@@ -223,7 +220,6 @@ void GamePage::initConnect()
             m_hintBtn.at(0)->setPressed(false);
             m_hintBtn.at(1)->setPressed(false);
         }
-
     });
     QObject::connect(m_hintPicOffTimer, &QTimer::timeout, this, [&] {
         m_hintPicOffTimer->stop();
@@ -355,7 +351,7 @@ void GamePage::successAction(GameButton *preBtn, GameButton *currentBtn)
     if (judgeVictory()) {
         //游戏胜利啦!
         m_timer->stop();
-        m_isStart = false;
+        setBtnEnabled(false);
         Q_EMIT sigResult(true);
     }
 
@@ -688,14 +684,13 @@ void GamePage::onProgressChanged(int value)
         m_timer->stop();
         //无了!
         //显示失败结果,发送失败信号
+        setBtnEnabled(false);
         Q_EMIT sigResult(false);
-        m_isStart = false;
     }
 }
 
 void GamePage::reGame()
 {
-    setBtnEnabled(false);
     GameControl::GameInterFace().gameBegin();
     setInitalTime(m_timeRecord);
     updateBtn();

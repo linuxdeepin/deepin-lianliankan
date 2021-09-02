@@ -68,6 +68,11 @@ void GameoverBlurEffectWidget::paintEvent(QPaintEvent *event)
     painterImg.drawPixmap(imgX,imgY,pic);
 }
 
+void GameoverBlurEffectWidget::mouseMoveEvent(QMouseEvent *event)
+{
+    Q_UNUSED(event);
+}
+
 void GameoverBlurEffectWidget::initUI()
 {
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
@@ -95,7 +100,7 @@ void GameoverBlurEffectWidget::initUI()
 
 void GameoverBlurEffectWidget::initConnect()
 {
-    connect(m_OverBtnGroup, QOverload<int>::of(&QButtonGroup::buttonPressed), this, &GameoverBlurEffectWidget::onButtonPressed);
+    connect(m_OverBtnGroup, QOverload<int>::of(&QButtonGroup::buttonClicked), this, &GameoverBlurEffectWidget::onButtonPressed);
 }
 
 void GameoverBlurEffectWidget::updateLabel(QString text)

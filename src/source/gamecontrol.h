@@ -132,6 +132,16 @@ public:
             scaledSize = QSize(280, 300);
             fileName = ":/assets/images/failed.png";
             break;
+        case ButtonHover:
+            fileName = ":/assets/images/hover.svg";
+            break;
+        case ButtonPress:
+            fileName = ":/assets/images/press.svg";
+            break;
+        case checkeffect:
+            scaledSize = QSize(60, 60);
+            fileName = ":/assets/images/checkanimal.png";
+            break;
         default:
             fileName = ":/assets/images/explode.png";
             break;
@@ -212,16 +222,13 @@ public:
 
         if(flag==ButtonNormal){
             if (iconType == None) {
-                btn=new GameButton(GameControl::m_picMap.value(qMakePair(flag,btnSize)) ,text,parent);
-                //修改bug，后面可能有用
-//                QBitmap bitmap = GameControl::m_picMap.value(qMakePair(flag,btnSize)).mask();
-//                int mheight = bitmap.rect().height();
-//                bitmap.rect().setHeight(mheight - 50);
-//                btn->setMask(bitmap);
-
+                btn=new GameButton(flag,btnSize ,text,parent);
+                //配置可选区域
+                btn->setMask(GameControl::m_picMap.value(qMakePair(flag,btnSize)).mask());
             } else {
                 btn = new GameButton(GameControl::m_picMap.value(qMakePair(flag, btnSize)), btnIcon, parent);
-                //                btn->setMask(GameControl::m_picMap.value(qMakePair(flag,btnSize)).mask());
+                //配置可选区域
+                btn->setMask(GameControl::m_picMap.value(qMakePair(flag,btnSize)).mask());
             }
         }else {
             btn=new GameButton (GameControl::m_picMap.value(qMakePair(flag,btnSize)),parent);

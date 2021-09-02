@@ -80,7 +80,7 @@ void MainPage::initUI()
 
 void MainPage::initConnect()
 {
-    connect(m_btnGrp, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonPressed), this, &MainPage::buttonPress);
+    connect(m_btnGrp, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &MainPage::buttonPress);
     connect(m_soundBtn, &GameButton::pressed, this, &MainPage::soundSwitch);
 }
 

@@ -30,7 +30,7 @@ class GameButton : public QPushButton
     Q_OBJECT
 
 public:
-    explicit GameButton(const QPixmap &pic,const QString &text,QWidget *parent = nullptr);
+    explicit GameButton(const GameBtnFlag &flag, const GameBtnSize &size, const QString &text,QWidget *parent = nullptr);
     explicit GameButton(const QPixmap &pic,const QPixmap &icon,QWidget*parent=nullptr);
     explicit GameButton(const QPixmap &pic,QWidget*parent=nullptr);
 
@@ -88,6 +88,8 @@ protected:
    void paintEvent(QPaintEvent *event) override;
    void mousePressEvent(QMouseEvent *e) override;
    void mouseReleaseEvent(QMouseEvent *e) override;
+   void enterEvent(QEvent *event) override;
+   void leaveEvent(QEvent *event) override;
 
    private:
    /**
@@ -104,6 +106,7 @@ protected:
    QPixmap m_icon;//按钮图标
    QString m_text;//按钮文字
    QFont  m_font; //按钮字体
+   GameBtnSize m_size;//按钮大小
    int m_rowIndex; //行
    int m_columnIndex; //列
    bool m_gameBtnPressd = false; //判读游戏按钮是否点击

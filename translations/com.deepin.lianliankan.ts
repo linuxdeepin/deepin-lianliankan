@@ -60,12 +60,12 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/source/mainwindow.cpp" line="200"/>
+        <location filename="../src/source/mainwindow.cpp" line="203"/>
         <source>时间已用完,下一次要加快速度哦！</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/source/mainwindow.cpp" line="203"/>
+        <location filename="../src/source/mainwindow.cpp" line="206"/>
         <source>您赢了！！</source>
         <translation type="unfinished"></translation>
     </message>

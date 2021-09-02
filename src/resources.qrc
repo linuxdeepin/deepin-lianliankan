@@ -30,5 +30,8 @@
         <file>assets/icon/sound.svg</file>
         <file>assets/icon/hint.svg</file>
         <file>assets/icon/pause.svg</file>
+        <file>assets/images/hover.svg</file>
+        <file>assets/images/press.svg</file>
+        <file>assets/images/checkanimal.png</file>
     </qresource>
 </RCC>

@@ -58,6 +58,9 @@ enum GameBtnFlag {
     ProgressBack, //进度条背景
     VictoryPic, //胜利背景图
     FailedPic, //失败背景图
+    ButtonHover,
+    ButtonPress,
+    checkeffect,//游戏按钮选中效果
     ExplodePic //爆炸效果图
 };
 

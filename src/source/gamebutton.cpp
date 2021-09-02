@@ -20,6 +20,7 @@
 */
 #include "gamebutton.h"
 #include "utils.h"
+#include "gamecontrol.h"
 
 #include <QPainter>
 #include <QFontMetricsF>
@@ -27,12 +28,13 @@
 #include <QMouseEvent>
 #include <QtMath>
 
-GameButton::GameButton(const QPixmap &pic, const QString &text, QWidget *parent)
+GameButton::GameButton(const GameBtnFlag &flag, const GameBtnSize &size, const QString &text, QWidget *parent)
     : QPushButton(parent)
-    , m_pic(pic)
     , m_text(text)
+    , m_size(size)
     , m_btnType(TextOnPic)
 {
+    m_pic = GameControl::m_picMap.value(qMakePair(flag, size));
 }
 
 GameButton::GameButton(const QPixmap &pic, const QPixmap &icon, QWidget *parent)
@@ -82,6 +84,7 @@ void GameButton::updatePlayIcon(bool isStarted)
     } else {
         m_icon = Utils::getDpiPixmap(QSize(0, 0), ":/assets/icon/pause.svg", nullptr);
     }
+    update();
 }
 
 void GameButton::paintEvent(QPaintEvent *e)
@@ -97,12 +100,15 @@ void GameButton::paintEvent(QPaintEvent *e)
         p.setOpacity(0.6);
     }
 
+
     //消失的情况消失相匹配元素.
     if (m_btnType == NoneType) {
         drawBackdrop(p);
         return;
     }
-
+    if (m_gameBtnPressd) {
+        drawRect(p);
+    }
     p.drawPixmap(rect(),m_pic);
     switch (m_btnType) {
     case TextOnPic: {
@@ -127,10 +133,6 @@ void GameButton::paintEvent(QPaintEvent *e)
         p.setFont(m_font);
         p.setPen(QColor("#FFFFFF"));
         p.drawText(QRectF(textX, textY, fontWidth, fontHeight), m_text);
-        //控制按钮测试效果,较随意
-        if (m_cotrolBtnPressd) {
-            drawRect(p);
-        }
         break;
     }
     case IconOnPic: {
@@ -140,19 +142,11 @@ void GameButton::paintEvent(QPaintEvent *e)
         int iconX = (rect().width() - iconWidth) / 2;
         int iconY = (rect().height() - iconHeight - iconHeight / 2) / 2;
         p.drawPixmap(QRect(iconX, iconY, iconWidth, iconHeight), m_icon);
-        //控制按钮测试效果,较随意
-        if (m_cotrolBtnPressd) {
-            drawRect(p);
-        }
         break;
     }
     default: {
-        //绘制游戏动物按钮
         //绘制背景
         drawBackdrop(p);
-        if (m_gameBtnPressd) {
-            drawRect(p);
-        }
         break;
     }
     }
@@ -168,11 +162,14 @@ void GameButton::mousePressEvent(QMouseEvent *e)
     if (hitButton(e->pos())) {
         if (m_btnType == OnlyPic) {
             m_gameBtnPressd = true;
-        } else {
+        } else if (m_btnType == TextOnPic){
+            QPixmap pressPic = GameControl::m_picMap.value(qMakePair(ButtonPress, m_size));
+            m_pic = pressPic;
+        } else if (m_btnType == IconOnPic) {
             m_cotrolBtnPressd = true;
+            QPixmap pressPic = GameControl::m_picMap.value(qMakePair(ButtonPress, Small));
+            m_pic = pressPic;
         }
-        //        qInfo()<<m_isClicked;
-        //        Q_EMIT controlBtnClicked(m_isClicked);
         e->accept();
     } else {
         if (m_btnType == OnlyPic) {
@@ -188,8 +185,46 @@ void GameButton::mousePressEvent(QMouseEvent *e)
 
 void GameButton::mouseReleaseEvent(QMouseEvent *e)
 {
-    m_cotrolBtnPressd = false;
+    if (m_btnType == TextOnPic) {
+        QPixmap normalPic = GameControl::m_picMap.value(qMakePair(ButtonHover, m_size));
+        m_pic = normalPic;
+    }else if (m_btnType == IconOnPic) {
+        m_cotrolBtnPressd = false;
+        QPixmap normalPic = GameControl::m_picMap.value(qMakePair(ButtonHover, Small));
+        m_pic = normalPic;
+    } else if (m_btnType == OnlyPic){
+        m_gameBtnPressd = true;
+    }
     return QPushButton::mouseReleaseEvent(e);
+}
+
+void GameButton::enterEvent(QEvent *event)
+{
+    if (m_btnType == TextOnPic) {
+        QPixmap hoverPic = GameControl::m_picMap.value(qMakePair(ButtonHover, m_size));
+        m_pic = hoverPic;
+    }else if (m_btnType == IconOnPic) {
+        QPixmap hoverPic = GameControl::m_picMap.value(qMakePair(ButtonHover, Small));
+        m_pic = hoverPic;
+    } else if (m_btnType == OnlyPic){
+        event->ignore();
+    }
+    return QWidget::enterEvent(event);
+
+}
+
+void GameButton::leaveEvent(QEvent *event)
+{
+    if (m_btnType == TextOnPic) {
+        QPixmap normalPic = GameControl::m_picMap.value(qMakePair(ButtonNormal, m_size));
+        m_pic = normalPic;
+    }else if (m_btnType == IconOnPic) {
+        QPixmap normalPic = GameControl::m_picMap.value(qMakePair(ButtonNormal, Small));
+        m_pic = normalPic;
+    } else if (m_btnType == OnlyPic){
+        event->ignore();
+    }
+    return QWidget::leaveEvent(event);
 }
 
 void GameButton::setBtnMode(const GameBtnType &type)
@@ -211,17 +246,12 @@ GameBtnType GameButton::btnMode() const
 
 void GameButton::drawRect(QPainter &p)
 {
-    qreal rectX = rect().x();
-    qreal rectY = rect().y();
-    qreal rectWidth = rect().width();
-    qreal rectHeight = rect().height();
-    QColor color(Qt::yellow);
-    for (int i = 0; i < 10; i++) {
-        color.setAlpha(static_cast<int>(120 - qSqrt(i) * 40));
-        p.setPen(color);
-        // 圆角阴影边框;
-        p.drawRoundedRect(QRectF(rectX, rectY + i * 1, rectWidth, rectHeight - i * 1 - i * 1), 11, 11);
-    }
+    int rectX = rect().x();
+    int rectY = rect().y();
+    QPixmap pic = GameControl::m_picMap.value(qMakePair(checkeffect, Default));
+
+    p.drawPixmap(rectX - 6, rectY - 5, pic);
+
 }
 
 void GameButton::drawBackdrop(QPainter &p)

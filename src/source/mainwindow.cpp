@@ -79,12 +79,15 @@ void MainWindow::initPic()
     //    QTime time;
     //    time.start();
     //加载图片
-    for (int i = 1; i < 21; i++) {
+    for (int i = 1; i < 24; i++) {
         GameControl::loadPic(GameBtnFlag(i), GameBtnSize::Default, this);
     }
     for (int i=1;i<5;i++) {
     GameControl::loadPic(GameBtnFlag(-1),GameBtnSize(i), this);
+    GameControl::loadPic(GameBtnFlag(20),GameBtnSize(i), this);
+    GameControl::loadPic(GameBtnFlag(21),GameBtnSize(i), this);
     }
+
 
     //qInfo()<<time.elapsed()<<GameControl::m_picMap.value(qMakePair(GameBtnFlag::ButtonCat,GameBtnSize::Default));
 }
