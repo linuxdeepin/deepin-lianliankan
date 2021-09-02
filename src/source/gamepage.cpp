@@ -36,7 +36,6 @@
 #include <QFrame>
 #include <QTime>
 
-bool GamePage::m_isConnect = false;
 const int BtnFlashCount = 3;//提示按钮闪烁次数
 
 GamePage::GamePage(QWidget *parent)
@@ -159,11 +158,11 @@ void GamePage::initUI()
     controlFrame->setFixedSize(175, 542);
 
     m_controlGrp = new QButtonGroup(controlFrame);
-    GameButton *beginBtn = BtnFactory::createBtn(ButtonNormal, Small, None, "开始/暂停");
-    GameButton *resetBtn = BtnFactory::createBtn(ButtonNormal, Small, None, "重置");
-    GameButton *hintBtn = BtnFactory::createBtn(ButtonNormal, Small, None, "提示");
-    GameButton *soundBtn = BtnFactory::createBtn(ButtonNormal, Small, None, "音效");
-    GameButton *homeBtn = BtnFactory::createBtn(ButtonNormal, Small, None, "主页面");
+    GameButton *beginBtn = BtnFactory::createBtn(ButtonNormal, Small, Begin);
+    GameButton *resetBtn = BtnFactory::createBtn(ButtonNormal, Small, Reset);
+    GameButton *hintBtn = BtnFactory::createBtn(ButtonNormal, Small, Hint);
+    GameButton *soundBtn = BtnFactory::createBtn(ButtonNormal, Small, Sound);
+    GameButton *homeBtn = BtnFactory::createBtn(ButtonNormal, Small, Home);
     controlBtnLayout->addWidget(beginBtn);
     controlBtnLayout->addSpacing(-15);
     controlBtnLayout->addWidget(resetBtn);
@@ -254,7 +253,14 @@ void GamePage::setBtnEnabled(bool isEnabled)
 {
     //设置可点击状态
     m_gameFrame->setEnabled(isEnabled);
+    //改变开始状态
     m_isStart = isEnabled;
+    //更改开始图标状态
+    GameButton *beginBtn = dynamic_cast<GameButton *>(m_controlGrp->button(0));
+    if (!beginBtn)
+        return;
+    beginBtn->updatePlayIcon(isEnabled);
+
     for (QAbstractButton *btn : m_controlGrp->buttons()) {
         //开始按钮和返回主页面按钮和音效按钮保持可点击状态
         if (btn == m_controlGrp->button(0) || btn == m_controlGrp->button(4) || btn == m_controlGrp->button(3))
@@ -607,7 +613,6 @@ void GamePage::onControlBtnControl(int id)
             m_timer->start();
             //设置游戏状态开始
             Q_EMIT setGameStated(true);
-            //更改图标状态
         } else {
             //点击暂停后,设置相关按钮不可点击,定时器暂停
             setBtnEnabled(false);

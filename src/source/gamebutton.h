@@ -33,18 +33,56 @@ public:
     explicit GameButton(const QPixmap &pic,const QString &text,QWidget *parent = nullptr);
     explicit GameButton(const QPixmap &pic,const QPixmap &icon,QWidget*parent=nullptr);
     explicit GameButton(const QPixmap &pic,QWidget*parent=nullptr);
-    void setFont(const QFont &font); //设置字体
-    void setLocation(int x, int y); //设置坐标
+
+    /**
+    * @brief GameButton::setFont 设置字体按钮的字体
+    * @param font 具体字体
+    */
+    void setFont(const QFont &font);
+    /**
+    * @brief GameButton::setLocation 记录按钮行列
+    * @param x 行
+    * @param y 列
+    */
+    void setLocation(int x, int y);
+    /**
+    * @brief GameButton::setControlBtnPressed 设置游戏控制按钮是否按下
+    * @param pressed 按下状态
+    */
     void setControlBtnPressed(bool pressed);
-    void updatePic(const QPixmap &pic); //刷新按钮
+    /**
+    * @brief GameButton::setPressed 设置游戏按钮是否按下
+    * @param pressed 按下状态
+    */
+    void setPressed(bool isPressd);
+    /**
+    * @brief GameButton::setBtnMode 设置按钮类型
+    * @param type 按钮类型
+    */
+    void setBtnMode(const GameBtnType &type);
+    /**
+    * @brief GameButton:: updatePic 更新游戏背景图片
+    * @param pic 图片
+    */
+    void updatePic(const QPixmap &pic);
+    /**
+    * @brief GameButton:: updatePlayIcon 更新游戏控制按钮开始暂停图标
+    * @param isStarted 是否为开始状态
+    */
+    void updatePlayIcon(bool isStarted);
+    /**
+    * @brief GameButton:: location 获取游戏按钮行列
+    * @return QPoint 按钮行列
+    */
     inline const QPoint location() const
     {
         return QPoint(m_rowIndex, m_columnIndex);
     }
-    void setBtnMode(const GameBtnType &type); //设置按钮类型
-    void setPressed(bool isPressd); //设置按下
-    GameBtnType btnMode() const; //按钮类型
-public slots:
+    /**
+    * @brief GameButton:: btnMode 获取游戏按钮类型
+    * @return GameBtnType 按钮类型
+    */
+    GameBtnType btnMode() const;
 
 protected:
    void paintEvent(QPaintEvent *event) override;
@@ -52,8 +90,14 @@ protected:
    void mouseReleaseEvent(QMouseEvent *e) override;
 
    private:
-   void drawRect(QPainter &p); //绘制阴影
-   void drawBackdrop(QPainter &p); //绘制背景
+   /**
+   * @brief GameButton:: drawRect 绘制游戏按钮选中阴影
+   */
+   void drawRect(QPainter &p);
+   /**
+   * @brief GameButton:: drawRect 绘制游戏按钮背景
+   */
+   void drawBackdrop(QPainter &p);
 
    private:
    QPixmap m_pic;//按钮背景图

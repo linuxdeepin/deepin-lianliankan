@@ -24,5 +24,11 @@
         <file>assets/images/failed.png</file>
         <file>assets/images/victory.png</file>
         <file>assets/images/explode.png</file>
+        <file>assets/icon/home.svg</file>
+        <file>assets/icon/play.svg</file>
+        <file>assets/icon/reset.svg</file>
+        <file>assets/icon/sound.svg</file>
+        <file>assets/icon/hint.svg</file>
+        <file>assets/icon/pause.svg</file>
     </qresource>
 </RCC>

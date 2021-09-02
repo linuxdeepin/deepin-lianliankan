@@ -168,21 +168,25 @@ public:
 
         QSize size;
         GameButton *btn=nullptr;
-        QPixmap *btnIcon=nullptr;
+        QPixmap btnIcon;
+        QSize IconSize(0, 0);
 
         switch (iconType) {
            case Sound:
-            break;
+               btnIcon = Utils::getDpiPixmap(IconSize, ":/assets/icon/sound.svg", nullptr);
+               break;
            case Begin:
-            break;
+               btnIcon = Utils::getDpiPixmap(IconSize, ":/assets/icon/play.svg", nullptr);
+               break;
            case Reset:
-            break;
+               btnIcon = Utils::getDpiPixmap(IconSize, ":/assets/icon/reset.svg", nullptr);
+               break;
            case Hint:
-            break;
-           case Home:
-            break;
+               btnIcon = Utils::getDpiPixmap(IconSize, ":/assets/icon/hint.svg", nullptr);
+               break;
            default:
-            break;
+               btnIcon = Utils::getDpiPixmap(IconSize, ":/assets/icon/home.svg", nullptr);
+               break;
         }
 
         switch (btnSize) {
@@ -207,7 +211,7 @@ public:
         }
 
         if(flag==ButtonNormal){
-            if(!btnIcon){
+            if (iconType == None) {
                 btn=new GameButton(GameControl::m_picMap.value(qMakePair(flag,btnSize)) ,text,parent);
                 //修改bug，后面可能有用
 //                QBitmap bitmap = GameControl::m_picMap.value(qMakePair(flag,btnSize)).mask();
@@ -215,9 +219,9 @@ public:
 //                bitmap.rect().setHeight(mheight - 50);
 //                btn->setMask(bitmap);
 
-            }else {
-                btn=new GameButton(GameControl::m_picMap.value(qMakePair(flag,btnSize)),*btnIcon,parent);
-//                btn->setMask(GameControl::m_picMap.value(qMakePair(flag,btnSize)).mask());
+            } else {
+                btn = new GameButton(GameControl::m_picMap.value(qMakePair(flag, btnSize)), btnIcon, parent);
+                //                btn->setMask(GameControl::m_picMap.value(qMakePair(flag,btnSize)).mask());
             }
         }else {
             btn=new GameButton (GameControl::m_picMap.value(qMakePair(flag,btnSize)),parent);

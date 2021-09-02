@@ -19,6 +19,7 @@
 * along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 #include "gamebutton.h"
+#include "utils.h"
 
 #include <QPainter>
 #include <QFontMetricsF>
@@ -74,11 +75,28 @@ void GameButton::updatePic(const QPixmap &pic)
     update();
 }
 
+void GameButton::updatePlayIcon(bool isStarted)
+{
+    if (!isStarted) {
+        m_icon = Utils::getDpiPixmap(QSize(0, 0), ":/assets/icon/play.svg", nullptr);
+    } else {
+        m_icon = Utils::getDpiPixmap(QSize(0, 0), ":/assets/icon/pause.svg", nullptr);
+    }
+}
+
 void GameButton::paintEvent(QPaintEvent *e)
 {
     Q_UNUSED(e);
+
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing, true);
+
+    //绘制游戏页面控制按钮不可点击状态
+    if (!this->isEnabled() && this->btnMode() == IconOnPic) {
+        //透明度设置为0.6
+        p.setOpacity(0.6);
+    }
+
     //消失的情况消失相匹配元素.
     if (m_btnType == NoneType) {
         drawBackdrop(p);
@@ -116,6 +134,16 @@ void GameButton::paintEvent(QPaintEvent *e)
         break;
     }
     case IconOnPic: {
+        //绘制游戏控制按钮
+        int iconHeight = m_icon.height();
+        int iconWidth = m_icon.width();
+        int iconX = (rect().width() - iconWidth) / 2;
+        int iconY = (rect().height() - iconHeight - iconHeight / 2) / 2;
+        p.drawPixmap(QRect(iconX, iconY, iconWidth, iconHeight), m_icon);
+        //控制按钮测试效果,较随意
+        if (m_cotrolBtnPressd) {
+            drawRect(p);
+        }
         break;
     }
     default: {

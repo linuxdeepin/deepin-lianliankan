@@ -77,7 +77,6 @@ private:
     void hintBtnflash(GameBtnType type, bool pressAble);//提示按钮闪烁
 
 private:
-    static bool m_isConnect; //判断是否连接
     GameBlurEffectWidget *m_gameFrame; //游戏区域
     GameProgressBar *m_progress; //进度条
     QGridLayout *m_gameBtngridLayout; //游戏按钮布局

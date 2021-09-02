@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>暂停</title>
+    <g id="暂停" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="矩形" x="0" y="0" width="26" height="26"></rect>
+        <rect id="矩形" fill="#FFFFFF" x="6" y="4" width="4" height="18" rx="2"></rect>
+        <rect id="矩形备份" fill="#FFFFFF" x="16" y="4" width="4" height="18" rx="2"></rect>
+    </g>
+</svg>
