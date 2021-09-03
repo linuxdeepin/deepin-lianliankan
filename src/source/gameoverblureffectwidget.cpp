@@ -77,17 +77,15 @@ void GameoverBlurEffectWidget::initUI()
 {
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
     m_tipLabel = new DLabel;
-    QString m_Text = "";
     QFont font;
     font.setFamily("Noto Sans CJK SC");
     font.setPointSize(16);
-    m_tipLabel->setText(m_Text);
     m_tipLabel->setAlignment(Qt::AlignHCenter);
     m_tipLabel->setFont(font);
 
     m_OverBtnGroup = new QButtonGroup(this);
-    GameButton *againButton = BtnFactory::createBtn(ButtonNormal, Over, None, "再来一局");
-    GameButton *restButton = BtnFactory::createBtn(ButtonNormal, Over, None, "休息一下");
+    GameButton *againButton = BtnFactory::createBtn(ButtonNormal, Over, None, "Play Again");
+    GameButton *restButton = BtnFactory::createBtn(ButtonNormal, Over, None, "Have a Rest");
     m_OverBtnGroup->addButton(againButton,0);
     m_OverBtnGroup->addButton(restButton,1);
     QHBoxLayout *buttonLayout = new QHBoxLayout;

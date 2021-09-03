@@ -200,10 +200,10 @@ void MainWindow::showFinishPage(bool res)
     QString text = "";
     if (!res) {
         GameoverBlurEffectWidget::m_overType = GameOverType::Failed;
-        text = tr("时间已用完,下一次要加快速度哦！");
+        text = tr("FAIL");
     } else {
         GameoverBlurEffectWidget::m_overType = GameOverType::Victory;
-        text = tr("您赢了！！");
+        text = tr("VICTORY");
     }
     m_gameOverPage->updateLabel(text);
     m_gameOverPage->setFixedSize(QSize(1024,718));

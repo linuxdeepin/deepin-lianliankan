@@ -68,5 +68,4 @@ install(FILES assets/com.deepin.lianliankan.desktop DESTINATION ${CMAKE_INSTALL_
 install(FILES assets/images/com.deepin.lianliankan.svg
             DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps/)
 install(TARGETS ${EXE_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
-#install(DIRECTORY assets/deepin-log-viewer DESTINATION /usr/share/deepin-manual/manual-assets/application/)
-
+install(DIRECTORY assets/com.deepin.lianliankan DESTINATION /usr/share/deepin-manual/manual-assets/application/)

@@ -224,11 +224,11 @@ public:
             if (iconType == None) {
                 btn=new GameButton(flag,btnSize ,text,parent);
                 //配置可选区域
-                btn->setMask(GameControl::m_picMap.value(qMakePair(flag,btnSize)).mask());
+                //                btn->setMask(GameControl::m_picMap.value(qMakePair(flag,btnSize)).mask());
             } else {
                 btn = new GameButton(GameControl::m_picMap.value(qMakePair(flag, btnSize)), btnIcon, parent);
                 //配置可选区域
-                btn->setMask(GameControl::m_picMap.value(qMakePair(flag,btnSize)).mask());
+                //                btn->setMask(GameControl::m_picMap.value(qMakePair(flag,btnSize)).mask());
             }
         }else {
             btn=new GameButton (GameControl::m_picMap.value(qMakePair(flag,btnSize)),parent);

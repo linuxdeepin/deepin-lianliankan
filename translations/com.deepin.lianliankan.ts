@@ -5,17 +5,17 @@
     <name>CloseWindowDialog</name>
     <message>
         <location filename="../src/source/closewindowdialog.cpp" line="48"/>
-        <source>游戏正在进行中，您确认退出吗？</source>
+        <source>Are you sure you want to exit the game?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/source/closewindowdialog.cpp" line="56"/>
-        <source>继续游戏</source>
+        <source>Keep Playing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/source/closewindowdialog.cpp" line="57"/>
-        <source>确认退出</source>
+        <source>Exit</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -38,22 +38,22 @@
     <name>MainPage</name>
     <message>
         <location filename="../src/source/mainpage.cpp" line="46"/>
-        <source>初级</source>
+        <source>Easy</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/source/mainpage.cpp" line="47"/>
-        <source>中级</source>
+        <source>Normal</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/source/mainpage.cpp" line="48"/>
-        <source>高级</source>
+        <source>Hard</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/source/mainpage.cpp" line="67"/>
-        <source>难度选择</source>
+        <source>Select Level</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -61,12 +61,12 @@
     <name>MainWindow</name>
     <message>
         <location filename="../src/source/mainwindow.cpp" line="203"/>
-        <source>时间已用完,下一次要加快速度哦！</source>
+        <source>FAIL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../src/source/mainwindow.cpp" line="206"/>
-        <source>您赢了！！</source>
+        <source>VICTORY</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

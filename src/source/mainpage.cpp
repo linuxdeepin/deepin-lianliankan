@@ -43,9 +43,9 @@ MainPage::MainPage(QWidget*parent):DWidget (parent)
 void MainPage::initUI()
 {
     m_btnGrp=new QButtonGroup(this);
-    GameButton *primaryBtn=BtnFactory::createBtn(GameBtnFlag::ButtonNormal,GameBtnSize::Mid,GameIconType::None,tr("初级"),this);
-    GameButton *interBtn=BtnFactory::createBtn(GameBtnFlag::ButtonNormal,GameBtnSize::Mid,GameIconType::None,tr("中级"),this);
-    GameButton *advanceBtn=BtnFactory::createBtn(GameBtnFlag::ButtonNormal,GameBtnSize::Mid,GameIconType::None,tr("高级"),this);
+    GameButton *primaryBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Mid, GameIconType::None, tr("Easy"), this);
+    GameButton *interBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Mid, GameIconType::None, tr("Normal"), this);
+    GameButton *advanceBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Mid, GameIconType::None, tr("Hard"), this);
     m_btnGrp->addButton(primaryBtn, 0);
     m_btnGrp->addButton(interBtn, 1);
     m_btnGrp->addButton(advanceBtn, 2);
@@ -64,7 +64,7 @@ void MainPage::initUI()
     switchFrame->setGeometry(278,125,FRAMEWH,FRAMEHH);
     switchFrame->setLayout(frameLayout);
 
-    GameButton *swithBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Big, GameIconType::None, tr("难度选择"), this);
+    GameButton *swithBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Big, GameIconType::None, tr("Select Level"), this);
     swithBtn->setEnabled(false);
     swithBtn->setGeometry(393,80,250,135);
     m_soundBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Small, GameIconType::Sound);

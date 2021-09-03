@@ -45,7 +45,7 @@ void CloseWindowDialog::initUI()
 //    DFontSizeManager::instance()->bind(m_detailLabel, DFontSizeManager::T6, QFont::Medium);
     m_detailLabel->setWordWrap(true);
     m_detailLabel->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
-    m_detailLabel->setText(tr("游戏正在进行中，您确认退出吗？"));
+    m_detailLabel->setText(tr("Are you sure you want to exit the game?"));
     QFont tipFont;
     tipFont.setFamily("Noto Sans CJK SC");
     tipFont.setWeight(QFont::DemiBold);
@@ -53,8 +53,8 @@ void CloseWindowDialog::initUI()
     m_detailLabel->setFont(tipFont);
     addContent(m_detailLabel, Qt::AlignCenter);
     addSpacing(10);
-    addButton(tr("继续游戏"), true, ButtonNormal);
-    addButton(tr("确认退出"), true, ButtonNormal);
+    addButton(tr("Keep Playing"), true, ButtonNormal);
+    addButton(tr("Exit"), true, ButtonNormal);
 }
 
 void CloseWindowDialog::onButtonClicked(int index, const QString &)
