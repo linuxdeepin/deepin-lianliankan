@@ -167,6 +167,17 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
 }
 
+void MainWindow::changeEvent(QEvent *event)
+{
+    if(event->type()!=QEvent::WindowStateChange) {
+        event->accept();
+    }
+    if(this->windowState()==Qt::WindowMinimized) {
+        m_gamePage->pauseGame();
+    }
+    event->accept();
+}
+
 void MainWindow::onShowClickedPage(int id)
 {
     switch (id) {

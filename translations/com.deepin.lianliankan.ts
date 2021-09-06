@@ -60,12 +60,12 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/source/mainwindow.cpp" line="203"/>
+        <location filename="../src/source/mainwindow.cpp" line="214"/>
         <source>FAIL</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../src/source/mainwindow.cpp" line="206"/>
+        <location filename="../src/source/mainwindow.cpp" line="217"/>
         <source>VICTORY</source>
         <translation type="unfinished"></translation>
     </message>

@@ -43,6 +43,10 @@ public:
     void setSoundSwitch(bool isOpen); //设置音效开关
     bool soundSwitch() const; //音效开关
     void beginGame(); //开始游戏
+    /**
+     * @brief pauseGame 暂停游戏
+     */
+    void pauseGame();
 
 signals:
     void backToMainPage();

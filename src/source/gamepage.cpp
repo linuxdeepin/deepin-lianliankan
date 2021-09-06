@@ -80,6 +80,15 @@ void GamePage::beginGame()
     updateBtn();
 }
 
+void GamePage::pauseGame()
+{
+    if(!m_isStart || !m_gameStart) {
+        return;
+    }
+    setBtnEnabled(false);
+    m_timer->stop();
+}
+
 void GamePage::resetGame()
 {
     GameControl::GameInterFace().gameReset();
@@ -611,9 +620,7 @@ void GamePage::onControlBtnControl(int id)
             Q_EMIT setGameStated(true);
         } else {
             //点击暂停后,设置相关按钮不可点击,定时器暂停
-            setBtnEnabled(false);
-            m_timer->stop();
-            //更改图标状态
+            pauseGame();
         }
         break;
     }
