@@ -39,46 +39,154 @@ class GamePage : public QWidget
     Q_OBJECT
 public:
     explicit GamePage(QWidget *parent = nullptr);
-    void setInitalTime(int time); //设置初始化时间
-    void setSoundSwitch(bool isOpen); //设置音效开关
-    bool soundSwitch() const; //音效开关
-    void beginGame(); //开始游戏
     /**
-     * @brief pauseGame 暂停游戏
+    * @brief GamePage::  setInitalTime 设置倒计时的时间
+    * @param time 倒计时时间
+    */
+    void setInitalTime(int time);
+    /**
+    * @brief  GamePage::  setSoundSwitch 设置音效开关
+    * @param isOpen 设置开关的状态
+    */
+    void setSoundSwitch(bool isOpen);
+    /**
+    * @brief  GamePage:: soundSwitch 音效当前开关状态
+    * @return bool 音效开关
+    */
+    bool soundSwitch() const;
+    /**
+     * @brief GamePage::setOnOffGame 开始停止按钮和最小化暂停控制游戏的开始停止
+     * @param isBegin 设置开始暂停状态
      */
-    void pauseGame();
-
+    void setOnOffGame(bool isBegin);
+    /**
+     * @brief GamePage::onOffGame 开始停止按钮和最小化暂停控制游戏的开始停止
+     * @return bool 游戏开始暂停状态
+     */
+    bool onOffGame() const;
+    /**
+    * @brief  GamePage:: reStartGame 第一次进入游戏或重玩游戏
+    * @param isFirst 是否为第一次
+    */
+    void restartGame(bool isFirst);
 signals:
+    /**
+    * @brief  GamePage:: reStartGame 回到主页面的信号
+    */
     void backToMainPage();
+    /**
+    * @brief  GamePage:: sigResult 传递游戏失败胜利的信号
+    * @param res 成功或者失败
+    */
     void sigResult(bool res);
+    /**
+    * @brief  GamePage:: setGameStated 游戏是否正在进行种的信号
+    * @param state 是否正在进行游戏
+    */
     void setGameStated(bool state);
 
 public slots:
+    /**
+    * @brief  GamePage::onControlBtnControl 游戏控制按钮的选择
+    * @param id 选中的按钮id
+    */
     void onControlBtnControl(int id);
+    /**
+    * @brief  GamePage::onAnimalBtnControl 游戏界面动物按钮的选中
+    * @param btn 选中的游戏动物按钮
+    */
     void onAnimalBtnControl(QAbstractButton *btn);
+    /**
+    * @brief  GamePage::onProgressChanged 游戏界面界面倒计时的变化
+    * @param value 倒计时数值
+    */
     void onProgressChanged(int value);
+    /**
+    * @brief  GamePage::reGame 游戏结果页面再玩当前的难度再玩一局
+    */
     void reGame();
 
 protected:
     void mouseMoveEvent(QMouseEvent *event) override;
 private:
+    /**
+    * @brief  GamePage::initUI 初始化游戏界面UI
+    */
     void initUI();
+    /**
+    * @brief  GamePage::initConnect 绑定信号槽
+    */
     void initConnect();
-    void initGameBtn(); //初始化游戏按钮
-    void resetGame(); //重置游戏
-    void hintGame(); //提示游戏
-    bool judgeGame(); //判断游戏
-    bool judgeVictory(); //判断游戏是否胜利;
-    void setBtnEnabled(bool isEnabled); //是否按钮可以点击
-    void shadowBtn(GameButton *btn); //游戏按钮阴影处理
-    void updateBtn(); //刷新按钮
-    void successAction(GameButton *prebtn, GameButton *currentbtn); //连接失败设置
-    void failedAction(GameButton *prebtn, GameButton *currentbtn); //连接失败设置
-    void popDialog(); //弹出关闭弹窗
-    void updateConnection(); //更新连线
-    QPointF dirCoord(PosType order, int dir, QPointF pos); //获取方向坐标
-    int changeDir(int dir); //上下左右方向对应切换
-    void hintBtnflash(GameBtnType type, bool pressAble);//提示按钮闪烁
+    /**
+    * @brief  GamePage::initGameBtn 初始化动物游戏按钮
+    */
+    void initGameBtn();
+    /**
+    * @brief  GamePage::resetGame 重置游戏
+    */
+    void resetGame();
+    /**
+    * @brief  GamePage::hintGame 提示游戏
+    */
+    void hintGame();
+    /**
+    * @brief  GamePage::shadowBtn 游戏按钮阴影处理
+    */
+    void shadowBtn(GameButton *btn);
+    /**
+    * @brief  GamePage::updateBtn 刷新按钮
+    */
+    void updateBtn();
+    /**
+    * @brief  GamePage::successAction 连接成功的一系列动作和设置
+    * @param  prebtn 前一个点击的游戏按钮
+    * @param  currentbtn 当前点击的游戏按钮
+    */
+    void successAction(GameButton *prebtn, GameButton *currentbtn);
+    /**
+    * @brief  GamePage::failedAction 连接失败的一系列动作和设置
+    * @param  prebtn 前一个点击的游戏按钮
+    * @param  currentbtn 当前点击的游戏按钮
+    */
+    void failedAction(GameButton *prebtn, GameButton *currentbtn);
+    /**
+    * @brief  GamePage::popDialog 弹出关闭弹窗
+    */
+    void popDialog();
+    /**
+    * @brief  GamePage::updateConnection 更新通路连线,绘制线路
+    */
+    void updateConnection();
+    /**
+    * @brief  GamePage::hintBtnflash 提示按钮闪烁
+    * @param  type 按钮类型
+    * @param  pressAble 是否按下
+    */
+    void hintBtnflash(GameBtnType type, bool pressAble);
+    /**
+    * @brief  GamePage::judgeGame 判断游戏是否有可连接的线路
+    * @return bool 是否有可连接的线路
+    */
+    bool judgeGame();
+    /**
+    * @brief  GamePage::judgeVictory 判断游戏是否胜利
+    * @return bool 游戏胜利或者失败
+    */
+    bool judgeVictory();
+    /**
+    * @brief  GamePage::changeDir 获取相反的方向
+    * @param  dir 原来的方向
+    * @return int 相反的方向
+    */
+    int changeDir(int dir);
+    /**
+    * @brief  GamePage::dirCoord 获取方向坐标
+    * @param  order 连线或者爆炸效果
+    * @param  dir 方向
+    * @param  pos 当前点击按钮的坐标
+    * @return QPointF 得到的爆炸图或者连线的坐标
+    */
+    QPointF dirCoord(PosType order, int dir, QPointF pos);
 
 private:
     GameBlurEffectWidget *m_gameFrame; //游戏区域
@@ -97,13 +205,13 @@ private:
     QList<GameButton *> m_hintBtn;//提示按钮
     int m_value; //进度值
     int m_flashCount;//闪烁次数
-    bool m_isStart = false; //开始暂停的控制
-    bool m_soundSwitch = true; //音效开关控制
-    bool m_gameStart = false;//记录游戏开始状态
     int m_timeRecord;//记录难度时间
     int m_dir; //路径方向
     int m_btnWidth; //游戏按钮宽度
     int m_btnHeight; //游戏按钮高度
+    bool m_isStart = false; //开始暂停的控制
+    bool m_soundSwitch = true; //音效开关控制
+    bool m_gameStart = false; //记录游戏是否正在进行,暂停也是正在行
 };
 
 #endif // GAMEPAGE_H

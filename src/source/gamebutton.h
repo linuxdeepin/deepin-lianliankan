@@ -97,7 +97,7 @@ protected:
    */
    void drawRect(QPainter &p);
    /**
-   * @brief GameButton:: drawRect 绘制游戏按钮背景
+   * @brief GameButton:: drawBackdrop 绘制游戏按钮背景
    */
    void drawBackdrop(QPainter &p);
 

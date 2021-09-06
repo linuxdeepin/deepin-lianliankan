@@ -1,22 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="en_US">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" version="2.1">
 <context>
     <name>CloseWindowDialog</name>
     <message>
         <location filename="../src/source/closewindowdialog.cpp" line="48"/>
         <source>Are you sure you want to exit the game?</source>
-        <translation>Are you sure you want to exit the game?</translation>
+        <translation>¿Estás seguro de que quieres salir del juego?</translation>
     </message>
     <message>
         <location filename="../src/source/closewindowdialog.cpp" line="56"/>
         <source>Keep Playing</source>
-        <translation>Keep Playing</translation>
+        <translation>Seguir jugando</translation>
     </message>
     <message>
         <location filename="../src/source/closewindowdialog.cpp" line="57"/>
         <source>Exit</source>
-        <translation>Exit</translation>
+        <translation>Salir</translation>
     </message>
 </context>
 <context>
@@ -31,7 +29,7 @@
     <message>
         <location filename="../src/main.cpp" line="64"/>
         <source>Lianliankan is a puzzle game.</source>
-        <translation>Lianliankan is a puzzle game.</translation>
+        <translation>Lianliankan es un juego de puzzle.</translation>
     </message>
 </context>
 <context>
@@ -39,7 +37,7 @@
     <message>
         <location filename="../src/source/mainpage.cpp" line="46"/>
         <source>Easy</source>
-        <translation>Easy</translation>
+        <translation>Facil</translation>
     </message>
     <message>
         <location filename="../src/source/mainpage.cpp" line="47"/>
@@ -49,25 +47,25 @@
     <message>
         <location filename="../src/source/mainpage.cpp" line="48"/>
         <source>Hard</source>
-        <translation>Hard</translation>
+        <translation>Dificil</translation>
     </message>
     <message>
         <location filename="../src/source/mainpage.cpp" line="67"/>
         <source>Select Level</source>
-        <translation>Select Level</translation>
+        <translation>Seleccionar Nivel</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/source/mainwindow.cpp" line="220"/>
+        <location filename="../src/source/mainwindow.cpp" line="203"/>
         <source>FAIL</source>
-        <translation>FAIL</translation>
+        <translation>FALLO</translation>
     </message>
     <message>
-        <location filename="../src/source/mainwindow.cpp" line="223"/>
+        <location filename="../src/source/mainwindow.cpp" line="206"/>
         <source>VICTORY</source>
-        <translation>VICTORY</translation>
+        <translation>VICTORIA</translation>
     </message>
 </context>
 </TS>

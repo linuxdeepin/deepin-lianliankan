@@ -1,0 +1,21 @@
+[Desktop Entry]
+Categories=Qt
+Exec=/usr/bin/com.deepin.lianliankan %F
+GenericName=LianLianKan
+GenericName[en_US]=LianLianKan
+GenericName[es]=LianLianKan
+GenericName[zh_CN]=连连看
+GenericName[zh_HK]=連連看
+GenericName[zh_TW]=連連看
+Icon=com.deepin.lianliankan
+Keywords=lianliankan;game;deepin;
+Name=LianLianKan
+Name[en_US]=LianLianKan
+Name[es]=LianLianKan
+Name[zh_CN]=连连看
+Name[zh_HK]=連連看
+Name[zh_TW]=連連看
+StartupNotify=true
+TryExec=/usr/bin/com.deepin.lianliankan
+Type=Application
+X-Deepin-Vendor=user-custom

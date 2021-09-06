@@ -152,6 +152,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
 {
     if (m_gameState) {
         CloseWindowDialog *dialog = new CloseWindowDialog(this);
+        //保留弹出窗口前的开始暂停状态
+        bool preOnOff = m_gamePage->onOffGame();
+        //弹出阻塞窗口暂停游戏
+        m_gamePage->setOnOffGame(false);
         int dialogY = (this->height()-dialog->height())/2 + this->y();
         int dialogX = (this->width()-dialog->width())/2 + this->x();
         dialog->setGeometry(dialogX, dialogY, dialog->width(),dialog->height());
@@ -160,6 +164,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
         if (dialog->result() == QMessageBox::Ok) {
             event->accept();
         } else {
+            m_gamePage->setOnOffGame(preOnOff);
             event->ignore();
         }
     } else {
@@ -173,7 +178,8 @@ void MainWindow::changeEvent(QEvent *event)
         event->accept();
     }
     if(this->windowState()==Qt::WindowMinimized) {
-        m_gamePage->pauseGame();
+        if (m_gamePage->onOffGame())
+            m_gamePage->setOnOffGame(false);
     }
     event->accept();
 }
@@ -192,7 +198,7 @@ void MainWindow::onShowClickedPage(int id)
         break;
     }
     if (!m_firstGame)
-        m_gamePage->beginGame();
+        m_gamePage->restartGame(m_firstGame);
 
     m_firstGame = false;
     m_stackedWidget->setCurrentWidget(m_gamePage);

@@ -74,19 +74,44 @@ bool GamePage::soundSwitch() const
     return m_soundSwitch;
 }
 
-void GamePage::beginGame()
+void GamePage::restartGame(bool isFirst)
 {
     GameControl::GameInterFace().gameBegin();
-    updateBtn();
+    //第一次游戏只需要打乱游戏地图,重新开始游戏需要刷新按钮
+    if (!isFirst)
+        updateBtn();
 }
 
-void GamePage::pauseGame()
+void GamePage::setOnOffGame(bool isBegin)
 {
-    if(!m_isStart || !m_gameStart) {
-        return;
+    if (isBegin) {
+        m_gameStart = true;
+        m_timer->start();
+    } else {
+        m_timer->stop();
     }
-    setBtnEnabled(false);
-    m_timer->stop();
+
+    //设置可点击状态
+    m_gameFrame->setEnabled(isBegin);
+    //改变开始状态
+    m_isStart = isBegin;
+    //更改开始图标状态
+    GameButton *beginBtn = dynamic_cast<GameButton *>(m_controlGrp->button(0));
+    if (!beginBtn)
+        return;
+    beginBtn->updatePlayIcon(isBegin);
+
+    for (QAbstractButton *btn : m_controlGrp->buttons()) {
+        //开始按钮和返回主页面按钮和音效按钮保持可点击状态
+        if (btn == m_controlGrp->button(0) || btn == m_controlGrp->button(4) || btn == m_controlGrp->button(3))
+            continue;
+        btn->setEnabled(isBegin);
+    }
+}
+
+bool GamePage::onOffGame() const
+{
+    return m_isStart;
 }
 
 void GamePage::resetGame()
@@ -161,7 +186,7 @@ void GamePage::initUI()
     m_gameBtngridLayout->setContentsMargins(20, 10, 20, 35);
     m_animalGrp = new QButtonGroup(this);
     m_animalGrp->setExclusive(true);
-    initGameBtn(); //初始化游戏按钮
+    initGameBtn(); //初始化游戏按钮和状态
     m_gameFrame->setLayout(m_gameBtngridLayout);
 
     GameBlurEffectWidget *controlFrame = new GameBlurEffectWidget(GameBtnSize::Small, this);
@@ -188,7 +213,8 @@ void GamePage::initUI()
     m_controlGrp->addButton(hintBtn, 2);
     m_controlGrp->addButton(soundBtn, 3);
     m_controlGrp->addButton(homeBtn, 4);
-
+    //设置状态为暂停状态
+    setOnOffGame(false);
     controlBtnLayout->setAlignment(Qt::AlignHCenter);
     controlBtnLayout->setContentsMargins(0, 25, 0, 25);
     controlFrame->setLayout(controlBtnLayout);
@@ -202,7 +228,6 @@ void GamePage::initUI()
     mainLayout->addLayout(gameFrameLayout);
     mainLayout->addWidget(m_progress);
     mainLayout->setContentsMargins(15, 86, 15, 25);
-    setBtnEnabled(false);
     this->setLayout(mainLayout);
     m_drawScene = new GameLineScene(this);
     m_drawScene->setFixedSize(this->parent()->property("size").value<QSize>());
@@ -239,7 +264,8 @@ void GamePage::initConnect()
 
 void GamePage::initGameBtn()
 {
-    GameControl::GameInterFace().gameBegin();
+    //初始化游戏按钮
+    restartGame(true);
     for (int i = 0; i < GAMEROW; i++) {
         for (int j = 0; j < GAMECOLUMN; j++) {
             GameButton *gameBtn = BtnFactory::createBtn(GameControl::m_map[i + 1][j + 1], Default, None);
@@ -252,26 +278,7 @@ void GamePage::initGameBtn()
             m_gameBtngridLayout->addWidget(gameBtn, i, j);
         }
     }
-}
 
-void GamePage::setBtnEnabled(bool isEnabled)
-{
-    //设置可点击状态
-    m_gameFrame->setEnabled(isEnabled);
-    //改变开始状态
-    m_isStart = isEnabled;
-    //更改开始图标状态
-    GameButton *beginBtn = dynamic_cast<GameButton *>(m_controlGrp->button(0));
-    if (!beginBtn)
-        return;
-    beginBtn->updatePlayIcon(isEnabled);
-
-    for (QAbstractButton *btn : m_controlGrp->buttons()) {
-        //开始按钮和返回主页面按钮和音效按钮保持可点击状态
-        if (btn == m_controlGrp->button(0) || btn == m_controlGrp->button(4) || btn == m_controlGrp->button(3))
-            continue;
-        btn->setEnabled(isEnabled);
-    }
 }
 
 void GamePage::shadowBtn(GameButton *btn)
@@ -359,8 +366,8 @@ void GamePage::successAction(GameButton *preBtn, GameButton *currentBtn)
     //判断游戏是否胜利,如果胜利,发送成功信号
     if (judgeVictory()) {
         //游戏胜利啦!
-        m_timer->stop();
-        setBtnEnabled(false);
+        //将游戏状态暂停
+        setOnOffGame(false);
         Q_EMIT sigResult(true);
     }
 
@@ -384,6 +391,11 @@ void GamePage::failedAction(GameButton *preBtn, GameButton *currentBtn)
 void GamePage::popDialog()
 {
     CloseWindowDialog *dialog = new CloseWindowDialog(this);
+
+    //保留弹出窗口前的开始暂停状态
+    bool preOnOff = onOffGame();
+    //弹出阻塞窗口暂停游戏
+    setOnOffGame(false);
     //    int dialogY = (this->height()-dialog->height())/2 + this->y();
     //    int dialogX = (this->width()-dialog->width())/2 + this->x();
     //    dialog->setGeometry(dialogX, dialogY, dialog->width(),dialog->height());
@@ -393,10 +405,12 @@ void GamePage::popDialog()
     if (dialog->result() == QMessageBox::Ok) {
         //返回主页面
         Q_EMIT backToMainPage();
-        setBtnEnabled(false);
-        m_timer->stop();
         Q_EMIT setGameStated(false);
+    } else {
+        //点击继续游戏,游戏回到弹出阻塞窗口前的状态
+        setOnOffGame(preOnOff);
     }
+
     GameButton *btn = dynamic_cast<GameButton *>(m_controlGrp->button(4));
     if (!btn) {
         return;
@@ -612,15 +626,12 @@ void GamePage::onControlBtnControl(int id)
     switch (id) {
     case 0: {
         if (!m_isStart) {
-            m_gameStart = true;
             //点击开始后,设置相关按钮可点击,定时器开始
-            setBtnEnabled(true);
-            m_timer->start();
-            //设置游戏状态开始
+            setOnOffGame(true);
             Q_EMIT setGameStated(true);
         } else {
             //点击暂停后,设置相关按钮不可点击,定时器暂停
-            pauseGame();
+            setOnOffGame(false);
         }
         break;
     }
@@ -688,19 +699,18 @@ void GamePage::onAnimalBtnControl(QAbstractButton *btn)
 void GamePage::onProgressChanged(int value)
 {
     if (value == 0) {
-        m_timer->stop();
         //无了!
         //显示失败结果,发送失败信号
-        setBtnEnabled(false);
+        //将游戏暂停
+        setOnOffGame(false);
         Q_EMIT sigResult(false);
     }
 }
 
 void GamePage::reGame()
 {
-    GameControl::GameInterFace().gameBegin();
     setInitalTime(m_timeRecord);
-    updateBtn();
+    restartGame(false);
 }
 
 void GamePage::mouseMoveEvent(QMouseEvent *event)

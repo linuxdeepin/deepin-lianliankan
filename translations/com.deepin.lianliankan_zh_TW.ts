@@ -1,22 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="en_US">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_TW" version="2.1">
 <context>
     <name>CloseWindowDialog</name>
     <message>
         <location filename="../src/source/closewindowdialog.cpp" line="48"/>
         <source>Are you sure you want to exit the game?</source>
-        <translation>Are you sure you want to exit the game?</translation>
+        <translation>遊戲正在進行中，確定退出嗎？</translation>
     </message>
     <message>
         <location filename="../src/source/closewindowdialog.cpp" line="56"/>
         <source>Keep Playing</source>
-        <translation>Keep Playing</translation>
+        <translation>繼續遊戲</translation>
     </message>
     <message>
         <location filename="../src/source/closewindowdialog.cpp" line="57"/>
         <source>Exit</source>
-        <translation>Exit</translation>
+        <translation>退 出</translation>
     </message>
 </context>
 <context>
@@ -26,12 +24,12 @@
         <location filename="../src/main.cpp" line="65"/>
         <location filename="../src/main.cpp" line="66"/>
         <source>LianLianKan</source>
-        <translation>LianLianKan</translation>
+        <translation>連連看</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="64"/>
         <source>Lianliankan is a puzzle game.</source>
-        <translation>Lianliankan is a puzzle game.</translation>
+        <translation>連連看是一款益智類小遊戲。</translation>
     </message>
 </context>
 <context>
@@ -39,35 +37,35 @@
     <message>
         <location filename="../src/source/mainpage.cpp" line="46"/>
         <source>Easy</source>
-        <translation>Easy</translation>
+        <translation>初級</translation>
     </message>
     <message>
         <location filename="../src/source/mainpage.cpp" line="47"/>
         <source>Normal</source>
-        <translation>Normal</translation>
+        <translation>中級</translation>
     </message>
     <message>
         <location filename="../src/source/mainpage.cpp" line="48"/>
         <source>Hard</source>
-        <translation>Hard</translation>
+        <translation>進階</translation>
     </message>
     <message>
         <location filename="../src/source/mainpage.cpp" line="67"/>
         <source>Select Level</source>
-        <translation>Select Level</translation>
+        <translation>難度選擇</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/source/mainwindow.cpp" line="220"/>
+        <location filename="../src/source/mainwindow.cpp" line="203"/>
         <source>FAIL</source>
-        <translation>FAIL</translation>
+        <translation>時間已用完，下次快點喔！</translation>
     </message>
     <message>
-        <location filename="../src/source/mainwindow.cpp" line="223"/>
+        <location filename="../src/source/mainwindow.cpp" line="206"/>
         <source>VICTORY</source>
-        <translation>VICTORY</translation>
+        <translation>您贏了！！</translation>
     </message>
 </context>
 </TS>

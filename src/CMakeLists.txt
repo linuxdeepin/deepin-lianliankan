@@ -36,7 +36,7 @@ file (GLOB APP_TS_FILES translations/*.ts)
 set(APP_TRANS_SCRIPT "${CMAKE_CURRENT_SOURCE_DIR}/translate_generation.sh")
 execute_process(COMMAND bash ${APP_TRANS_SCRIPT}
     WORKING_DIRECTORY ${TS_DIR})
-qt5_create_translation(APP_QM_FILES ${APP_TS_FILES} ${APP_QM_FILES})
+file(GLOB INSTALL_QM_FILES ../translations/*.qm)
 
 #源文件、头文件和资源文件
 include_directories(${PROJECT_SOURCE_DIR})
@@ -51,7 +51,7 @@ file(GLOB_RECURSE res_files RELATIVE ${PROJECT_SOURCE_DIR} *.qrc)
 QT5_ADD_RESOURCES(QRC_FILES ${res_files})
 
 #生成可执行程序
-add_executable(${EXE_NAME} ${c_files} ${h_files} ${QRC_FILES} ${APP_QM_FILES})
+add_executable(${EXE_NAME} ${c_files} ${h_files} ${QRC_FILES})
 
 
 target_include_directories(${EXE_NAME} PUBLIC ${DtkWidget_INCLUDE_DIRS} ${OBJECT_BINARY_DIR})
@@ -63,8 +63,8 @@ target_link_libraries(${EXE_NAME}
 
 # Install files
 set(CMAKE_INSTALL_PREFIX /usr)
-install(FILES ${APP_QM_FILES} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/com.deepin.lianliankan/translations)
-install(FILES assets/com.deepin.lianliankan.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
+install(FILES ${INSTALL_QM_FILES} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/com.deepin.lianliankan/translations)
+install(FILES ../translations/desktop/com.deepin.lianliankan.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
 install(FILES assets/images/com.deepin.lianliankan.svg
             DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps/)
 install(TARGETS ${EXE_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
