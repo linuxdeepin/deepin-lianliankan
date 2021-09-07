@@ -160,9 +160,12 @@ private:
     /**
     * @brief  GamePage::hintBtnflash 提示按钮闪烁
     * @param  type 按钮类型
-    * @param  pressAble 是否按下
     */
-    void hintBtnflash(GameBtnType type, bool pressAble);
+    void hintBtnflash(GameBtnType type);
+    /**
+     * @brief recoverBtnState 恢复按钮默认状态
+     */
+    void recoverBtnState();
     /**
     * @brief  GamePage::judgeGame 判断游戏是否有可连接的线路
     * @return bool 是否有可连接的线路

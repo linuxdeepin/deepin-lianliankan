@@ -117,6 +117,11 @@ bool GamePage::onOffGame() const
 void GamePage::resetGame()
 {
     GameControl::GameInterFace().gameReset();
+    //消除提示效果
+    m_hintPicOnTimer->stop();
+    m_hintPicOffTimer->stop();
+    hintBtnflash(GameBtnType::OnlyPic);
+    recoverBtnState();
     updateBtn();
 }
 
@@ -149,10 +154,11 @@ void GamePage::hintGame()
             }
             gameBtnList.append(gameBtn);
             gameBtn->setPressed(true);
+            gameBtn->setEnabled(false);
         }
         m_hintBtn = gameBtnList;
         //设置提示按钮闪烁
-        hintBtnflash(GameBtnType::NoneType, false);
+        hintBtnflash(GameBtnType::NoneType);
         m_flashCount = BtnFlashCount;
         m_hintPicOnTimer->start();
     }
@@ -246,18 +252,17 @@ void GamePage::initConnect()
     QObject::connect(m_hintPicOnTimer, &QTimer::timeout, this, [&] {
         m_hintPicOnTimer->stop();
         m_flashCount--;
-        this->hintBtnflash(GameBtnType::OnlyPic, false);
+        this->hintBtnflash(GameBtnType::OnlyPic);
         if(m_flashCount != 0) {
             m_hintPicOffTimer->start();
         } else if (m_flashCount == 0) {
-            this->hintBtnflash(GameBtnType::OnlyPic, true);
-            m_hintBtn.at(0)->setPressed(false);
-            m_hintBtn.at(1)->setPressed(false);
+            this->hintBtnflash(GameBtnType::OnlyPic);
+            this->recoverBtnState();
         }
     });
     QObject::connect(m_hintPicOffTimer, &QTimer::timeout, this, [&] {
         m_hintPicOffTimer->stop();
-        this->hintBtnflash(GameBtnType::NoneType, false);
+        this->hintBtnflash(GameBtnType::NoneType);
         m_hintPicOnTimer->start();
     });
 }
@@ -610,15 +615,28 @@ int GamePage::changeDir(int dir)
     }
     return dir;
 }
-/**
- * @brief GamePage::hintBtnflash 设置提示按钮闪烁
- */
-void GamePage::hintBtnflash(GameBtnType type, bool pressable)
+
+void GamePage::hintBtnflash(GameBtnType type)
 {
-    m_hintBtn.at(0)->setBtnMode(type);
-    m_hintBtn.at(1)->setBtnMode(type);
-    m_hintBtn.at(0)->setEnabled(pressable);
-    m_hintBtn.at(1)->setEnabled(pressable);
+    if(!m_hintBtn.isEmpty()) {
+        m_hintBtn.at(0)->setBtnMode(type);
+        m_hintBtn.at(1)->setBtnMode(type);
+    }
+}
+
+void GamePage::recoverBtnState()
+{
+    if(m_hintBtn.isEmpty()) {
+        return;
+    }
+    if(m_hintBtn.at(0)) {
+        m_hintBtn.at(0)->setPressed(false);
+        m_hintBtn.at(0)->setEnabled(true);
+    }
+    if(m_hintBtn.at(1)) {
+        m_hintBtn.at(1)->setPressed(false);
+        m_hintBtn.at(1)->setEnabled(true);
+    }
 }
 
 void GamePage::onControlBtnControl(int id)

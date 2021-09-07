@@ -192,8 +192,6 @@ void GameButton::mouseReleaseEvent(QMouseEvent *e)
         m_cotrolBtnPressd = false;
         QPixmap normalPic = GameControl::m_picMap.value(qMakePair(ButtonHover, Small));
         m_pic = normalPic;
-    } else if (m_btnType == OnlyPic){
-        m_gameBtnPressd = true;
     }
     return QPushButton::mouseReleaseEvent(e);
 }
