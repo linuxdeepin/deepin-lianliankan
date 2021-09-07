@@ -44,6 +44,114 @@ GameControl::GameControl(QObject *parent)
 {
 }
 
+void GameControl::loadPic(const GameBtnFlag &flag, const GameBtnSize &btnSize, DWidget *widget)
+{
+    QString fileName;
+    QSize scaledSize;
+
+    switch (btnSize) {
+    case Big:
+        scaledSize = QSize(250, 135);
+        break;
+    case Mid:
+        scaledSize = QSize(200, 115);
+        break;
+    case Small:
+        scaledSize = QSize(140, 80);
+        break;
+    case Over:
+        scaledSize = QSize(175, 100);
+        break;
+    default:
+        scaledSize = QSize(50, 50);
+    }
+
+    switch (flag) {
+    case ButtonNormal:
+        fileName = ":/assets/images/normal.svg";
+        break;
+    case ButtonCow:
+        fileName = ":/assets/images/cow.png";
+        break;
+    case ButtonTiger:
+        fileName = ":/assets/images/tiger.png";
+        break;
+    case ButtonRabbit:
+        fileName = ":/assets/images/rabbit.png";
+        break;
+    case ButtonSnake:
+        fileName = ":/assets/images/snake.png";
+        break;
+    case ButtonHorse:
+        fileName = ":/assets/images/horse.png";
+        break;
+    case ButtonSheep:
+        fileName = ":/assets/images/sheep.png";
+        break;
+    case ButtonDog:
+        fileName = ":/assets/images/dog.png";
+        break;
+    case ButtonPig:
+        fileName = ":/assets/images/pig.png";
+        break;
+    case ButtonCat:
+        fileName = ":/assets/images/cat.png";
+        break;
+    case ButtonLion:
+        fileName = ":/assets/images/lion.png";
+        break;
+    case ButtonFox:
+        fileName = ":/assets/images/fox.png";
+        break;
+    case ButtonPanda:
+        fileName = ":/assets/images/panda.png";
+        break;
+    case BigRect:
+        scaledSize = QSize(835, 542);
+        fileName = ":/assets/images/bigRect.png";
+        break;
+    case MidRect:
+        scaledSize = QSize(480, 515);
+        fileName = ":/assets/images/midRect.png";
+        break;
+    case SmallRect:
+        scaledSize = QSize(175, 542);
+        fileName = ":/assets/images/smallRect.png";
+        break;
+    case MainBack:
+        scaledSize = QSize(1024, 718);
+        fileName = ":/assets/images/background.png";
+        break;
+    case ProgressBack:
+        scaledSize = QSize(816, 60);
+        fileName = ":/assets/images/progressback.png";
+        break;
+    case VictoryPic:
+        scaledSize = QSize(370, 300);
+        fileName = ":/assets/images/victory.png";
+        break;
+    case FailedPic:
+        scaledSize = QSize(280, 300);
+        fileName = ":/assets/images/failed.png";
+        break;
+    case ButtonHover:
+        fileName = ":/assets/images/hover.svg";
+        break;
+    case ButtonPress:
+        fileName = ":/assets/images/press.svg";
+        break;
+    case checkeffect:
+        scaledSize = QSize(60, 60);
+        fileName = ":/assets/images/checkanimal.png";
+        break;
+    default:
+        fileName = ":/assets/images/explode.png";
+        break;
+    }
+    QPixmap pic = Utils::getDpiPixmap(scaledSize, fileName, widget);
+    m_picMap.insert(qMakePair(flag, btnSize), pic);
+}
+
 void GameControl::gameBegin()
 {
     gameShuffle(true);
@@ -220,4 +328,74 @@ bool GameControl::gameBfs(bool isOveride, const QPoint &startPos, const QPoint &
         }
     }
     return false;
+}
+
+GameButton *BtnFactory::createBtn(const GameBtnFlag &flag, const GameBtnSize &btnSize, const GameIconType &iconType, const QString &text, QWidget *parent)
+{
+    QFont btnFont;
+    btnFont.setFamily("Noto Sans CJK SC");
+    btnFont.setWeight(QFont::DemiBold);
+
+    QSize size;
+    GameButton *btn = nullptr;
+    QPixmap btnIcon;
+    QSize IconSize(0, 0);
+
+    switch (iconType) {
+    case Sound:
+        btnIcon = Utils::getDpiPixmap(IconSize, ":/assets/icon/sound.svg", nullptr);
+        break;
+    case Begin:
+        btnIcon = Utils::getDpiPixmap(IconSize, ":/assets/icon/play.svg", nullptr);
+        break;
+    case Reset:
+        btnIcon = Utils::getDpiPixmap(IconSize, ":/assets/icon/reset.svg", nullptr);
+        break;
+    case Hint:
+        btnIcon = Utils::getDpiPixmap(IconSize, ":/assets/icon/hint.svg", nullptr);
+        break;
+    default:
+        btnIcon = Utils::getDpiPixmap(IconSize, ":/assets/icon/home.svg", nullptr);
+        break;
+    }
+
+    switch (btnSize) {
+    case Big:
+        btnFont.setPointSize(20);
+        size = QSize(250, 135);
+        break;
+    case Mid:
+        btnFont.setPointSize(16);
+        size = QSize(200, 115);
+        break;
+    case Small:
+        btnFont.setPointSize(10);
+        size = QSize(140, 80);
+        break;
+    case Over:
+        btnFont.setPointSize(16);
+        size = QSize(175, 100);
+        break;
+    default:
+        size = QSize(50, 50);
+    }
+
+    if (flag == ButtonNormal) {
+        if (iconType == None) {
+            btn = new GameButton(flag, btnSize, text, parent);
+            //配置可选区域
+            //                btn->setMask(GameControl::m_picMap.value(qMakePair(flag,btnSize)).mask());
+        } else {
+            btn = new GameButton(GameControl::m_picMap.value(qMakePair(flag, btnSize)), btnIcon, parent);
+            //配置可选区域
+            //                btn->setMask(GameControl::m_picMap.value(qMakePair(flag,btnSize)).mask());
+        }
+    } else {
+        btn = new GameButton(GameControl::m_picMap.value(qMakePair(flag, btnSize)), parent);
+    }
+
+    btn->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Fixed);
+    btn->setFixedSize(size);
+    btn->setFont(btnFont);
+    return btn;
 }

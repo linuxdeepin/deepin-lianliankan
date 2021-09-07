@@ -49,13 +49,14 @@ void GameLineScene::paintEvent(QPaintEvent *event)
     } else {
         QPainter painter(this);
         //反走样
-        painter.setRenderHint(QPainter::Antialiasing, true);
+        painter.setRenderHint(QPainter::HighQualityAntialiasing, true);
         //获取爆炸图片
         const QPixmap &pic = GameControl::m_picMap.value(qMakePair(ExplodePic, Default));
         QPen pen;
-        pen.setWidth(3);
+        pen.setWidth(2);
         pen.setColor(QColor("#FFFFFF"));
         painter.setPen(pen);
+        painter.save();
         QPainterPath path;
         int posCount = m_posList.count();
         for (int i = 0; i < posCount; i++) {
@@ -63,7 +64,7 @@ void GameLineScene::paintEvent(QPaintEvent *event)
             qreal posY = m_posList.at(i).y();
             //第一个pos和最后一个pos绘制爆炸效果
             if (i == 0 || i == posCount - 1) {
-                painter.drawPixmap(QPointF(posX - pic.width() / 2, posY - pic.height() / 2), pic);
+                painter.drawPixmap(QRect(static_cast<int>(posX - pic.width() / 2), static_cast<int>(posY - pic.height() / 2), pic.width(), pic.height()), pic);
                 continue;
             } else if (i == 1) {
                 //第二个pos是连线的起点
@@ -71,6 +72,13 @@ void GameLineScene::paintEvent(QPaintEvent *event)
             } else if (i == posCount - 2) {
                 //倒数第二pos是连线的终点,进行路径的绘制
                 path.lineTo(QPointF(posX, posY));
+                //绘制连线光效阴影
+                painter.setOpacity(0.2);
+                //设置画笔宽度
+                pen.setWidth(6);
+                painter.setPen(pen);
+                painter.drawPath(path);
+                painter.restore();
                 painter.drawPath(path);
             } else {
                 //其他的转向点正常加入path
