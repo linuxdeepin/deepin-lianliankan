@@ -42,7 +42,6 @@ void CloseWindowDialog::initUI()
     //set icon
     setIcon(QIcon::fromTheme("dialog-warning"));
     m_detailLabel = new DLabel(this);
-//    DFontSizeManager::instance()->bind(m_detailLabel, DFontSizeManager::T6, QFont::Medium);
     m_detailLabel->setWordWrap(true);
     m_detailLabel->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     m_detailLabel->setText(tr("Are you sure you want to exit the game?"));

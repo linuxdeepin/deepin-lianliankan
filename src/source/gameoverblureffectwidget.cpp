@@ -28,8 +28,9 @@
 #include <QDebug>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QFontMetrics>
+#include <QGraphicsDropShadowEffect>
 
-GameOverType GameoverBlurEffectWidget::m_overType = GameOverType::Failed;
 GameoverBlurEffectWidget::GameoverBlurEffectWidget(QWidget *parent)
     : DBlurEffectWidget(parent)
 {
@@ -56,11 +57,11 @@ void GameoverBlurEffectWidget::paintEvent(QPaintEvent *event)
     QPixmap pic;
     int imgX = 0;
     int imgY = 0;
-    if (m_overType == GameOverType::Victory) {
+    if (m_overType) {
         pic = GameControl::m_picMap.value(qMakePair(VictoryPic, Default));
         imgX = 329;
         imgY = 108;
-    } else if (m_overType == GameOverType::Failed) {
+    } else {
         pic = GameControl::m_picMap.value(qMakePair(FailedPic, Default));
         imgX = 372;
         imgY = 108;
@@ -76,16 +77,10 @@ void GameoverBlurEffectWidget::mouseMoveEvent(QMouseEvent *event)
 void GameoverBlurEffectWidget::initUI()
 {
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
-    m_tipLabel = new DLabel;
-    QFont font;
-    font.setFamily("Noto Sans CJK SC");
-    font.setPointSize(16);
-    m_tipLabel->setAlignment(Qt::AlignHCenter);
-    m_tipLabel->setFont(font);
-
+    m_tipLabel = new ShadowLabel(this);
     m_OverBtnGroup = new QButtonGroup(this);
-    GameButton *againButton = BtnFactory::createBtn(ButtonNormal, Over, None, "Play Again");
-    GameButton *restButton = BtnFactory::createBtn(ButtonNormal, Over, None, "Have a Rest");
+    GameButton *againButton = BtnFactory::createBtn(ButtonNormal, Over, None, tr("Play Again"));
+    GameButton *restButton = BtnFactory::createBtn(ButtonNormal, Over, None, tr("Have a Rest"));
     m_OverBtnGroup->addButton(againButton,0);
     m_OverBtnGroup->addButton(restButton,1);
     QHBoxLayout *buttonLayout = new QHBoxLayout;
@@ -93,7 +88,7 @@ void GameoverBlurEffectWidget::initUI()
     buttonLayout->addWidget(restButton,Qt::AlignRight);
     mainLayout->addWidget(m_tipLabel,Qt::AlignCenter);
     mainLayout->addLayout(buttonLayout,Qt::AlignBottom);
-    mainLayout->setContentsMargins(333,372,333,189);
+    mainLayout->setContentsMargins(333,370,333,171);
 }
 
 void GameoverBlurEffectWidget::initConnect()
@@ -105,6 +100,21 @@ void GameoverBlurEffectWidget::updateLabel(QString text)
 {
     m_Text = text;
     m_tipLabel->setText(m_Text);
+    QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect(this);
+    effect->setBlurRadius(8);
+    effect->setYOffset(4);
+    effect->setXOffset(0);
+    QColor shadowColor(108,69,25);
+    shadowColor.setAlphaF(0.6);
+    effect->setColor(shadowColor);
+
+    m_tipLabel->setGraphicsEffect(effect);
+}
+
+void GameoverBlurEffectWidget::setResult(bool res)
+{
+    m_tipLabel->setResult(res);
+    m_overType = res;
 }
 
 void GameoverBlurEffectWidget::onButtonPressed(int id)

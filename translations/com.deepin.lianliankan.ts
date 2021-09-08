@@ -4,19 +4,32 @@
 <context>
     <name>CloseWindowDialog</name>
     <message>
-        <location filename="../src/source/closewindowdialog.cpp" line="48"/>
+        <location filename="../src/source/closewindowdialog.cpp" line="47"/>
         <source>Are you sure you want to exit the game?</source>
         <translation>Are you sure you want to exit the game?</translation>
     </message>
     <message>
-        <location filename="../src/source/closewindowdialog.cpp" line="56"/>
+        <location filename="../src/source/closewindowdialog.cpp" line="55"/>
         <source>Keep Playing</source>
         <translation>Keep Playing</translation>
     </message>
     <message>
-        <location filename="../src/source/closewindowdialog.cpp" line="57"/>
+        <location filename="../src/source/closewindowdialog.cpp" line="56"/>
         <source>Exit</source>
         <translation>Exit</translation>
+    </message>
+</context>
+<context>
+    <name>GameoverBlurEffectWidget</name>
+    <message>
+        <location filename="../src/source/gameoverblureffectwidget.cpp" line="82"/>
+        <source>Play Again</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../src/source/gameoverblureffectwidget.cpp" line="83"/>
+        <source>Have a Rest</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -60,12 +73,12 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/source/mainwindow.cpp" line="220"/>
+        <location filename="../src/source/mainwindow.cpp" line="221"/>
         <source>FAIL</source>
         <translation>FAIL</translation>
     </message>
     <message>
-        <location filename="../src/source/mainwindow.cpp" line="223"/>
+        <location filename="../src/source/mainwindow.cpp" line="224"/>
         <source>VICTORY</source>
         <translation>VICTORY</translation>
     </message>

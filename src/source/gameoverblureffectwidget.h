@@ -22,10 +22,10 @@
 #define GAMEOVERBLUREFFECTWIDGET_H
 
 #include "global.h"
+#include "shadowlabel.h"
 
 #include <DBlurEffectWidget>
 #include <DLabel>
-#include <DFrame>
 #include <QButtonGroup>
 
 DWIDGET_USE_NAMESPACE
@@ -34,7 +34,6 @@ class GameoverBlurEffectWidget : public DBlurEffectWidget
     Q_OBJECT
 public:
     explicit GameoverBlurEffectWidget(QWidget *parent = nullptr);
-    static GameOverType m_overType;
 protected:
     void paintEvent(QPaintEvent *event)override;
     void mouseMoveEvent(QMouseEvent *event)override;
@@ -46,6 +45,12 @@ private:
 public:
     void updateLabel(QString text);
 
+    /**
+     * @brief setResult 外部通知游戏结果
+     * @param res 游戏结果
+     */
+    void setResult(bool res);
+
 private slots:
     void onButtonPressed(int id);
 
@@ -55,10 +60,10 @@ signals:
     void hideBlurWindow();//隐藏模糊背景
 
 private:
-    DFrame *m_tipFrame;//展示提示语和按钮
-    DLabel *m_tipLabel;//提示语
+    ShadowLabel *m_tipLabel;//提示语
     QButtonGroup *m_OverBtnGroup;
-    QString m_Text;
+    QString m_Text;//提示语文案
+    bool m_overType = false;//游戏结果
 };
 
 #endif // GAMEOVERBLUREFFECTWIDGET_H

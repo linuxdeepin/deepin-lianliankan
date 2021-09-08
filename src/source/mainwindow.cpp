@@ -22,6 +22,7 @@
 #include "mainwindow.h"
 #include "gamecontrol.h"
 #include "closewindowdialog.h"
+#include "shadowlabel.h"
 
 #include <DTitlebar>
 
@@ -216,10 +217,10 @@ void MainWindow::showFinishPage(bool res)
     m_gameState = false;
     QString text = "";
     if (!res) {
-        GameoverBlurEffectWidget::m_overType = GameOverType::Failed;
+        m_gameOverPage->setResult(false);
         text = tr("FAIL");
     } else {
-        GameoverBlurEffectWidget::m_overType = GameOverType::Victory;
+        m_gameOverPage->setResult(true);
         text = tr("VICTORY");
     }
     m_gameOverPage->updateLabel(text);
