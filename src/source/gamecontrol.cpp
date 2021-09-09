@@ -339,7 +339,7 @@ GameButton *BtnFactory::createBtn(const GameBtnFlag &flag, const GameBtnSize &bt
     QSize size;
     GameButton *btn = nullptr;
     QPixmap btnIcon;
-    QSize IconSize(0, 0);
+    QSize IconSize(30, 30);
 
     switch (iconType) {
     case Sound:
@@ -384,11 +384,9 @@ GameButton *BtnFactory::createBtn(const GameBtnFlag &flag, const GameBtnSize &bt
         if (iconType == None) {
             btn = new GameButton(flag, btnSize, text, parent);
             //配置可选区域
-            //                btn->setMask(GameControl::m_picMap.value(qMakePair(flag,btnSize)).mask());
         } else {
             btn = new GameButton(GameControl::m_picMap.value(qMakePair(flag, btnSize)), btnIcon, parent);
             //配置可选区域
-            //                btn->setMask(GameControl::m_picMap.value(qMakePair(flag,btnSize)).mask());
         }
     } else {
         btn = new GameButton(GameControl::m_picMap.value(qMakePair(flag, btnSize)), parent);

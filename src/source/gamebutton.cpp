@@ -28,6 +28,9 @@
 #include <QMouseEvent>
 #include <QtMath>
 
+#define ICON_WIDTH 30
+#define ICON_HEIGHT 30
+
 GameButton::GameButton(const GameBtnFlag &flag, const GameBtnSize &size, const QString &text, QWidget *parent)
     : QPushButton(parent)
     , m_text(text)
@@ -35,14 +38,17 @@ GameButton::GameButton(const GameBtnFlag &flag, const GameBtnSize &size, const Q
     , m_btnType(TextOnPic)
 {
     m_pic = GameControl::m_picMap.value(qMakePair(flag, size));
+    setBtnMask(m_pic);
 }
 
 GameButton::GameButton(const QPixmap &pic, const QPixmap &icon, QWidget *parent)
     : QPushButton(parent)
     , m_pic(pic)
     , m_icon(icon)
+    , m_size(Small)
     , m_btnType(IconOnPic)
 {
+    setBtnMask(m_pic);
 }
 
 GameButton::GameButton(const QPixmap &pic, QWidget *parent)
@@ -80,9 +86,9 @@ void GameButton::updatePic(const QPixmap &pic)
 void GameButton::updatePlayIcon(bool isStarted)
 {
     if (!isStarted) {
-        m_icon = Utils::getDpiPixmap(QSize(0, 0), ":/assets/icon/play.svg", nullptr);
+        m_icon = Utils::getDpiPixmap(QSize(ICON_WIDTH, ICON_HEIGHT), ":/assets/icon/play.svg", nullptr);
     } else {
-        m_icon = Utils::getDpiPixmap(QSize(0, 0), ":/assets/icon/pause.svg", nullptr);
+        m_icon = Utils::getDpiPixmap(QSize(ICON_WIDTH, ICON_HEIGHT), ":/assets/icon/pause.svg", nullptr);
     }
     update();
 }
@@ -90,7 +96,6 @@ void GameButton::updatePlayIcon(bool isStarted)
 void GameButton::paintEvent(QPaintEvent *e)
 {
     Q_UNUSED(e);
-
     QPainter p(this);
     p.setRenderHint(QPainter::Antialiasing, true);
 
@@ -137,11 +142,9 @@ void GameButton::paintEvent(QPaintEvent *e)
     }
     case IconOnPic: {
         //绘制游戏控制按钮
-        int iconHeight = m_icon.height();
-        int iconWidth = m_icon.width();
-        int iconX = (rect().width() - iconWidth) / 2;
-        int iconY = (rect().height() - iconHeight - iconHeight / 2) / 2;
-        p.drawPixmap(QRect(iconX, iconY, iconWidth, iconHeight), m_icon);
+        int iconX = (rect().width() - ICON_WIDTH) / 2;
+        int iconY = (rect().height() - ICON_HEIGHT - ICON_HEIGHT / 2) / 2;
+        p.drawPixmap(QRect(iconX, iconY, ICON_WIDTH, ICON_HEIGHT), m_icon);
         break;
     }
     default: {
@@ -261,4 +264,26 @@ void GameButton::drawBackdrop(QPainter &p)
     pen.setWidth(0);
     p.setPen(pen);
     p.drawRoundRect(this->rect().x() + 3, this->rect().y() + 5, 42, 42, 40, 40);
+}
+
+void GameButton::setBtnMask(QPixmap &pic)
+{
+    //设置控制按钮的蒙版,调整点击区域
+    QSize scaledSize;
+    QPixmap map;
+    switch (m_size) {
+    case Mid:
+        scaledSize = QSize(200, 110);
+        break;
+    case Small:
+        scaledSize = QSize(140, 75);
+        break;
+    case Over:
+        scaledSize = QSize(175, 95);
+        break;
+    default:
+        return;
+    }
+    map = pic.scaled(scaledSize);
+    setMask(map.mask());
 }

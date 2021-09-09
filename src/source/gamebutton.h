@@ -100,6 +100,10 @@ protected:
    * @brief GameButton:: drawBackdrop 绘制游戏按钮背景
    */
    void drawBackdrop(QPainter &p);
+   /**
+   * @brief GameButton:: setBtnMask 设置按钮蒙版
+   */
+   void setBtnMask(QPixmap &pic);
 
    private:
    QPixmap m_pic;//按钮背景图
