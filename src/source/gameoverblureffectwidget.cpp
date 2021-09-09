@@ -88,7 +88,7 @@ void GameoverBlurEffectWidget::initUI()
     buttonLayout->addWidget(restButton,Qt::AlignRight);
     mainLayout->addWidget(m_tipLabel,Qt::AlignCenter);
     mainLayout->addLayout(buttonLayout,Qt::AlignBottom);
-    mainLayout->setContentsMargins(333,370,333,171);
+    mainLayout->setContentsMargins(295,370,295,171);
 }
 
 void GameoverBlurEffectWidget::initConnect()

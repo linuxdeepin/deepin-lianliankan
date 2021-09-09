@@ -31,7 +31,7 @@ class GameButton : public QPushButton
 
 public:
     explicit GameButton(const GameBtnFlag &flag, const GameBtnSize &size, const QString &text,QWidget *parent = nullptr);
-    explicit GameButton(const QPixmap &pic,const QPixmap &icon,QWidget*parent=nullptr);
+    explicit GameButton(const QPixmap &pic,const GameIconType &icontype,QWidget*parent=nullptr);
     explicit GameButton(const QPixmap &pic,QWidget*parent=nullptr);
 
     /**
@@ -83,6 +83,11 @@ public:
     * @return GameBtnType 按钮类型
     */
     GameBtnType btnMode() const;
+    /**
+     * @brief btnIconType 获取按钮图标类型
+     * @return GameIconType 按钮图标类型
+     */
+    GameIconType btnIconType() const;
 
 protected:
    void paintEvent(QPaintEvent *event) override;
@@ -104,10 +109,16 @@ protected:
    * @brief GameButton:: setBtnMask 设置按钮蒙版
    */
    void setBtnMask(QPixmap &pic);
+   /**
+    * @brief loadIcon 加载按钮图标
+    * @param iconType 按钮图标类型
+    */
+   void loadIcon(GameIconType &iconType);
 
    private:
    QPixmap m_pic;//按钮背景图
    QPixmap m_icon;//按钮图标
+   GameIconType m_iconType;//按钮图标类型
    QString m_text;//按钮文字
    QFont  m_font; //按钮字体
    GameBtnSize m_size;//按钮大小

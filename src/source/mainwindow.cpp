@@ -157,11 +157,14 @@ void MainWindow::closeEvent(QCloseEvent *event)
         bool preOnOff = m_gamePage->onOffGame();
         //弹出阻塞窗口暂停游戏
         m_gamePage->setOnOffGame(false);
-        int dialogY = (this->height()-dialog->height())/2 + this->y();
-        int dialogX = (this->width()-dialog->width())/2 + this->x();
-        dialog->setGeometry(dialogX, dialogY, dialog->width(),dialog->height());
         dialog->setMinimumWidth(390);
-        dialog->exec();
+        m_gamePage->setEnabled(false);
+        dialog->show();
+        //添加时间循环，直到获取按钮信息退出循环
+        QEventLoop loop;
+        connect(dialog, &CloseWindowDialog::buttonClicked, &loop, &QEventLoop::quit);
+        loop.exec();
+        m_gamePage->setEnabled(true);
         if (dialog->result() == QMessageBox::Ok) {
             event->accept();
         } else {

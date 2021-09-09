@@ -41,13 +41,14 @@ GameButton::GameButton(const GameBtnFlag &flag, const GameBtnSize &size, const Q
     setBtnMask(m_pic);
 }
 
-GameButton::GameButton(const QPixmap &pic, const QPixmap &icon, QWidget *parent)
+GameButton::GameButton(const QPixmap &pic, const GameIconType &icontype, QWidget *parent)
     : QPushButton(parent)
     , m_pic(pic)
-    , m_icon(icon)
+    , m_iconType(icontype)
     , m_size(Small)
     , m_btnType(IconOnPic)
 {
+    loadIcon(m_iconType);
     setBtnMask(m_pic);
 }
 
@@ -100,7 +101,7 @@ void GameButton::paintEvent(QPaintEvent *e)
     p.setRenderHint(QPainter::Antialiasing, true);
 
     //绘制游戏页面控制按钮不可点击状态
-    if (!this->isEnabled() && this->btnMode() == IconOnPic) {
+    if (!this->isEnabled() && this->btnMode() == IconOnPic && (this->btnIconType() == Reset || this->btnIconType() == Hint)) {
         //透明度设置为0.6
         p.setOpacity(0.6);
     }
@@ -201,6 +202,9 @@ void GameButton::mouseReleaseEvent(QMouseEvent *e)
 
 void GameButton::enterEvent(QEvent *event)
 {
+    if (!this->isEnabled()) {
+        return;
+    }
     if (m_btnType == TextOnPic) {
         QPixmap hoverPic = GameControl::m_picMap.value(qMakePair(ButtonHover, m_size));
         m_pic = hoverPic;
@@ -210,7 +214,7 @@ void GameButton::enterEvent(QEvent *event)
     } else if (m_btnType == OnlyPic){
         event->ignore();
     }
-    return QWidget::enterEvent(event);
+    return QPushButton::enterEvent(event);
 
 }
 
@@ -243,6 +247,11 @@ void GameButton::setPressed(bool isPressd)
 GameBtnType GameButton::btnMode() const
 {
     return m_btnType;
+}
+
+GameIconType GameButton::btnIconType() const
+{
+    return m_iconType;
 }
 
 void GameButton::drawRect(QPainter &p)
@@ -286,4 +295,29 @@ void GameButton::setBtnMask(QPixmap &pic)
     }
     map = pic.scaled(scaledSize);
     setMask(map.mask());
+}
+
+void GameButton::loadIcon(GameIconType &iconType)
+{
+    if (!iconType) {
+        return;
+    }
+    QSize IconSize(0, 0);
+    switch (iconType) {
+    case Sound:
+        m_icon = Utils::getDpiPixmap(IconSize, ":/assets/icon/sound.svg", nullptr);
+        break;
+    case Begin:
+        m_icon = Utils::getDpiPixmap(IconSize, ":/assets/icon/play.svg", nullptr);
+        break;
+    case Reset:
+        m_icon = Utils::getDpiPixmap(IconSize, ":/assets/icon/reset.svg", nullptr);
+        break;
+    case Hint:
+        m_icon = Utils::getDpiPixmap(IconSize, ":/assets/icon/hint.svg", nullptr);
+        break;
+    default:
+        m_icon = Utils::getDpiPixmap(IconSize, ":/assets/icon/home.svg", nullptr);
+        break;
+    }
 }

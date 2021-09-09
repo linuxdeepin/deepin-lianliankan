@@ -338,26 +338,6 @@ GameButton *BtnFactory::createBtn(const GameBtnFlag &flag, const GameBtnSize &bt
 
     QSize size;
     GameButton *btn = nullptr;
-    QPixmap btnIcon;
-    QSize IconSize(30, 30);
-
-    switch (iconType) {
-    case Sound:
-        btnIcon = Utils::getDpiPixmap(IconSize, ":/assets/icon/sound.svg", nullptr);
-        break;
-    case Begin:
-        btnIcon = Utils::getDpiPixmap(IconSize, ":/assets/icon/play.svg", nullptr);
-        break;
-    case Reset:
-        btnIcon = Utils::getDpiPixmap(IconSize, ":/assets/icon/reset.svg", nullptr);
-        break;
-    case Hint:
-        btnIcon = Utils::getDpiPixmap(IconSize, ":/assets/icon/hint.svg", nullptr);
-        break;
-    default:
-        btnIcon = Utils::getDpiPixmap(IconSize, ":/assets/icon/home.svg", nullptr);
-        break;
-    }
 
     switch (btnSize) {
     case Big:
@@ -385,7 +365,7 @@ GameButton *BtnFactory::createBtn(const GameBtnFlag &flag, const GameBtnSize &bt
             btn = new GameButton(flag, btnSize, text, parent);
             //配置可选区域
         } else {
-            btn = new GameButton(GameControl::m_picMap.value(qMakePair(flag, btnSize)), btnIcon, parent);
+            btn = new GameButton(GameControl::m_picMap.value(qMakePair(flag, btnSize)), iconType, parent);
             //配置可选区域
         }
     } else {

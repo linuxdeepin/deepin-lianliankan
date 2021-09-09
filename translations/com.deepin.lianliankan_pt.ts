@@ -1,20 +1,20 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="zh_CN" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="pt" version="2.1">
 <context>
     <name>CloseWindowDialog</name>
     <message>
         <location filename="../src/source/closewindowdialog.cpp" line="47"/>
         <source>Are you sure you want to exit the game?</source>
-        <translation>游戏正在进行中，确定退出吗？</translation>
+        <translation>Tem a certeza que quer sair do jogo?</translation>
     </message>
     <message>
         <location filename="../src/source/closewindowdialog.cpp" line="55"/>
         <source>Keep Playing</source>
-        <translation>继续游戏</translation>
+        <translation>Continuar a jogar</translation>
     </message>
     <message>
         <location filename="../src/source/closewindowdialog.cpp" line="56"/>
         <source>Exit</source>
-        <translation>退 出</translation>
+        <translation>Sair</translation>
     </message>
 </context>
 <context>
@@ -22,12 +22,12 @@
     <message>
         <location filename="../src/source/gameoverblureffectwidget.cpp" line="82"/>
         <source>Play Again</source>
-        <translation>再来一局</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/source/gameoverblureffectwidget.cpp" line="83"/>
         <source>Have a Rest</source>
-        <translation>休息一下</translation>
+        <translation type="unfinished"/>
     </message>
 </context>
 <context>
@@ -37,12 +37,12 @@
         <location filename="../src/main.cpp" line="65"/>
         <location filename="../src/main.cpp" line="66"/>
         <source>LianLianKan</source>
-        <translation>连连看</translation>
+        <translation>LianLianKan</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="64"/>
         <source>Lianliankan is a puzzle game.</source>
-        <translation>连连看是一款益智类小游戏。</translation>
+        <translation>LianLianKan é um jogo de puzzle.</translation>
     </message>
 </context>
 <context>
@@ -50,22 +50,22 @@
     <message>
         <location filename="../src/source/mainpage.cpp" line="46"/>
         <source>Easy</source>
-        <translation>初级</translation>
+        <translation>Fácil</translation>
     </message>
     <message>
         <location filename="../src/source/mainpage.cpp" line="47"/>
         <source>Normal</source>
-        <translation>中级</translation>
+        <translation>Normal</translation>
     </message>
     <message>
         <location filename="../src/source/mainpage.cpp" line="48"/>
         <source>Hard</source>
-        <translation>高级</translation>
+        <translation>Difícil</translation>
     </message>
     <message>
         <location filename="../src/source/mainpage.cpp" line="67"/>
         <source>Select Level</source>
-        <translation>难度选择</translation>
+        <translation>Selecionar Nível</translation>
     </message>
 </context>
 <context>
@@ -73,12 +73,12 @@
     <message>
         <location filename="../src/source/mainwindow.cpp" line="221"/>
         <source>FAIL</source>
-        <translation>时间已用完，下次快点喔！</translation>
+        <translation>FALHOU</translation>
     </message>
     <message>
         <location filename="../src/source/mainwindow.cpp" line="224"/>
         <source>VICTORY</source>
-        <translation>您赢了！！</translation>
+        <translation>VITÓRIA</translation>
     </message>
 </context>
 </TS>

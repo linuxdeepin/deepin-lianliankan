@@ -24,12 +24,12 @@
     <message>
         <location filename="../src/source/gameoverblureffectwidget.cpp" line="82"/>
         <source>Play Again</source>
-        <translation type="unfinished"></translation>
+        <translation>Play Again</translation>
     </message>
     <message>
         <location filename="../src/source/gameoverblureffectwidget.cpp" line="83"/>
         <source>Have a Rest</source>
-        <translation type="unfinished"></translation>
+        <translation>Have a Rest</translation>
     </message>
 </context>
 <context>
@@ -73,12 +73,12 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/source/mainwindow.cpp" line="221"/>
+        <location filename="../src/source/mainwindow.cpp" line="227"/>
         <source>FAIL</source>
         <translation>FAIL</translation>
     </message>
     <message>
-        <location filename="../src/source/mainwindow.cpp" line="224"/>
+        <location filename="../src/source/mainwindow.cpp" line="230"/>
         <source>VICTORY</source>
         <translation>VICTORY</translation>
     </message>
