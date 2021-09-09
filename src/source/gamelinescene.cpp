@@ -53,7 +53,7 @@ void GameLineScene::paintEvent(QPaintEvent *event)
         //获取爆炸图片
         const QPixmap &pic = GameControl::m_picMap.value(qMakePair(ExplodePic, Default));
         QPen pen;
-        pen.setWidth(2);
+        pen.setWidth(1);
         pen.setColor(QColor("#FFFFFF"));
         painter.setPen(pen);
         painter.save();
@@ -70,20 +70,40 @@ void GameLineScene::paintEvent(QPaintEvent *event)
                 //第二个pos是连线的起点
                 path.moveTo(QPointF(posX, posY));
             } else if (i == posCount - 2) {
-                //倒数第二pos是连线的终点,进行路径的绘制
-                path.lineTo(QPointF(posX, posY));
-                //绘制连线光效阴影
-                painter.setOpacity(0.2);
-                //设置画笔宽度
-                pen.setWidth(6);
-                painter.setPen(pen);
-                painter.drawPath(path);
-                painter.restore();
-                painter.drawPath(path);
+                drawLightEffeec(painter, path, QPointF(posX, posY));
             } else {
                 //其他的转向点正常加入path
                 path.lineTo(QPointF(posX, posY));
             }
         }
     }
+}
+
+void GameLineScene::drawLightEffeec(QPainter &p, QPainterPath &path, const QPointF &pos)
+{
+    //倒数第二pos是连线的终点,进行路径的绘制
+    path.lineTo(pos);
+    //绘制最后一层连线光效阴影
+    p.setOpacity(0.1);
+    //设置画笔宽度
+    QPen pen;
+    pen.setColor(QColor("#FFFFFF"));
+    pen.setWidth(6);
+    p.setPen(pen);
+    p.drawPath(path);
+    //绘制第三层连线光效阴影
+    p.setOpacity(0.2);
+    //设置画笔宽度
+    pen.setWidth(4);
+    p.setPen(pen);
+    p.drawPath(path);
+    //绘制第二层连线光效阴影
+    p.setOpacity(0.4);
+    //设置画笔宽度
+    pen.setWidth(2);
+    p.setPen(pen);
+    p.drawPath(path);
+    p.restore();
+    p.setOpacity(0.6);
+    p.drawPath(path);
 }
