@@ -87,9 +87,9 @@ void GameButton::updatePic(const QPixmap &pic)
 void GameButton::updatePlayIcon(bool isStarted)
 {
     if (!isStarted) {
-        m_icon = Utils::getDpiPixmap(QSize(ICON_WIDTH, ICON_HEIGHT), ":/assets/icon/play.svg", nullptr);
+        loadIcon(GameIconType::Begin);
     } else {
-        m_icon = Utils::getDpiPixmap(QSize(ICON_WIDTH, ICON_HEIGHT), ":/assets/icon/pause.svg", nullptr);
+        loadIcon(GameIconType::Pause);
     }
     update();
 }
@@ -297,7 +297,7 @@ void GameButton::setBtnMask(QPixmap &pic)
     setMask(map.mask());
 }
 
-void GameButton::loadIcon(GameIconType &iconType)
+void GameButton::loadIcon(GameIconType iconType)
 {
     if (!iconType) {
         return;
@@ -309,6 +309,9 @@ void GameButton::loadIcon(GameIconType &iconType)
         break;
     case Begin:
         m_icon = Utils::getDpiPixmap(IconSize, ":/assets/icon/play.svg", nullptr);
+        break;
+    case Pause:
+        m_icon = Utils::getDpiPixmap(IconSize, ":/assets/icon/pause.svg", nullptr);
         break;
     case Reset:
         m_icon = Utils::getDpiPixmap(IconSize, ":/assets/icon/reset.svg", nullptr);

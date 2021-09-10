@@ -113,7 +113,7 @@ protected:
     * @brief loadIcon 加载按钮图标
     * @param iconType 按钮图标类型
     */
-   void loadIcon(GameIconType &iconType);
+   void loadIcon(GameIconType iconType);
 
    private:
    QPixmap m_pic;//按钮背景图

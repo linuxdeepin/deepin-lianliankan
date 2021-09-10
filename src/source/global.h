@@ -78,6 +78,7 @@ enum GameIconType{
     None=0,
     Sound,
     Begin,
+    Pause,
     Reset,
     Hint,
     Home
@@ -99,11 +100,6 @@ struct GameNode {
     int turnNum; //转弯次数
 };
 
-//游戏结束界面
-enum GameOverType{
-    Victory,
-    Failed
-};
 //关闭弹窗按钮
 enum CloseButtonType{
     ignore = 0,
