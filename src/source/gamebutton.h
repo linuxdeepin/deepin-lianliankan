@@ -69,7 +69,7 @@ public:
     * @brief GameButton:: updatePlayIcon 更新游戏控制按钮开始暂停图标
     * @param isStarted 是否为开始状态
     */
-    void updatePlayIcon(bool isStarted);
+    void updatePlayIcon(const GameBtnType &btntype, bool isStarted);
     /**
     * @brief GameButton:: location 获取游戏按钮行列
     * @return QPoint 按钮行列

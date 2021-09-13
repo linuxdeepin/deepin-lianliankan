@@ -42,9 +42,18 @@ private:
     void initUI();
     void initConnect();
     void controlTest();
+
+public:
+    /**
+     * @brief soundSync 音量同步设置
+     * @param isOpen 音量开关
+     */
+    void soundSync(bool isOpen);
+
 private:
     QButtonGroup *m_btnGrp;
     GameButton *m_soundBtn;
+    bool m_soundState = false;
 };
 
 #endif // MAINPAGE_H

@@ -73,12 +73,12 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/source/mainwindow.cpp" line="227"/>
+        <location filename="../src/source/mainwindow.cpp" line="228"/>
         <source>FAIL</source>
         <translation>FAIL</translation>
     </message>
     <message>
-        <location filename="../src/source/mainwindow.cpp" line="230"/>
+        <location filename="../src/source/mainwindow.cpp" line="231"/>
         <source>VICTORY</source>
         <translation>VICTORY</translation>
     </message>

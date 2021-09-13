@@ -77,6 +77,7 @@ enum GameBtnSize{
 enum GameIconType{
     None=0,
     Sound,
+    Mute,
     Begin,
     Pause,
     Reset,
@@ -89,7 +90,9 @@ enum GameBtnType {
     TextOnPic = 0,
     OnlyPic,
     IconOnPic,
-    NoneType
+    NoneType,
+    GameCtl,
+    SoundCtl
 };
 
 //游戏地图结点

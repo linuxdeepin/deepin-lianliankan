@@ -84,6 +84,11 @@ signals:
     * @param state 是否正在进行游戏
     */
     void setGameStated(bool state);
+    /**
+     * @brief soundSync 音量同步信号
+     * @param isOpen 音量开关
+     */
+    void soundSync(bool isOpen);
 
 public slots:
     /**

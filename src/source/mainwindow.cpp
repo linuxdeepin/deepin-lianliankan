@@ -73,6 +73,9 @@ void MainWindow::initConnect()
     connect(m_gamePage, &GamePage::setGameStated, this, [ = ](bool state){
         m_gameState = state;
     });
+    connect(m_gamePage, &GamePage::soundSync, this, [ = ](bool isOpen){
+        m_mainPage->soundSync(isOpen);
+    });
 }
 
 void MainWindow::initPic()
@@ -163,6 +166,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
         //添加时间循环，直到获取按钮信息退出循环
         QEventLoop loop;
         connect(dialog, &CloseWindowDialog::buttonClicked, &loop, &QEventLoop::quit);
+        connect(dialog, &CloseWindowDialog::finished, &loop, &QEventLoop::quit);
         loop.exec();
         m_gamePage->setEnabled(true);
         if (dialog->result() == QMessageBox::Ok) {

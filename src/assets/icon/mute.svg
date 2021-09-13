@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="26px" height="26px" viewBox="0 0 26 26" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <title>重置</title>
+    <title>静音</title>
     <defs>
         <filter x="-15.4%" y="-15.4%" width="130.8%" height="130.8%" filterUnits="objectBoundingBox" id="filter-1">
             <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
@@ -11,11 +11,13 @@
             </feMerge>
         </filter>
     </defs>
-    <g id="重置" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+    <g id="静音" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="编组" filter="url(#filter-1)">
             <rect id="矩形" x="0" y="0" width="26" height="26"></rect>
-            <g id="重复" transform="translate(4.000000, 1.000000)" fill="#FFFFFF" fill-rule="nonzero">
-                <path d="M8.99997407,4.39999494 L8.99997407,0 L3.37499029,5.5 L8.99997407,10.9999873 L8.99997407,6.59999239 C12.72935,6.59999239 15.7499546,9.55350292 15.7499546,13.1999848 C15.7499546,16.8464666 12.7293241,19.8000025 8.99997407,19.8000025 C5.27062407,19.8000025 2.24999352,16.846492 2.24999352,13.1999848 L0,13.1999848 C0,18.0619944 4.02749877,22 9,22 C13.9725012,22 18,18.0619944 18,13.1999848 C18,8.33797517 13.9724753,4.39999494 8.99997407,4.39999494 Z" id="路径"></path>
+            <g id="声音" transform="translate(3.000000, 4.000000)">
+                <path d="M10,18 C6.91666666,18 4.66666666,14.9727273 3.91666666,13.8272727 L1.75,13.8272727 C0.75,13.8272727 0,13.0909091 0,12.1090909 L0,5.80909091 C0,4.90909091 0.75,4.09090909 1.75,4.09090909 L3.91666666,4.09090909 C4.66666666,2.94545455 6.91666666,0 10,0 C10.5,0 10.8333333,0.327272734 10.8333333,0.818181806 L10.8333333,17.1818182 C10.8333333,17.6727273 10.5,18 10,18 Z" id="形状" fill="#FFFFFF" fill-rule="nonzero"></path>
+                <line x1="13" y1="5" x2="19" y2="13" id="路径-2" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"></line>
+                <line x1="19" y1="5" x2="13" y2="13" id="路径-2备份" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="round"></line>
             </g>
         </g>
     </g>

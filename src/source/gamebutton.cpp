@@ -84,12 +84,20 @@ void GameButton::updatePic(const QPixmap &pic)
     update();
 }
 
-void GameButton::updatePlayIcon(bool isStarted)
+void GameButton::updatePlayIcon(const GameBtnType &btntype, bool isStarted)
 {
-    if (!isStarted) {
-        loadIcon(GameIconType::Begin);
-    } else {
-        loadIcon(GameIconType::Pause);
+    if (btntype == GameCtl) {
+        if(isStarted) {
+            loadIcon(Pause);
+        } else {
+            loadIcon(Begin);
+        }
+    } else if(btntype == SoundCtl) {
+        if(isStarted) {
+            loadIcon(Sound);
+        } else {
+            loadIcon(Mute);
+        }
     }
     update();
 }
@@ -302,13 +310,16 @@ void GameButton::loadIcon(GameIconType iconType)
     if (!iconType) {
         return;
     }
-    QSize IconSize(0, 0);
+    QSize IconSize(ICON_WIDTH, ICON_HEIGHT);
     switch (iconType) {
     case Sound:
         m_icon = Utils::getDpiPixmap(IconSize, ":/assets/icon/sound.svg", nullptr);
         break;
+    case Mute:
+        m_icon = Utils::getDpiPixmap(IconSize, ":/assets/icon/mute.svg", nullptr);
+        break;
     case Begin:
-        m_icon = Utils::getDpiPixmap(IconSize, ":/assets/icon/play.svg", nullptr);
+        m_icon = Utils::getDpiPixmap(IconSize, ":/assets/icon/begin.svg", nullptr);
         break;
     case Pause:
         m_icon = Utils::getDpiPixmap(IconSize, ":/assets/icon/pause.svg", nullptr);

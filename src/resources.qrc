@@ -25,7 +25,6 @@
         <file>assets/images/victory.png</file>
         <file>assets/images/explode.png</file>
         <file>assets/icon/home.svg</file>
-        <file>assets/icon/play.svg</file>
         <file>assets/icon/reset.svg</file>
         <file>assets/icon/sound.svg</file>
         <file>assets/icon/hint.svg</file>
@@ -33,5 +32,7 @@
         <file>assets/images/hover.svg</file>
         <file>assets/images/press.svg</file>
         <file>assets/images/checkanimal.png</file>
+        <file>assets/icon/begin.svg</file>
+        <file>assets/icon/mute.svg</file>
     </qresource>
 </RCC>

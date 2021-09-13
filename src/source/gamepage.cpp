@@ -67,6 +67,13 @@ void GamePage::setInitalTime(int time)
 void GamePage::setSoundSwitch(bool isOpen)
 {
     m_soundSwitch = isOpen;
+    //音量状态同步信号
+    Q_EMIT soundSync(isOpen);
+    //更改开始图标状态
+    GameButton *soundBtn = dynamic_cast<GameButton *>(m_controlGrp->button(3));
+    if (!soundBtn)
+        return;
+    soundBtn->updatePlayIcon(GameBtnType::SoundCtl, isOpen);
 }
 
 bool GamePage::soundSwitch() const
@@ -99,7 +106,7 @@ void GamePage::setOnOffGame(bool isBegin)
     GameButton *beginBtn = dynamic_cast<GameButton *>(m_controlGrp->button(0));
     if (!beginBtn)
         return;
-    beginBtn->updatePlayIcon(isBegin);
+    beginBtn->updatePlayIcon(GameBtnType::GameCtl, isBegin);
 
     for (QAbstractButton *btn : m_controlGrp->buttons()) {
         //开始按钮和返回主页面按钮和音效按钮保持可点击状态
@@ -407,6 +414,7 @@ void GamePage::popDialog()
     //添加时间循环，直到获取按钮信息退出循环
     QEventLoop loop;
     connect(dialog, &CloseWindowDialog::buttonClicked, &loop, &QEventLoop::quit);
+    connect(dialog, &CloseWindowDialog::finished, &loop, &QEventLoop::quit);
     loop.exec();
     if (dialog->result() == QMessageBox::Ok) {
         //返回主页面

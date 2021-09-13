@@ -93,6 +93,12 @@ void MainPage::controlTest()
     //    qInfo() << "elapsed::" << t.elapsed();
 }
 
+void MainPage::soundSync(bool isOpen)
+{
+    m_soundState = isOpen;
+    m_soundBtn->updatePlayIcon(SoundCtl, m_soundState);
+}
+
 void MainPage::mouseMoveEvent(QMouseEvent *event)
 {
     Q_UNUSED(event);
