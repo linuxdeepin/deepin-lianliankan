@@ -206,17 +206,17 @@ void GamePage::initUI()
     controlFrame->setFixedSize(175, 542);
 
     m_controlGrp = new QButtonGroup(controlFrame);
-    GameButton *beginBtn = BtnFactory::createBtn(ButtonNormal, Small, Begin);
-    GameButton *resetBtn = BtnFactory::createBtn(ButtonNormal, Small, Reset);
-    GameButton *hintBtn = BtnFactory::createBtn(ButtonNormal, Small, Hint);
-    GameButton *soundBtn = BtnFactory::createBtn(ButtonNormal, Small, Sound);
-    GameButton *homeBtn = BtnFactory::createBtn(ButtonNormal, Small, Home);
+    GameButton *beginBtn = BtnFactory::createBtn(ButtonSmall, Small, Begin);
+    GameButton *resetBtn = BtnFactory::createBtn(ButtonSmall, Small, Reset);
+    GameButton *hintBtn = BtnFactory::createBtn(ButtonSmall, Small, Hint);
+    GameButton *soundBtn = BtnFactory::createBtn(ButtonSmall, Small, Sound);
+    GameButton *homeBtn = BtnFactory::createBtn(ButtonSmall, Small, Home);
     controlBtnLayout->addWidget(beginBtn);
-    controlBtnLayout->addSpacing(-15);
+    controlBtnLayout->addSpacing(-23);
     controlBtnLayout->addWidget(resetBtn);
-    controlBtnLayout->addSpacing(-15);
+    controlBtnLayout->addSpacing(-22);
     controlBtnLayout->addWidget(hintBtn);
-    controlBtnLayout->addSpacing(-15);
+    controlBtnLayout->addSpacing(-21);
     controlBtnLayout->addWidget(soundBtn);
     controlBtnLayout->addStretch();
     controlBtnLayout->addWidget(homeBtn);
@@ -237,7 +237,7 @@ void GamePage::initUI()
     gameFrameLayout->addWidget(controlFrame);
 
     m_progress = new GameProgressBar(this);
-    m_progress->setFixedSize(816, 60);
+    m_progress->setFixedSize(816, 54);
     mainLayout->addLayout(gameFrameLayout);
     mainLayout->addWidget(m_progress);
     mainLayout->setContentsMargins(15, 86, 15, 25);

@@ -83,14 +83,17 @@ void MainWindow::initPic()
     //    QTime time;
     //    time.start();
     //加载图片
-    for (int i = 1; i < 24; i++) {
+    for (int i = 1; i < 27; i++) {
         GameControl::loadPic(GameBtnFlag(i), GameBtnSize::Default, this);
     }
-    for (int i=1;i<5;i++) {
+    for (int i=1;i<4;i++) {
     GameControl::loadPic(GameBtnFlag(-1),GameBtnSize(i), this);
     GameControl::loadPic(GameBtnFlag(20),GameBtnSize(i), this);
     GameControl::loadPic(GameBtnFlag(21),GameBtnSize(i), this);
     }
+    GameControl::loadPic(GameBtnFlag(22),GameBtnSize(Small), this);
+    GameControl::loadPic(GameBtnFlag(23),GameBtnSize(Small), this);
+    GameControl::loadPic(GameBtnFlag(24),GameBtnSize(Small), this);
 
 
     //qInfo()<<time.elapsed()<<GameControl::m_picMap.value(qMakePair(GameBtnFlag::ButtonCat,GameBtnSize::Default));
@@ -138,6 +141,7 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
         painter.drawRect(titlebar()->rect());
         return  true;
      }
+
     }
     return  DMainWindow::eventFilter(obj,event);
 }

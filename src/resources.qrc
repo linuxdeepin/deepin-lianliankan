@@ -17,7 +17,6 @@
         <file>assets/images/bigRect.png</file>
         <file>assets/images/smallRect.png</file>
         <file>assets/images/midRect.png</file>
-        <file>assets/images/com.deepin.lianliankan.svg</file>
         <file>assets/Sound/ConnectSuccess.wav</file>
         <file>assets/Sound/ConnectFailed.wav</file>
         <file>assets/images/progressback.png</file>
@@ -34,5 +33,12 @@
         <file>assets/images/checkanimal.png</file>
         <file>assets/icon/begin.svg</file>
         <file>assets/icon/mute.svg</file>
+        <file>assets/images/press.png</file>
+        <file>assets/images/normal.png</file>
+        <file>assets/images/hover.png</file>
+        <file>assets/images/snormal.png</file>
+        <file>assets/images/spress.png</file>
+        <file>assets/images/shover.png</file>
+        <file>assets/icon/com.deepin.lianliankan.svg</file>
     </qresource>
 </RCC>

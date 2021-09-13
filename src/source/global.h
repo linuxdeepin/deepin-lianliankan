@@ -60,6 +60,9 @@ enum GameBtnFlag {
     FailedPic, //失败背景图
     ButtonHover,
     ButtonPress,
+    ButtonSmall,
+    ButtonSHover,
+    ButtonSPress,
     checkeffect,//游戏按钮选中效果
     ExplodePic //爆炸效果图
 };
@@ -69,30 +72,30 @@ enum GameBtnSize{
     Default=0,
     Big,
     Mid,
-    Small,
-    Over
+    Over,
+    Small
 };
 
 //游戏图标类型
 enum GameIconType{
     None=0,
-    Sound,
-    Mute,
-    Begin,
-    Pause,
-    Reset,
-    Hint,
-    Home
+    Sound,//音量打开
+    Mute,//音量关闭
+    Begin,//开始游戏
+    Pause,//暂停游戏
+    Reset,//重置游戏
+    Hint,//提示
+    Home//回主菜单
 };
 
 //游戏按钮样式类型
 enum GameBtnType {
-    TextOnPic = 0,
-    OnlyPic,
-    IconOnPic,
-    NoneType,
-    GameCtl,
-    SoundCtl
+    TextOnPic = 0,//文字按钮
+    OnlyPic,//动物图片按钮
+    IconOnPic,//图标按钮
+    NoneType,//空按钮，不显示
+    GameCtl,//开始暂停按钮
+    SoundCtl//音量开关按钮
 };
 
 //游戏地图结点

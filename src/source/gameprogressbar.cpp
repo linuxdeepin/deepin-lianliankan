@@ -46,21 +46,29 @@ void GameProgressBar::paintEvent(QPaintEvent *e)
     painter.setRenderHint(QPainter::Antialiasing, true);
     QPixmap pic = GameControl::m_picMap.value(qMakePair(ProgressBack, Default));
     painter.drawPixmap(rect(), pic);
-    qreal rectX = rect().x() + 6;
+    qreal rectX = rect().x() + 7;
 
     qreal rectY = rect().y() + 1;
-    qreal rectWidth = rect().width() - 11;
-    qreal rectHeight = rect().height() - 15;
+    qreal rectWidth = rect().width() - 14;
+    qreal rectHeight = (rect().height() - 14);
     qreal value = this->value();
     qreal proportion = value / m_time;
 
     //设置渐变填充颜色
     QLinearGradient linearGradient(QPointF(rectX, rectY), QPointF(rectX + rectWidth, rectY + rectHeight)); //线性渐变
-    linearGradient.setColorAt(0.2, QColor("#F66610")); //插入颜色
-    linearGradient.setColorAt(0.33, QColor("#F7AA62"));
-    linearGradient.setColorAt(0.65, QColor("#FFC24A"));
+    linearGradient.setColorAt(0.03, QColor("#F66610")); //插入颜色
+    linearGradient.setColorAt(0.65, QColor("#F7AA62"));
+    linearGradient.setColorAt(0.33, QColor("#FFC24A"));
     linearGradient.setColorAt(0.98, QColor("#FFD273"));
-    linearGradient.setSpread(QGradient::RepeatSpread); //指定渐变区域以外的区域的扩散方式
+    linearGradient.setSpread(QGradient::ReflectSpread); //指定渐变区域以外的区域的扩散方式
+
+    //覆盖一层垂直线性渐变色，创造立体效果
+    QLinearGradient shadowLg(QPointF(rectX, rectY), QPointF(rectX, (rectY+rectHeight)*0.7));
+    shadowLg.setColorAt(0.04, QColor("#F2EB79"));
+    shadowLg.setColorAt(0.2, QColor("#F1EB6E"));
+    shadowLg.setColorAt(0.61, QColor("#DE8A4C"));
+    shadowLg.setColorAt(0.9, QColor("#D56B39"));
+    shadowLg.setSpread(QGradient::ReflectSpread);
 
     //    // 进度条外框,固定的路径
     //    QPainterPath path;
@@ -83,19 +91,22 @@ void GameProgressBar::paintEvent(QPaintEvent *e)
         fillPath.lineTo(rectX + rectHeight / 2, rectY + rectHeight);
         fillPath.arcTo(QRectF(rectX + rectHeight, rectY + rectHeight, -rectHeight, -rectHeight), 90, -180);
         painter.fillPath(fillPath, linearGradient);
+        painter.setOpacity(0.5);
+        painter.fillPath(fillPath, shadowLg);
     }
 
     // 绘制倒计时
+    painter.setOpacity(1);
     QFont textFont;
     //阴影字体
     QFont BackFont;
     const QString &text = QString::number(value) + "s";
     textFont.setFamily("Noto Sans CJK SC");
     textFont.setWeight(QFont::DemiBold);
-    textFont.setPointSize(16);
+    textFont.setPointSize(15);
     BackFont.setFamily("Noto Sans CJK SC");
     BackFont.setWeight(QFont::DemiBold);
-    BackFont.setPointSize(16);
+    BackFont.setPointSize(15);
     QFontMetricsF mertic(textFont);
     qreal merticWidth = mertic.width(text);
     qreal merticHeight = mertic.height();

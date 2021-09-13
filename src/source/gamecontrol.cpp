@@ -56,11 +56,11 @@ void GameControl::loadPic(const GameBtnFlag &flag, const GameBtnSize &btnSize, D
     case Mid:
         scaledSize = QSize(200, 115);
         break;
-    case Small:
-        scaledSize = QSize(140, 80);
-        break;
     case Over:
-        scaledSize = QSize(175, 100);
+        scaledSize = QSize(180, 98);
+        break;
+    case Small:
+        scaledSize = QSize(150, 90);
         break;
     default:
         scaledSize = QSize(50, 50);
@@ -68,7 +68,7 @@ void GameControl::loadPic(const GameBtnFlag &flag, const GameBtnSize &btnSize, D
 
     switch (flag) {
     case ButtonNormal:
-        fileName = ":/assets/images/normal.svg";
+        fileName = ":/assets/images/normal.png";
         break;
     case ButtonCow:
         fileName = ":/assets/images/cow.png";
@@ -123,7 +123,7 @@ void GameControl::loadPic(const GameBtnFlag &flag, const GameBtnSize &btnSize, D
         fileName = ":/assets/images/background.png";
         break;
     case ProgressBack:
-        scaledSize = QSize(816, 60);
+        scaledSize = QSize(816, 54);
         fileName = ":/assets/images/progressback.png";
         break;
     case VictoryPic:
@@ -135,10 +135,19 @@ void GameControl::loadPic(const GameBtnFlag &flag, const GameBtnSize &btnSize, D
         fileName = ":/assets/images/failed.png";
         break;
     case ButtonHover:
-        fileName = ":/assets/images/hover.svg";
+        fileName = ":/assets/images/hover.png";
         break;
     case ButtonPress:
-        fileName = ":/assets/images/press.svg";
+        fileName = ":/assets/images/press.png";
+        break;
+    case ButtonSmall:
+        fileName = ":/assets/images/snormal.png";
+        break;
+    case ButtonSHover:
+        fileName = ":/assets/images/shover.png";
+        break;
+    case ButtonSPress:
+        fileName = ":/assets/images/spress.png";
         break;
     case checkeffect:
         scaledSize = QSize(60, 60);
@@ -350,17 +359,17 @@ GameButton *BtnFactory::createBtn(const GameBtnFlag &flag, const GameBtnSize &bt
         break;
     case Small:
         btnFont.setPointSize(10);
-        size = QSize(140, 80);
+        size = QSize(150, 90);
         break;
     case Over:
         btnFont.setPointSize(16);
-        size = QSize(175, 100);
+        size = QSize(180, 98);
         break;
     default:
         size = QSize(50, 50);
     }
 
-    if (flag == ButtonNormal) {
+    if (flag == ButtonNormal || flag == ButtonSmall) {
         if (iconType == None) {
             btn = new GameButton(flag, btnSize, text, parent);
             //配置可选区域

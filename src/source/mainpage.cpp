@@ -67,7 +67,7 @@ void MainPage::initUI()
     GameButton *swithBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Big, GameIconType::None, tr("Select Level"), this);
     swithBtn->setEnabled(false);
     swithBtn->setGeometry(393,80,250,135);
-    m_soundBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Small, GameIconType::Sound);
+    m_soundBtn = BtnFactory::createBtn(GameBtnFlag::ButtonSmall, GameBtnSize::Small, GameIconType::Sound);
     m_soundBtn->setParent(this);
     m_soundBtn->setGeometry(854, 569, 140, 80);
 

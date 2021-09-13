@@ -179,7 +179,7 @@ void GameButton::mousePressEvent(QMouseEvent *e)
             m_pic = pressPic;
         } else if (m_btnType == IconOnPic) {
             m_cotrolBtnPressd = true;
-            QPixmap pressPic = GameControl::m_picMap.value(qMakePair(ButtonPress, Small));
+            QPixmap pressPic = GameControl::m_picMap.value(qMakePair(ButtonSPress, Small));
             m_pic = pressPic;
         }
         e->accept();
@@ -202,7 +202,7 @@ void GameButton::mouseReleaseEvent(QMouseEvent *e)
         m_pic = normalPic;
     }else if (m_btnType == IconOnPic) {
         m_cotrolBtnPressd = false;
-        QPixmap normalPic = GameControl::m_picMap.value(qMakePair(ButtonHover, Small));
+        QPixmap normalPic = GameControl::m_picMap.value(qMakePair(ButtonSHover, Small));
         m_pic = normalPic;
     }
     return QPushButton::mouseReleaseEvent(e);
@@ -217,7 +217,7 @@ void GameButton::enterEvent(QEvent *event)
         QPixmap hoverPic = GameControl::m_picMap.value(qMakePair(ButtonHover, m_size));
         m_pic = hoverPic;
     }else if (m_btnType == IconOnPic) {
-        QPixmap hoverPic = GameControl::m_picMap.value(qMakePair(ButtonHover, Small));
+        QPixmap hoverPic = GameControl::m_picMap.value(qMakePair(ButtonSHover, Small));
         m_pic = hoverPic;
     } else if (m_btnType == OnlyPic){
         event->ignore();
@@ -232,7 +232,7 @@ void GameButton::leaveEvent(QEvent *event)
         QPixmap normalPic = GameControl::m_picMap.value(qMakePair(ButtonNormal, m_size));
         m_pic = normalPic;
     }else if (m_btnType == IconOnPic) {
-        QPixmap normalPic = GameControl::m_picMap.value(qMakePair(ButtonNormal, Small));
+        QPixmap normalPic = GameControl::m_picMap.value(qMakePair(ButtonSmall, Small));
         m_pic = normalPic;
     } else if (m_btnType == OnlyPic){
         event->ignore();
@@ -293,10 +293,10 @@ void GameButton::setBtnMask(QPixmap &pic)
         scaledSize = QSize(200, 110);
         break;
     case Small:
-        scaledSize = QSize(140, 75);
+        scaledSize = QSize(150, 85);
         break;
     case Over:
-        scaledSize = QSize(175, 95);
+        scaledSize = QSize(180, 93);
         break;
     default:
         return;
