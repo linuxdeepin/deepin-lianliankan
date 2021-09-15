@@ -402,20 +402,22 @@ void GamePage::failedAction(GameButton *preBtn, GameButton *currentBtn)
 
 void GamePage::popDialog()
 {
-    CloseWindowDialog *dialog = new CloseWindowDialog(this->parentWidget());
+    CloseWindowDialog *dialog = new CloseWindowDialog(this);
 
     //保留弹出窗口前的开始暂停状态
     bool preOnOff = onOffGame();
     //弹出阻塞窗口暂停游戏
     setOnOffGame(false);
     dialog->setMinimumWidth(390);
+    this->parentWidget()->parentWidget()->setEnabled(false);
+    dialog->setEnabled(true);
     dialog->show();
-    this->setEnabled(false);
     //添加时间循环，直到获取按钮信息退出循环
     QEventLoop loop;
     connect(dialog, &CloseWindowDialog::buttonClicked, &loop, &QEventLoop::quit);
     connect(dialog, &CloseWindowDialog::finished, &loop, &QEventLoop::quit);
     loop.exec();
+    this->parentWidget()->parentWidget()->setEnabled(true);
     if (dialog->result() == QMessageBox::Ok) {
         //返回主页面
         Q_EMIT backToMainPage();
@@ -424,7 +426,7 @@ void GamePage::popDialog()
         //点击继续游戏,游戏回到弹出阻塞窗口前的状态
         setOnOffGame(preOnOff);
     }
-    this->setEnabled(true);
+
 
     GameButton *btn = dynamic_cast<GameButton *>(m_controlGrp->button(4));
     if (!btn) {

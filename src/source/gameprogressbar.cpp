@@ -56,15 +56,15 @@ void GameProgressBar::paintEvent(QPaintEvent *e)
 
     //设置渐变填充颜色
     QLinearGradient linearGradient(QPointF(rectX, rectY), QPointF(rectX + rectWidth, rectY + rectHeight)); //线性渐变
-    linearGradient.setColorAt(0.03, QColor("#F66610")); //插入颜色
-    linearGradient.setColorAt(0.65, QColor("#F7AA62"));
-    linearGradient.setColorAt(0.33, QColor("#FFC24A"));
-    linearGradient.setColorAt(0.98, QColor("#FFD273"));
+    linearGradient.setColorAt(0.03, QColor(255, 58, 0, 255)); //插入颜色
+    linearGradient.setColorAt(0.33, QColor(238, 89, 26, 255));
+    linearGradient.setColorAt(0.65, QColor(255, 173, 0, 255));
+    linearGradient.setColorAt(0.98, QColor(255, 210, 115, 255));
     linearGradient.setSpread(QGradient::ReflectSpread); //指定渐变区域以外的区域的扩散方式
 
     //覆盖一层垂直线性渐变色，创造立体效果
-    QLinearGradient shadowLg(QPointF(rectX, rectY), QPointF(rectX, (rectY+rectHeight)*0.7));
-    shadowLg.setColorAt(0.04, QColor("#F2EB79"));
+    QLinearGradient shadowLg(QPointF(rectX, rectY), QPointF(rectX, (rectY+rectHeight)*0.6));
+    shadowLg.setColorAt(0.04, QColor(235, 255, 209));
     shadowLg.setColorAt(0.2, QColor("#F1EB6E"));
     shadowLg.setColorAt(0.61, QColor("#DE8A4C"));
     shadowLg.setColorAt(0.9, QColor("#D56B39"));

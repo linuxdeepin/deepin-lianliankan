@@ -33,6 +33,9 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <QCloseEvent>
+#include <DWindowCloseButton>
+#include <DWindowMinButton>
+#include <DWindowOptionButton>
 
 MainWindow::MainWindow(QWidget *parent):DMainWindow (parent)
 {
@@ -165,14 +168,18 @@ void MainWindow::closeEvent(QCloseEvent *event)
         //弹出阻塞窗口暂停游戏
         m_gamePage->setOnOffGame(false);
         dialog->setMinimumWidth(390);
-        m_gamePage->setEnabled(false);
+        this->setEnabled(false);
+//        DWindowCloseButton *titleCloseBtn = m_titlebar->findChild<DWindowCloseButton *>("DTitlebarDWindowCloseButton");
+//        titleCloseBtn->setDisabled(true);
+//        m_gamePage->setEnabled(false);
+        dialog->setEnabled(true);
         dialog->show();
         //添加时间循环，直到获取按钮信息退出循环
         QEventLoop loop;
         connect(dialog, &CloseWindowDialog::buttonClicked, &loop, &QEventLoop::quit);
         connect(dialog, &CloseWindowDialog::finished, &loop, &QEventLoop::quit);
         loop.exec();
-        m_gamePage->setEnabled(true);
+        this->setEnabled(true);
         if (dialog->result() == QMessageBox::Ok) {
             event->accept();
         } else {
@@ -182,6 +189,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
     } else {
         event->accept();
     }
+
+
 }
 
 void MainWindow::changeEvent(QEvent *event)
