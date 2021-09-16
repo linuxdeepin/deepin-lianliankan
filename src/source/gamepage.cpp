@@ -352,7 +352,7 @@ void GamePage::successAction(GameButton *preBtn, GameButton *currentBtn)
     //清除通路容器
     m_locationVec.append(currentBtn);
 
-    updateConnection();
+    updateConnection(preBtn, currentBtn);
 
     //连线成功音效
     if (m_soundSwitch)
@@ -436,7 +436,7 @@ void GamePage::popDialog()
     dialog->done(0);
 }
 
-void GamePage::updateConnection()
+void GamePage::updateConnection(GameButton *preBtn, GameButton *currentBtn)
 {
     QVector<QPair<int, QPoint>>::iterator iter;
     QList<QPointF> pointList;
@@ -450,15 +450,15 @@ void GamePage::updateConnection()
         return;
 
     //获取两个点击按钮的坐标
-    GameButton *gameStartBtn = m_locationVec.first();
-    GameButton *gameEndBtn = m_locationVec.last();
+    //    GameButton *gameStartBtn = m_locationVec.first();
+    //    GameButton *gameEndBtn = m_locationVec.last();
     GameButton *gameBtn = nullptr;
-    qreal btnStartX = gameStartBtn->pos().x();
-    qreal btnStartY = gameStartBtn->pos().y();
-    qreal btnEndX = gameEndBtn->pos().x();
-    qreal btnEndY = gameEndBtn->pos().y();
+    qreal btnStartX = preBtn->pos().x();
+    qreal btnStartY = preBtn->pos().y();
+    qreal btnEndX = currentBtn->pos().x();
+    qreal btnEndY = currentBtn->pos().y();
 
-//    qInfo() << btnStartX << btnStartY << btnEndX << btnEndY;
+    //    qInfo() << btnStartX << btnStartY << btnEndX << btnEndY;
     //如果路径容器种只有一个位置,那就代表两个按钮靠在一起,故单独处理
     if (m_pathVec.count() == 1) {
         QPointF posStart(btnStartX + m_btnWidth / 2 + framePosX, btnStartY + m_btnHeight / 2 + framePosY);
@@ -486,7 +486,7 @@ void GamePage::updateConnection()
             if (iter == m_pathVec.end() - 1) {
                 //保存当前转向方向
                 m_dir = iter->first;
-                QPointF startPos = dirCoord(ExplodeType, iter->first, gameStartBtn->pos());
+                QPointF startPos = dirCoord(ExplodeType, iter->first, preBtn->pos());
                 QPointF lineStartPos = dirCoord(LineType, iter->first, startPos);
                 //添加爆炸图起点和连线起点
                 pointList.append(startPos);
@@ -540,7 +540,7 @@ void GamePage::updateConnection()
                 }
             }
         }
-        QPointF endPos = dirCoord(ExplodeType, changeDir(m_dir), gameEndBtn->pos());
+        QPointF endPos = dirCoord(ExplodeType, changeDir(m_dir), currentBtn->pos());
         QPointF lineEndPos = dirCoord(LineType, changeDir(m_dir), endPos);
         pointList.append(lineEndPos);
         pointList.append(endPos);
@@ -711,12 +711,18 @@ void GamePage::onAnimalBtnControl(QAbstractButton *btn)
             return;
         //判断搜索结果
         // qInfo()<<firstBtn->location()<<gameBtn->location();
-        bool res = GameControl::GameInterFace().gameSearch(firstBtn->location(), gameBtn->location());
+        GameSearchResult res = GameControl::GameInterFace().gameSearch(firstBtn->location(), gameBtn->location());
         //如果符合规则
-        if (res) {
+        switch (res) {
+        case PositiveSuccess:
             successAction(firstBtn, gameBtn);
-        } else {
+            break;
+        case ReverseSuccess:
+            successAction(gameBtn, firstBtn);
+            break;
+        default:
             failedAction(firstBtn, gameBtn);
+            break;
         }
 
     } else {

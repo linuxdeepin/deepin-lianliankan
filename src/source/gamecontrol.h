@@ -65,9 +65,9 @@ public:
     * @brief  GameControl::gameSearch 游戏寻路
     * @param  startPos 找寻路线的起点
     * @param  endPos   找寻路线的终点
-    * @return bool 寻路结果
+    * @return GameSearchResult 寻路结果
     */
-    bool gameSearch(const QPoint &startPos, const QPoint &endPos); //寻路
+    GameSearchResult gameSearch(const QPoint &startPos, const QPoint &endPos); //寻路
     /**
     * @brief  GameControl::gameJudgeVictory 判断游戏是否胜利
     * @return bool 胜利或者失败

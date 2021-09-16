@@ -118,4 +118,11 @@ enum PosType {
     ExplodeType
 };
 
+//游戏地图寻路结果
+enum GameSearchResult {
+    FAIL = 0, //寻找失败
+    PositiveSuccess, //正向寻找成功
+    ReverseSuccess //反向寻找成功
+};
+
 #endif // GLOBAL_H

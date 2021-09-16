@@ -160,8 +160,10 @@ private:
     void popDialog();
     /**
     * @brief  GamePage::updateConnection 更新通路连线,绘制线路
+    * @param  prebtn 前一个点击的游戏按钮
+    * @param  currentbtn 当前点击的游戏按钮
     */
-    void updateConnection();
+    void updateConnection(GameButton *preBtn, GameButton *currentBtn);
     /**
     * @brief  GamePage::hintBtnflash 提示按钮闪烁
     * @param  type 按钮类型

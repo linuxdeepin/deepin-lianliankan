@@ -191,8 +191,8 @@ QPair<bool, QList<QPoint>> GameControl::gameJudge()
                     //                  qInfo()<<QPoint(i,j)<<QPoint(i+rowOffset,j+columnOffset);
                     QPoint startPoint = QPoint(i, j);
                     QPoint endPoint = QPoint(i + rowOffset, j + columnOffset);
-                    bool res = gameSearch(startPoint, endPoint);
-                    if (res) {
+                    GameSearchResult res = gameSearch(startPoint, endPoint);
+                    if (res != FAIL) {
                         pointList.append(startPoint);
                         pointList.append(endPoint);
                         return qMakePair(true, pointList);
@@ -207,13 +207,20 @@ QPair<bool, QList<QPoint>> GameControl::gameJudge()
     return qMakePair(false, pointList);
 }
 
-bool GameControl::gameSearch(const QPoint &startPos, const QPoint &endPos)
+GameSearchResult GameControl::gameSearch(const QPoint &startPos, const QPoint &endPos)
 {
-    //先保证的无交叉覆盖搜索,如果没有通路,再进行交叉覆盖搜索
+    //先保证的无交叉正向覆盖搜索,如果没有通路,再进行反向覆盖搜索，最后进行交叉搜索
     if (!gameBfs(false, startPos, endPos)) {
-        return gameBfs(true, startPos, endPos);
+        if (!gameBfs(false, endPos, startPos)) {
+            if (gameBfs(true, startPos, endPos)) {
+                return PositiveSuccess;
+            } else {
+                return FAIL;
+            }
+        }
+        return ReverseSuccess;
     }
-    return true;
+    return PositiveSuccess;
 }
 
 bool GameControl::gameJudgeVictory()
@@ -372,10 +379,8 @@ GameButton *BtnFactory::createBtn(const GameBtnFlag &flag, const GameBtnSize &bt
     if (flag == ButtonNormal || flag == ButtonSmall) {
         if (iconType == None) {
             btn = new GameButton(flag, btnSize, text, parent);
-            //配置可选区域
         } else {
             btn = new GameButton(GameControl::m_picMap.value(qMakePair(flag, btnSize)), iconType, parent);
-            //配置可选区域
         }
     } else {
         btn = new GameButton(GameControl::m_picMap.value(qMakePair(flag, btnSize)), parent);
