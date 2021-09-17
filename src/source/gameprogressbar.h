@@ -38,6 +38,7 @@ public slots:
 
 private:
     qreal m_time = 0;
+    QPixmap m_pic;
 };
 
 #endif // GAMEPROGRESSBAR_H

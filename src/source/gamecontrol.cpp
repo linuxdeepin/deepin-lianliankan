@@ -106,33 +106,9 @@ void GameControl::loadPic(const GameBtnFlag &flag, const GameBtnSize &btnSize, D
     case ButtonPanda:
         fileName = ":/assets/images/panda.png";
         break;
-    case BigRect:
-        scaledSize = QSize(835, 542);
-        fileName = ":/assets/images/bigRect.png";
-        break;
-    case MidRect:
-        scaledSize = QSize(480, 515);
-        fileName = ":/assets/images/midRect.png";
-        break;
-    case SmallRect:
-        scaledSize = QSize(175, 542);
-        fileName = ":/assets/images/smallRect.png";
-        break;
     case MainBack:
         scaledSize = QSize(1024, 718);
         fileName = ":/assets/images/background.png";
-        break;
-    case ProgressBack:
-        scaledSize = QSize(816, 54);
-        fileName = ":/assets/images/progressback.png";
-        break;
-    case VictoryPic:
-        scaledSize = QSize(370, 300);
-        fileName = ":/assets/images/victory.png";
-        break;
-    case FailedPic:
-        scaledSize = QSize(280, 300);
-        fileName = ":/assets/images/failed.png";
         break;
     case ButtonHover:
         fileName = ":/assets/images/hover.png";

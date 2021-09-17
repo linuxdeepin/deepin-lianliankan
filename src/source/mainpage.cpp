@@ -35,7 +35,6 @@
 
 MainPage::MainPage(QWidget*parent):DWidget (parent)
 {
-    //        controlTest();
     initUI();
     initConnect();
 }
@@ -49,7 +48,6 @@ void MainPage::initUI()
     m_btnGrp->addButton(primaryBtn, 0);
     m_btnGrp->addButton(interBtn, 1);
     m_btnGrp->addButton(advanceBtn, 2);
-
     m_btnGrp->setExclusive(true);
 
     GameBlurEffectWidget *switchFrame = new GameBlurEffectWidget(GameBtnSize::Mid, this);
@@ -66,31 +64,18 @@ void MainPage::initUI()
 
     GameButton *swithBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Big, GameIconType::None, tr("Select Level"), this);
     swithBtn->setEnabled(false);
+    //这里由于窗口大小固定，且布局较难控制，故将按钮位置写为固定数字
     swithBtn->setGeometry(393,80,250,135);
     m_soundBtn = BtnFactory::createBtn(GameBtnFlag::ButtonSmall, GameBtnSize::Small, GameIconType::Sound);
     m_soundBtn->setParent(this);
     m_soundBtn->setGeometry(854, 569, 140, 80);
 
-    //    创建游戏按钮
-    //    GameButton*testBtn=BtnFactory::createBtn(GameBtnFlag::ButtonBlank,GameBtnSize::Default,GameIconType::None);
-    //    testBtn->setParent(this);
-    //    testBtn->setGeometry(213,569,50,50);
-    //    qInfo()<<testBtn->geometry();
 }
 
 void MainPage::initConnect()
 {
     connect(m_btnGrp, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &MainPage::buttonPress);
     connect(m_soundBtn, &GameButton::pressed, this, &MainPage::soundSwitch);
-}
-
-void MainPage::controlTest()
-{
-    //    QTime t;
-    //    t.start();
-    ////    GameControl::GameInterFace().gameBegin();
-
-    //    qInfo() << "elapsed::" << t.elapsed();
 }
 
 void MainPage::soundSync(bool isOpen)

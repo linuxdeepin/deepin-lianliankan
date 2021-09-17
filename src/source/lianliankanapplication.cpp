@@ -34,7 +34,7 @@ void LianLianKanApplication::handleQuitAction()
 
     // 处理点击退出事件
     if (pWindow)
-        pWindow->handleQuit();
+        pWindow->close();
 }
 
 

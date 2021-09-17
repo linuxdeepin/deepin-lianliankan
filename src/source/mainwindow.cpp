@@ -22,20 +22,13 @@
 #include "mainwindow.h"
 #include "gamecontrol.h"
 #include "closewindowdialog.h"
-#include "shadowlabel.h"
 
 #include <DTitlebar>
 
-#include <QImageReader>
-#include <QHBoxLayout>
 #include <QTime>
-#include <QGraphicsBlurEffect>
 #include <QMessageBox>
 #include <QDebug>
 #include <QCloseEvent>
-#include <DWindowCloseButton>
-#include <DWindowMinButton>
-#include <DWindowOptionButton>
 
 MainWindow::MainWindow(QWidget *parent):DMainWindow (parent)
 {
@@ -46,18 +39,18 @@ MainWindow::MainWindow(QWidget *parent):DMainWindow (parent)
 
 void MainWindow::initUI()
 {
-    this->setFixedSize(QSize(1024, 768));
+    this->setFixedSize(QSize(WINDOW_WIDTH, WINDOW_HEIGHT));
     m_titlebar = titlebar();
+    m_titlebar->setIcon(QIcon(":/assets/icon/com.deepin.lianliankan.svg"));
     m_titlebar->installEventFilter(this);
     m_titlebar->setBackgroundTransparent(true);
 
     m_stackedWidget = new DStackedWidget(this);
     m_mainPage = new MainPage(m_stackedWidget);
+    //游戏页面
     m_gamePage = new GamePage(this);
-
     m_stackedWidget->addWidget(m_mainPage);
     m_stackedWidget->addWidget(m_gamePage);
-
     setCentralWidget(m_stackedWidget);
 }
 
@@ -73,33 +66,12 @@ void MainWindow::initConnect()
         m_stackedWidget->setCurrentWidget(m_mainPage);
     });
     connect(m_gamePage, &GamePage::sigResult, this, &MainWindow::showFinishPage);
-    connect(m_gamePage, &GamePage::setGameStated, this, [ = ](bool state){
+    connect(m_gamePage, &GamePage::setGameStated, this, [=](bool state) {
         m_gameState = state;
     });
-    connect(m_gamePage, &GamePage::soundSync, this, [ = ](bool isOpen){
+    connect(m_gamePage, &GamePage::soundSync, this, [=](bool isOpen) {
         m_mainPage->soundSync(isOpen);
     });
-}
-
-void MainWindow::initPic()
-{
-    //    QTime time;
-    //    time.start();
-    //加载图片
-    for (int i = 1; i < 27; i++) {
-        GameControl::loadPic(GameBtnFlag(i), GameBtnSize::Default, this);
-    }
-    for (int i=1;i<4;i++) {
-    GameControl::loadPic(GameBtnFlag(-1),GameBtnSize(i), this);
-    GameControl::loadPic(GameBtnFlag(20),GameBtnSize(i), this);
-    GameControl::loadPic(GameBtnFlag(21),GameBtnSize(i), this);
-    }
-    GameControl::loadPic(GameBtnFlag(22),GameBtnSize(Small), this);
-    GameControl::loadPic(GameBtnFlag(23),GameBtnSize(Small), this);
-    GameControl::loadPic(GameBtnFlag(24),GameBtnSize(Small), this);
-
-
-    //qInfo()<<time.elapsed()<<GameControl::m_picMap.value(qMakePair(GameBtnFlag::ButtonCat,GameBtnSize::Default));
 }
 
 void MainWindow::initOverWindowConnect()
@@ -108,19 +80,32 @@ void MainWindow::initOverWindowConnect()
         m_gameOverPage->hide();
         m_gameOverPage->deleteLater();
         m_stackedWidget->setCurrentWidget(m_mainPage);
-
     });
 
-    connect(m_gameOverPage, &GameoverBlurEffectWidget::hideBlurWindow, this, [&] {
-        m_gameOverPage->setFixedSize(0,0);
+    connect(m_gameOverPage, &GameoverBlurEffectWidget::reGame, this, [&] {
+        m_gameOverPage->setFixedSize(0, 0);
+        m_gamePage->reGame();
     });
-
-    connect(m_gameOverPage, &GameoverBlurEffectWidget::reGame, m_gamePage, &GamePage::reGame);
 }
 
-void MainWindow::handleQuit()
+void MainWindow::initPic()
 {
-    close();
+    //    QTime time;
+    //    time.start();
+    //加载图片
+    for (int i = 1; i < 21; i++) {
+        GameControl::loadPic(GameBtnFlag(i), GameBtnSize::Default, this);
+    }
+    for (int i=1;i<4;i++) {
+    GameControl::loadPic(GameBtnFlag(-1),GameBtnSize(i), this);
+    GameControl::loadPic(GameBtnFlag(14), GameBtnSize(i), this);
+    GameControl::loadPic(GameBtnFlag(15), GameBtnSize(i), this);
+    }
+    GameControl::loadPic(GameBtnFlag(16), GameBtnSize(Small), this);
+    GameControl::loadPic(GameBtnFlag(17), GameBtnSize(Small), this);
+    GameControl::loadPic(GameBtnFlag(18), GameBtnSize(Small), this);
+
+    //qInfo()<<time.elapsed()<<GameControl::m_picMap.value(qMakePair(GameBtnFlag::ButtonCat,GameBtnSize::Default));
 }
 
 bool MainWindow::eventFilter(QObject *obj, QEvent *event)
@@ -169,9 +154,6 @@ void MainWindow::closeEvent(QCloseEvent *event)
         m_gamePage->setOnOffGame(false);
         dialog->setMinimumWidth(390);
         this->setEnabled(false);
-//        DWindowCloseButton *titleCloseBtn = m_titlebar->findChild<DWindowCloseButton *>("DTitlebarDWindowCloseButton");
-//        titleCloseBtn->setDisabled(true);
-//        m_gamePage->setEnabled(false);
         dialog->setEnabled(true);
         dialog->show();
         //添加时间循环，直到获取按钮信息退出循环
@@ -186,11 +168,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
             m_gamePage->setOnOffGame(preOnOff);
             event->ignore();
         }
+        dialog->done(0);
     } else {
         event->accept();
     }
-
-
 }
 
 void MainWindow::changeEvent(QEvent *event)
@@ -209,13 +190,13 @@ void MainWindow::onShowClickedPage(int id)
 {
     switch (id) {
     case 1:
-        m_gamePage->setInitalTime(320);
+        m_gamePage->setInitalTime(INTER_TIME);
         break;
     case 2:
-        m_gamePage->setInitalTime(160);
+        m_gamePage->setInitalTime(ADVANCED_TIME);
         break;
     default:
-        m_gamePage->setInitalTime(480);
+        m_gamePage->setInitalTime(PRIMARY_TIME);
         break;
     }
     if (!m_firstGame)
@@ -224,7 +205,7 @@ void MainWindow::onShowClickedPage(int id)
     m_firstGame = false;
     m_stackedWidget->setCurrentWidget(m_gamePage);
     //提前加载结束界面
-    m_gameOverPage = new GameoverBlurEffectWidget(this);
+    m_gameOverPage = new GameoverBlurEffectWidget(centralWidget());
 
     initOverWindowConnect();
 
@@ -244,7 +225,5 @@ void MainWindow::showFinishPage(bool res)
         text = tr("VICTORY");
     }
     m_gameOverPage->updateLabel(text);
-    m_gameOverPage->setFixedSize(QSize(1024,718));
-    m_gameOverPage->move(0,50);
-
+    m_gameOverPage->setFixedSize(QSize(WINDOW_WIDTH, WINDOW_HEIGHT - m_titlebar->height()));
 }

@@ -23,12 +23,9 @@
 #include "gamecontrol.h"
 
 #include <QPainter>
-#include <QtMath>
-#include <QImageReader>
 #include <QDebug>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
-#include <QFontMetrics>
 #include <QGraphicsDropShadowEffect>
 
 GameoverBlurEffectWidget::GameoverBlurEffectWidget(QWidget *parent)
@@ -40,10 +37,18 @@ GameoverBlurEffectWidget::GameoverBlurEffectWidget(QWidget *parent)
 
 void GameoverBlurEffectWidget::paintEvent(QPaintEvent *event)
 {
+    QString fileName;
+    QSize scaledSize;
+    if (m_overType) {
+        scaledSize = QSize(370, 300);
+        fileName = ":/assets/images/victory.png";
+    } else {
+        scaledSize = QSize(280, 300);
+        fileName = ":/assets/images/failed.png";
+    }
+    m_pic = Utils::getDpiPixmap(scaledSize, fileName, this);
 
     //设置背景模糊
-    DBlurEffectWidget::setMaskAlpha(0);
-    DBlurEffectWidget::setRadius(35);
     DBlurEffectWidget::paintEvent(event);
     //绘制背景色
     QPainter painterBackground(this);
@@ -52,21 +57,18 @@ void GameoverBlurEffectWidget::paintEvent(QPaintEvent *event)
     color.setAlphaF(0.5);
     painterBackground.fillRect(rect(), color);
     //绘制居中图片
-    QPainter painterImg(this);
-    painterBackground.setRenderHint(QPainter::Antialiasing, true);
-    QPixmap pic;
+    painterBackground.save();
     int imgX = 0;
     int imgY = 0;
     if (m_overType) {
-        pic = GameControl::m_picMap.value(qMakePair(VictoryPic, Default));
         imgX = 329;
         imgY = 108;
     } else {
-        pic = GameControl::m_picMap.value(qMakePair(FailedPic, Default));
         imgX = 372;
         imgY = 108;
     }
-    painterImg.drawPixmap(imgX,imgY,pic);
+    painterBackground.drawPixmap(imgX, imgY, m_pic);
+    painterBackground.restore();
 }
 
 void GameoverBlurEffectWidget::mouseMoveEvent(QMouseEvent *event)
@@ -76,6 +78,8 @@ void GameoverBlurEffectWidget::mouseMoveEvent(QMouseEvent *event)
 
 void GameoverBlurEffectWidget::initUI()
 {
+    setMaskAlpha(0);
+    setRadius(35);
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
     m_tipLabel = new ShadowLabel(this);
     m_OverBtnGroup = new QButtonGroup(this);
@@ -98,16 +102,16 @@ void GameoverBlurEffectWidget::initConnect()
 
 void GameoverBlurEffectWidget::updateLabel(QString text)
 {
-    m_Text = text;
-    m_tipLabel->setText(m_Text);
+    m_tipLabel->setText(text);
     QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect(this);
+    //设置阴影模糊半径为8
     effect->setBlurRadius(8);
+    //设置阴影位置Y轴偏移4px
     effect->setYOffset(4);
-    effect->setXOffset(0);
     QColor shadowColor(108,69,25);
+    //设置透明度
     shadowColor.setAlphaF(0.6);
     effect->setColor(shadowColor);
-
     m_tipLabel->setGraphicsEffect(effect);
 }
 
@@ -121,7 +125,6 @@ void GameoverBlurEffectWidget::onButtonPressed(int id)
 {
     switch (id) {
     case 0: {
-        Q_EMIT hideBlurWindow();
         Q_EMIT reGame();
         break;
     }

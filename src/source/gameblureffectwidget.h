@@ -39,6 +39,7 @@ public slots:
 
 private:
     GameBtnSize m_sizeFlag;
+    QPixmap m_pic;
 };
 
 #endif // GAMEBLUREFFECTWIDGET_H

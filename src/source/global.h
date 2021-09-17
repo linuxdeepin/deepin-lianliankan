@@ -35,6 +35,15 @@
 #define DIR_UP 2
 #define DIR_DOWN 3
 
+//游戏难度时间
+#define ADVANCED_TIME 160
+#define INTER_TIME 320
+#define PRIMARY_TIME 480
+
+//窗口大小
+#define WINDOW_HEIGHT 768
+#define WINDOW_WIDTH 1024
+
 //游戏按钮背景类型||游戏图片类型
 enum GameBtnFlag {
     ButtonNormal = -1,
@@ -51,13 +60,7 @@ enum GameBtnFlag {
     ButtonLion,
     ButtonFox,
     ButtonPanda,
-    BigRect, //游戏页面左侧矩形框
-    MidRect, //主页面矩形框
-    SmallRect, //游戏页面右侧矩形框
     MainBack, //游戏背景图
-    ProgressBack, //进度条背景
-    VictoryPic, //胜利背景图
-    FailedPic, //失败背景图
     ButtonHover,
     ButtonPress,
     ButtonSmall,

@@ -27,6 +27,9 @@
 GameProgressBar::GameProgressBar(QWidget *parent)
     : DColoredProgressBar(parent)
 {
+    QSize scaledSize = QSize(1024, 718);
+    QString fileName = ":/assets/images/progressback.png";
+    m_pic = Utils::getDpiPixmap(scaledSize, fileName, this);
 }
 
 void GameProgressBar::setInintalTime(int time)
@@ -39,15 +42,10 @@ void GameProgressBar::setInintalTime(int time)
 void GameProgressBar::paintEvent(QPaintEvent *e)
 {
     Q_UNUSED(e);
-    //    QImageReader reader;
-    //    reader.setFileName(":/assets/images/progressback.png");
-    //    reader.setScaledSize(QSize(816,60));
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
-    QPixmap pic = GameControl::m_picMap.value(qMakePair(ProgressBack, Default));
-    painter.drawPixmap(rect(), pic);
+    painter.drawPixmap(rect(), m_pic);
     qreal rectX = rect().x() + 7;
-
     qreal rectY = rect().y() + 1;
     qreal rectWidth = rect().width() - 14;
     qreal rectHeight = (rect().height() - 14);
@@ -69,18 +67,6 @@ void GameProgressBar::paintEvent(QPaintEvent *e)
     shadowLg.setColorAt(0.61, QColor("#DE8A4C"));
     shadowLg.setColorAt(0.9, QColor("#D56B39"));
     shadowLg.setSpread(QGradient::ReflectSpread);
-
-    //    // 进度条外框,固定的路径
-    //    QPainterPath path;
-    //    painter.setPen(QColor("#FFFFFF"));
-    //    path.setFillRule(Qt::WindingFill);
-    //    path.moveTo(rectX + rectHeight / 2, rectY);
-    //    path.lineTo(rectX + rectWidth - rectHeight / 2, rectY);
-    //    path.arcTo(QRectF(rectX + rectWidth - rectHeight, rectY, rectHeight, rectHeight), 90, -180);
-    //    path.lineTo(rectX + rectHeight / 2, rectY + rectHeight);
-    //    path.arcTo(QRectF(rectX + rectHeight, rectY + rectHeight, -rectHeight, -rectHeight), 90, -180);
-    //    painter.drawPath(path);
-    //    //   painter.drawPixmap(QRect(rect().x(),rect().y(),816,60),QPixmap::fromImageReader(&reader));
 
     //  绘制动态填充状态,若为开始,使用线性渐变作为画刷填满整个路径,若是0,忽略此段绘制
     if (proportion != 0.000) {
@@ -120,17 +106,4 @@ void GameProgressBar::paintEvent(QPaintEvent *e)
     painter.setPen(QColor("#FFFFFF"));
     painter.setFont(textFont);
     painter.drawText(QRectF(rectWidth / 2 - merticWidth / 2, rectHeight / 2 - merticHeight / 2, merticWidth, merticHeight), text);
-    //阴影
-
-    //        path.moveTo()
-    //        painter.fillRect(QRect(SHADOW_WIDTH, SHADOW_WIDTH, this->width() - 2 * SHADOW_WIDTH, this->height() - 2 * SHADOW_WIDTH), QBrush(Qt::white));
-    //          QColor color(50,50,50,10);
-    //          for (int i = 0; i < SHADOW_WIDTH; i++)
-    //          {
-    //              color.setAlpha(120 - qSqrt(i) * 40);
-    //              painter.setPen(color);
-    //              // 方角阴影边框;
-    //                painter.drawRect(SHADOW_WIDTH - i, SHADOW_WIDTH - i, this->width() - (SHADOW_WIDTH - i) * 2, this->height() - (SHADOW_WIDTH - i) * 2);
-    //              // 圆角阴影边框;
-    //              painter.drawRoundedRect(SHADOW_WIDTH - i, SHADOW_WIDTH - i, this->width() - (SHADOW_WIDTH - i) * 2, this->height() - (SHADOW_WIDTH - i) * 2, 4, 4);
 }

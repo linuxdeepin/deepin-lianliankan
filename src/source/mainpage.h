@@ -41,8 +41,6 @@ protected:
 private:
     void initUI();
     void initConnect();
-    void controlTest();
-
 public:
     /**
      * @brief soundSync 音量同步设置

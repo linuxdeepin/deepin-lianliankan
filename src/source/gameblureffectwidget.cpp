@@ -30,7 +30,24 @@ GameBlurEffectWidget::GameBlurEffectWidget(const GameBtnSize &size, QWidget *par
     : QWidget(parent)
     , m_sizeFlag(size)
 {
+    QSize scaledSize;
+    QString fileName;
 
+    switch (m_sizeFlag) {
+    case Big:
+        scaledSize = QSize(835, 542);
+        fileName = ":/assets/images/bigRect.png";
+        break;
+    case Mid:
+        scaledSize = QSize(480, 515);
+        fileName = ":/assets/images/midRect.png";
+        break;
+    default:
+        scaledSize = QSize(175, 542);
+        fileName = ":/assets/images/smallRect.png";
+        break;
+    }
+    m_pic = Utils::getDpiPixmap(scaledSize, fileName, this);
 }
 
 void GameBlurEffectWidget::paintEvent(QPaintEvent *event)
@@ -38,17 +55,5 @@ void GameBlurEffectWidget::paintEvent(QPaintEvent *event)
    Q_UNUSED(event);
    QPainter painter(this);
    painter.setRenderHint(QPainter::Antialiasing, true);
-   QPixmap pic;
-   switch (m_sizeFlag) {
-   case Big:
-       pic = GameControl::m_picMap.value(qMakePair(BigRect, Default));
-       break;
-   case Mid:
-       pic = GameControl::m_picMap.value(qMakePair(MidRect, Default));
-       break;
-   default:
-       pic = GameControl::m_picMap.value(qMakePair(SmallRect, Default));
-       break;
-   }
-   painter.drawPixmap(rect(), pic);
+   painter.drawPixmap(rect(), m_pic);
 }

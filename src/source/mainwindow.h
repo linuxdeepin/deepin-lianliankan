@@ -23,7 +23,6 @@
 
 #include "mainpage.h"
 #include "gamepage.h"
-#include "utils.h"
 #include "gameblureffectwidget.h"
 #include "gameoverblureffectwidget.h"
 
@@ -35,36 +34,39 @@ class MainWindow : public DMainWindow
     Q_OBJECT
 public:
     explicit MainWindow(QWidget *parent = nullptr);
-
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
     void paintEvent(QPaintEvent *event)override;
     void closeEvent(QCloseEvent *event) override;
     void changeEvent(QEvent *event) override;
 
-signals:
-
 private slots:
     void onShowClickedPage(int id);
     void showFinishPage(bool res);
 
 private:
-   void initUI();
-   void initConnect();
-   void initPic();
-   void initOverWindowConnect();
-
-public:
-   void handleQuit();
+    /**
+   * @brief  MainWindow::initUI 初始化页面
+   */
+    void initUI();
+    /**
+   * @brief  MainWindow::initConnect 初始化信号槽
+   */
+    void initConnect();
+    void initOverWindowConnect();
+    /**
+   * @brief  MainWindow::initConnect 初始化图片资源
+   */
+    void initPic();
 
 private:
    DStackedWidget *m_stackedWidget;
    DTitlebar *m_titlebar;
    MainPage *m_mainPage; //主页面
-   GamePage *m_gamePage; //游戏页面
+   GamePage *m_gamePage = nullptr; //游戏页面
+   GameoverBlurEffectWidget *m_gameOverPage; //结算界面模糊蒙版
    bool m_firstGame = true; //判断是否为第一次游戏
    bool m_soundSwtich = true; //保存音效开关设置
-   GameoverBlurEffectWidget *m_gameOverPage;//结算界面模糊蒙版
    bool m_gameState = false;//判断游戏是否开始
 };
 

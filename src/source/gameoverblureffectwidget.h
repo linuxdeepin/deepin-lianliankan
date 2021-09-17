@@ -57,13 +57,11 @@ private slots:
 signals:
     void backToMainPage();//点击休息一下，返回主界面
     void reGame();//再玩一次
-    void hideBlurWindow();//隐藏模糊背景
-
 private:
     ShadowLabel *m_tipLabel;//提示语
     QButtonGroup *m_OverBtnGroup;
-    QString m_Text;//提示语文案
     bool m_overType = false;//游戏结果
+    QPixmap m_pic;
 };
 
 #endif // GAMEOVERBLUREFFECTWIDGET_H
