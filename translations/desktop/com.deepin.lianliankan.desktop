@@ -1,6 +1,6 @@
 [Desktop Entry]
 Categories=Qt
-Exec=/usr/bin/com.deepin.lianliankan %F
+Exec=/usr/bin/deepin-lianliankan %F
 GenericName=LianLianKan
 GenericName[en_US]=LianLianKan
 GenericName[es]=LianLianKan
@@ -16,6 +16,6 @@ Name[zh_CN]=连连看
 Name[zh_HK]=連連看
 Name[zh_TW]=連連看
 StartupNotify=false
-TryExec=/usr/bin/com.deepin.lianliankan
+TryExec=/usr/bin/deepin-lianliankan
 Type=Application
 X-Deepin-Vendor=user-custom

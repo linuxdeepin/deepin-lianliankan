@@ -3,9 +3,9 @@ host = https://www.transifex.com
 minimum_perc = 80
 mode = developer
 
-[deepin-lianliankan.comdeepinlianliankan]
-file_filter = translations/com.deepin.lianliankan_<lang>.ts
-source_file = translations/com.deepin.lianliankan.ts
+[deepin-lianliankan.deepin-lianliankan]
+file_filter = translations/deepin-lianliankan_<lang>.ts
+source_file = translations/deepin-lianliankan.ts
 source_lang = en_US
 type = QT
 

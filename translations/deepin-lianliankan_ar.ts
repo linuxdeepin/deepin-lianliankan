@@ -1,22 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE TS>
-<TS version="2.1" language="en_US">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="ar" version="2.1">
 <context>
     <name>CloseWindowDialog</name>
     <message>
         <location filename="../src/source/closewindowdialog.cpp" line="47"/>
         <source>Are you sure you want to exit the game?</source>
-        <translation>Are you sure you want to exit the game?</translation>
+        <translation>هل أنت متأكد أنك تريد الخروج من اللعبة؟</translation>
     </message>
     <message>
         <location filename="../src/source/closewindowdialog.cpp" line="55"/>
         <source>Keep Playing</source>
-        <translation>Keep Playing</translation>
+        <translation>حفظ اللعب&lt;br&gt;</translation>
     </message>
     <message>
         <location filename="../src/source/closewindowdialog.cpp" line="56"/>
         <source>Exit</source>
-        <translation>Exit</translation>
+        <translation>خروج</translation>
     </message>
 </context>
 <context>
@@ -24,12 +22,12 @@
     <message>
         <location filename="../src/source/gameoverblureffectwidget.cpp" line="82"/>
         <source>Play Again</source>
-        <translation>Play Again</translation>
+        <translation>اللعب مرة أخرى</translation>
     </message>
     <message>
         <location filename="../src/source/gameoverblureffectwidget.cpp" line="83"/>
         <source>Have a Rest</source>
-        <translation>Have a Rest</translation>
+        <translation>خذ استراحة</translation>
     </message>
 </context>
 <context>
@@ -39,12 +37,12 @@
         <location filename="../src/main.cpp" line="65"/>
         <location filename="../src/main.cpp" line="66"/>
         <source>LianLianKan</source>
-        <translation>LianLianKan</translation>
+        <translation type="unfinished"/>
     </message>
     <message>
         <location filename="../src/main.cpp" line="64"/>
         <source>Lianliankan is a puzzle game.</source>
-        <translation>Lianliankan is a puzzle game.</translation>
+        <translation>Lianliankan هي لعبة ألغاز.</translation>
     </message>
 </context>
 <context>
@@ -52,35 +50,35 @@
     <message>
         <location filename="../src/source/mainpage.cpp" line="46"/>
         <source>Easy</source>
-        <translation>Easy</translation>
+        <translation>سهل</translation>
     </message>
     <message>
         <location filename="../src/source/mainpage.cpp" line="47"/>
         <source>Normal</source>
-        <translation>Normal</translation>
+        <translation>عادي</translation>
     </message>
     <message>
         <location filename="../src/source/mainpage.cpp" line="48"/>
         <source>Hard</source>
-        <translation>Hard</translation>
+        <translation>صعب</translation>
     </message>
     <message>
         <location filename="../src/source/mainpage.cpp" line="67"/>
         <source>Select Level</source>
-        <translation>Select Level</translation>
+        <translation>تحديد مستوى</translation>
     </message>
 </context>
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/source/mainwindow.cpp" line="232"/>
+        <location filename="../src/source/mainwindow.cpp" line="221"/>
         <source>FAIL</source>
-        <translation>FAIL</translation>
+        <translation>خسارة</translation>
     </message>
     <message>
-        <location filename="../src/source/mainwindow.cpp" line="235"/>
+        <location filename="../src/source/mainwindow.cpp" line="224"/>
         <source>VICTORY</source>
-        <translation>VICTORY</translation>
+        <translation>فوز</translation>
     </message>
 </context>
 </TS>

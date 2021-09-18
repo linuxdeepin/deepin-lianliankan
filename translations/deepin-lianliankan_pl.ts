@@ -22,12 +22,12 @@
     <message>
         <location filename="../src/source/gameoverblureffectwidget.cpp" line="82"/>
         <source>Play Again</source>
-        <translation type="unfinished"/>
+        <translation>Zagraj ponownie</translation>
     </message>
     <message>
         <location filename="../src/source/gameoverblureffectwidget.cpp" line="83"/>
         <source>Have a Rest</source>
-        <translation type="unfinished"/>
+        <translation>Odpocznij</translation>
     </message>
 </context>
 <context>

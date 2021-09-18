@@ -27,7 +27,7 @@
 GameProgressBar::GameProgressBar(QWidget *parent)
     : DColoredProgressBar(parent)
 {
-    QSize scaledSize = QSize(1024, 718);
+    QSize scaledSize = QSize(816, 54);
     QString fileName = ":/assets/images/progressback.png";
     m_pic = Utils::getDpiPixmap(scaledSize, fileName, this);
 }
@@ -45,6 +45,8 @@ void GameProgressBar::paintEvent(QPaintEvent *e)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing, true);
     painter.drawPixmap(rect(), m_pic);
+
+    //根据背景图片位置调整绘制动态效果位置
     qreal rectX = rect().x() + 7;
     qreal rectY = rect().y() + 1;
     qreal rectWidth = rect().width() - 14;
@@ -84,6 +86,7 @@ void GameProgressBar::paintEvent(QPaintEvent *e)
     // 绘制倒计时
     painter.setOpacity(1);
     QFont textFont;
+
     //阴影字体
     QFont BackFont;
     const QString &text = QString::number(value) + "s";
@@ -96,12 +99,15 @@ void GameProgressBar::paintEvent(QPaintEvent *e)
     QFontMetricsF mertic(textFont);
     qreal merticWidth = mertic.width(text);
     qreal merticHeight = mertic.height();
+
     //绘制字体阴影效果
     QColor shadowColor(0, 0, 0);
     shadowColor.setAlphaF(0.50);
     painter.setPen(shadowColor);
     painter.setFont(BackFont);
+    //Y轴阴影向下偏移2px
     painter.drawText(QRectF(rectWidth / 2 - merticWidth / 2, rectHeight / 2 - merticHeight / 2 + 2, merticWidth, merticHeight), text);
+
     //绘制字体
     painter.setPen(QColor("#FFFFFF"));
     painter.setFont(textFont);
