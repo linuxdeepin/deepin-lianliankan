@@ -68,4 +68,4 @@ install(FILES ../translations/desktop/com.deepin.lianliankan.desktop DESTINATION
 install(FILES assets/icon/com.deepin.lianliankan.svg
             DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps/)
 install(TARGETS ${EXE_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
-install(DIRECTORY assets/com.deepin.lianliankan DESTINATION /usr/share/deepin-manual/manual-assets/application/)
+install(DIRECTORY assets/deepin-lianliankan DESTINATION /usr/share/deepin-manual/manual-assets/application/)
