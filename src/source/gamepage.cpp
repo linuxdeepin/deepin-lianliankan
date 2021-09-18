@@ -67,9 +67,7 @@ void GamePage::setInitalTime(int time)
 void GamePage::setSoundSwitch(bool isOpen)
 {
     m_soundSwitch = isOpen;
-    //音量状态同步信号
-    Q_EMIT soundSync(isOpen);
-    //更改开始图标状态
+    //更改游戏页面音效图标状态
     GameButton *soundBtn = dynamic_cast<GameButton *>(m_controlGrp->button(3));
     if (!soundBtn)
         return;
@@ -678,6 +676,8 @@ void GamePage::onControlBtnControl(int id)
     case 3: {
         //音效开关
         setSoundSwitch(!m_soundSwitch);
+        //音量状态同步到主页面
+        Q_EMIT soundSync(m_soundSwitch);
         break;
     }
     default: {

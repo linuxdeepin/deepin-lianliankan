@@ -50,14 +50,19 @@ private:
    */
     void initUI();
     /**
-   * @brief  MainWindow::initConnect 初始化信号槽
+   * @brief  MainWindow::loadMainPage 加载主页面
    */
-    void initConnect();
-    void initOverWindowConnect();
+    void loadMainpage();
     /**
-   * @brief  MainWindow::initConnect 初始化图片资源
+   * @brief  MainWindow::loadGamePage 加载游戏页面
+   * @param  id 游戏难度按钮id
    */
-    void initPic();
+    void loadGamePage(int id);
+    /**
+   * @brief  MainWindow::loadOverPage 加载结束页面
+   * @param  res 游戏结果
+   */
+    void loadOverPage(bool res);
 
 private:
    DStackedWidget *m_stackedWidget;

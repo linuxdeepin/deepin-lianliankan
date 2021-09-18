@@ -24,7 +24,10 @@
 
 ShadowLabel::ShadowLabel(QWidget *parent) : DLabel (parent)
 {
-
+    m_font.setFamily("Noto Sans CJK SC");
+    m_font.setPixelSize(21);
+    m_font.setWeight(580);
+    setFont(m_font);
 }
 
 void ShadowLabel::paintEvent(QPaintEvent *event)
@@ -33,12 +36,8 @@ void ShadowLabel::paintEvent(QPaintEvent *event)
     QString text = this->text();
     QPainter painterText(this);
     painterText.setRenderHint(QPainter::Antialiasing, true);
-    QFont font;
-    font.setFamily("Noto Sans CJK SC");
-    font.setPixelSize(21);
-    font.setWeight(580);
-    setFont(font);
-    QFontMetrics fm(font);
+
+    QFontMetrics fm(m_font);
     //设置渐变区域,参数为区域右上角和右下角。表示垂直线性渐变
     QLinearGradient lg(rect().width()/2 - fm.width(text)/2,
                        rect().y(),

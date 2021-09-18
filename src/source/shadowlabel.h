@@ -41,6 +41,7 @@ public:
 
 private:
     bool m_result = false;
+    QFont m_font;
 };
 
 #endif // SHADOWLABEL_H

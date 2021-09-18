@@ -32,9 +32,7 @@
 
 MainWindow::MainWindow(QWidget *parent):DMainWindow (parent)
 {
-    initPic();
     initUI();
-    initConnect();
 }
 
 void MainWindow::initUI()
@@ -44,56 +42,92 @@ void MainWindow::initUI()
     m_titlebar->setIcon(QIcon(":/assets/icon/com.deepin.lianliankan.svg"));
     m_titlebar->installEventFilter(this);
     m_titlebar->setBackgroundTransparent(true);
-
-    m_stackedWidget = new DStackedWidget(this);
-    m_mainPage = new MainPage(m_stackedWidget);
-    //游戏页面
-    m_gamePage = new GamePage(this);
-    m_stackedWidget->addWidget(m_mainPage);
-    m_stackedWidget->addWidget(m_gamePage);
-    setCentralWidget(m_stackedWidget);
+    //加载主页面
+    loadMainpage();
 }
 
-void MainWindow::initConnect()
+void MainWindow::loadGamePage(int id)
 {
-    connect(m_mainPage, &MainPage::buttonPress, this, &MainWindow::onShowClickedPage);
-    //主页面音效按钮控制
-    connect(m_mainPage, &MainPage::soundSwitch, this, [&] {
-        m_gamePage->setSoundSwitch(!m_gamePage->soundSwitch());
-    });
+    //加载游戏页面图片
+    for (int i = 1; i < 13; i++) {
+        GameControl::loadPic(GameBtnFlag(i), GameBtnSize::Default, this);
+    }
+    GameControl::loadPic(GameBtnFlag(19), GameBtnSize::Default, this);
+    GameControl::loadPic(GameBtnFlag(20), GameBtnSize::Default, this);
+    //游戏页面
+    m_gamePage = new GamePage(this);
+    //游戏页面音效状态与主页面音效状态同步
+    m_gamePage->setSoundSwitch(m_mainPage->soundState());
+    //选择游戏难度，设置游戏时间
+    switch (id) {
+    case 1:
+        m_gamePage->setInitalTime(INTER_TIME);
+        break;
+    case 2:
+        m_gamePage->setInitalTime(ADVANCED_TIME);
+        break;
+    default:
+        m_gamePage->setInitalTime(PRIMARY_TIME);
+        break;
+    }
+    m_stackedWidget->addWidget(m_gamePage);
+
+    if (!m_firstGame)
+        m_gamePage->restartGame(m_firstGame);
+
+    m_firstGame = false;
+
+    m_stackedWidget->setCurrentWidget(m_gamePage);
+
     //游戏页面主页面按钮返回主页面
     connect(m_gamePage, &GamePage::backToMainPage, this, [&] {
         m_stackedWidget->setCurrentWidget(m_mainPage);
     });
+
     connect(m_gamePage, &GamePage::sigResult, this, &MainWindow::showFinishPage);
-    connect(m_gamePage, &GamePage::setGameStated, this, [=](bool state) {
-        m_gameState = state;
+
+    connect(m_gamePage, &GamePage::setGameStated, this, [&](bool gameState) {
+        m_gameState = gameState;
     });
-    connect(m_gamePage, &GamePage::soundSync, this, [=](bool isOpen) {
-        m_mainPage->soundSync(isOpen);
+
+    //游戏页面反向同步音效状态到主页面
+    connect(m_gamePage, &GamePage::soundSync, this, [&](bool soundState) {
+        m_mainPage->setSoundState(soundState);
     });
 }
 
-void MainWindow::initOverWindowConnect()
+void MainWindow::loadOverPage(bool res)
 {
+    //加载结束界面
+    m_gameOverPage = new GameoverBlurEffectWidget(centralWidget());
+
+    QString text = "";
+    if (!res) {
+        m_gameOverPage->setResult(false);
+        text = tr("FAIL");
+    } else {
+        m_gameOverPage->setResult(true);
+        text = tr("VICTORY");
+    }
+    m_gameOverPage->updateLabel(text);
+    m_gameOverPage->show();
+
+    m_gameOverPage->setFixedSize(QSize(WINDOW_WIDTH, WINDOW_HEIGHT - m_titlebar->height()));
     connect(m_gameOverPage, &GameoverBlurEffectWidget::backToMainPage, this, [&] {
         m_gameOverPage->hide();
-        m_gameOverPage->deleteLater();
         m_stackedWidget->setCurrentWidget(m_mainPage);
     });
 
     connect(m_gameOverPage, &GameoverBlurEffectWidget::reGame, this, [&] {
-        m_gameOverPage->setFixedSize(0, 0);
+        m_gameOverPage->hide();
         m_gamePage->reGame();
     });
 }
 
-void MainWindow::initPic()
+void MainWindow::loadMainpage()
 {
-    //    QTime time;
-    //    time.start();
-    //加载图片
-    for (int i = 1; i < 21; i++) {
+    //加载主页面图片资源
+    for (int i = 13; i < 19; i++) {
         GameControl::loadPic(GameBtnFlag(i), GameBtnSize::Default, this);
     }
     for (int i=1;i<4;i++) {
@@ -105,7 +139,11 @@ void MainWindow::initPic()
     GameControl::loadPic(GameBtnFlag(17), GameBtnSize(Small), this);
     GameControl::loadPic(GameBtnFlag(18), GameBtnSize(Small), this);
 
-    //qInfo()<<time.elapsed()<<GameControl::m_picMap.value(qMakePair(GameBtnFlag::ButtonCat,GameBtnSize::Default));
+    m_stackedWidget = new DStackedWidget(this);
+    m_mainPage = new MainPage(m_stackedWidget);
+    m_stackedWidget->addWidget(m_mainPage);
+    setCentralWidget(m_stackedWidget);
+    connect(m_mainPage, &MainPage::buttonPress, this, &MainWindow::onShowClickedPage);
 }
 
 bool MainWindow::eventFilter(QObject *obj, QEvent *event)
@@ -188,42 +226,14 @@ void MainWindow::changeEvent(QEvent *event)
 
 void MainWindow::onShowClickedPage(int id)
 {
-    switch (id) {
-    case 1:
-        m_gamePage->setInitalTime(INTER_TIME);
-        break;
-    case 2:
-        m_gamePage->setInitalTime(ADVANCED_TIME);
-        break;
-    default:
-        m_gamePage->setInitalTime(PRIMARY_TIME);
-        break;
-    }
-    if (!m_firstGame)
-        m_gamePage->restartGame(m_firstGame);
-
-    m_firstGame = false;
-    m_stackedWidget->setCurrentWidget(m_gamePage);
-    //提前加载结束界面
-    m_gameOverPage = new GameoverBlurEffectWidget(centralWidget());
-
-    initOverWindowConnect();
-
-    m_gameOverPage->setFixedSize(0,0);
-    m_gameOverPage->show();
+    //加载游戏页面
+    loadGamePage(id);
 }
 
 void MainWindow::showFinishPage(bool res)
 {
+    //加载结束页面
+    loadOverPage(res);
+    //游戏状态停止
     m_gameState = false;
-    QString text = "";
-    if (!res) {
-        m_gameOverPage->setResult(false);
-        text = tr("FAIL");
-    } else {
-        m_gameOverPage->setResult(true);
-        text = tr("VICTORY");
-    }
-    m_gameOverPage->updateLabel(text);
-    m_gameOverPage->setFixedSize(QSize(WINDOW_WIDTH, WINDOW_HEIGHT - m_titlebar->height()));
 }

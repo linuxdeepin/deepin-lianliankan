@@ -81,7 +81,19 @@ void GameoverBlurEffectWidget::initUI()
     setMaskAlpha(0);
     setRadius(35);
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
+
     m_tipLabel = new ShadowLabel(this);
+    QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect(this);
+    //设置阴影模糊半径为8
+    effect->setBlurRadius(8);
+    //设置阴影位置Y轴偏移4px
+    effect->setYOffset(4);
+    QColor shadowColor(108, 69, 25);
+    //设置透明度
+    shadowColor.setAlphaF(0.6);
+    effect->setColor(shadowColor);
+    m_tipLabel->setGraphicsEffect(effect);
+
     m_OverBtnGroup = new QButtonGroup(this);
     GameButton *againButton = BtnFactory::createBtn(ButtonNormal, Over, None, tr("Play Again"));
     GameButton *restButton = BtnFactory::createBtn(ButtonNormal, Over, None, tr("Have a Rest"));
@@ -103,16 +115,6 @@ void GameoverBlurEffectWidget::initConnect()
 void GameoverBlurEffectWidget::updateLabel(QString text)
 {
     m_tipLabel->setText(text);
-    QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect(this);
-    //设置阴影模糊半径为8
-    effect->setBlurRadius(8);
-    //设置阴影位置Y轴偏移4px
-    effect->setYOffset(4);
-    QColor shadowColor(108,69,25);
-    //设置透明度
-    shadowColor.setAlphaF(0.6);
-    effect->setColor(shadowColor);
-    m_tipLabel->setGraphicsEffect(effect);
 }
 
 void GameoverBlurEffectWidget::setResult(bool res)

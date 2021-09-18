@@ -43,15 +43,20 @@ private:
     void initConnect();
 public:
     /**
-     * @brief soundSync 音量同步设置
-     * @param isOpen 音量开关
+     * @brief soundSync 设置音效按钮状态
+     * @param state 音效开关状态
      */
-    void soundSync(bool isOpen);
+    void setSoundState(bool state);
+    /**
+     * @brief soundState 音效按钮状态
+     * @return bool 音效开关状态
+     */
+    bool soundState() const;
 
 private:
     QButtonGroup *m_btnGrp;
     GameButton *m_soundBtn;
-    bool m_soundState = false;
+    bool m_soundState = true; //音效开关状态
 };
 
 #endif // MAINPAGE_H

@@ -75,13 +75,20 @@ void MainPage::initUI()
 void MainPage::initConnect()
 {
     connect(m_btnGrp, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &MainPage::buttonPress);
-    connect(m_soundBtn, &GameButton::pressed, this, &MainPage::soundSwitch);
+    connect(m_soundBtn, &GameButton::pressed, this, [&] {
+        this->setSoundState(!m_soundState);
+    });
 }
 
-void MainPage::soundSync(bool isOpen)
+void MainPage::setSoundState(bool state)
 {
-    m_soundState = isOpen;
+    m_soundState = state;
     m_soundBtn->updatePlayIcon(SoundCtl, m_soundState);
+}
+
+bool MainPage::soundState() const
+{
+    return m_soundState;
 }
 
 void MainPage::mouseMoveEvent(QMouseEvent *event)
