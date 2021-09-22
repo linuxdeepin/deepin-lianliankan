@@ -37,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent):DMainWindow (parent)
 
 void MainWindow::initUI()
 {
+    setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
     this->setFixedSize(QSize(WINDOW_WIDTH, WINDOW_HEIGHT));
     m_titlebar = titlebar();
     m_titlebar->setIcon(QIcon(":/assets/icon/com.deepin.lianliankan.svg"));
