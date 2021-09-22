@@ -28,7 +28,8 @@ class ShadowLabel : public DLabel
 {
     Q_OBJECT
 public:
-    ShadowLabel(QWidget *parent = nullptr);
+    explicit ShadowLabel(QWidget *parent = nullptr);
+
 protected:
     void paintEvent(QPaintEvent *event) override;
 

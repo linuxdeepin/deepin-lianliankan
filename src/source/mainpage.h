@@ -30,7 +30,7 @@ class MainPage: public DWidget
 {
     Q_OBJECT
 public:
-    MainPage(QWidget *parent = nullptr);
+    explicit MainPage(QWidget *parent = nullptr);
 signals:
     void buttonPress(int id); //难度按钮选择
     void soundSwitch(); //音效按钮点击

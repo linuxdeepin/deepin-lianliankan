@@ -37,6 +37,7 @@
 #include <QTime>
 
 const int BtnFlashCount = 3;//提示按钮闪烁次数
+const unsigned int explodePicSize = 5; //爆炸图片大小
 
 GamePage::GamePage(QWidget *parent)
     : QWidget(parent)
@@ -72,11 +73,6 @@ void GamePage::setSoundSwitch(bool isOpen)
     if (!soundBtn)
         return;
     soundBtn->updatePlayIcon(GameBtnType::SoundCtl, isOpen);
-}
-
-bool GamePage::soundSwitch() const
-{
-    return m_soundSwitch;
 }
 
 void GamePage::restartGame(bool isFirst)
@@ -258,12 +254,14 @@ void GamePage::initConnect()
         m_hintPicOnTimer->stop();
         m_flashCount--;
         this->hintBtnflash(GameBtnType::OnlyPic);
+
         if(m_flashCount != 0) {
             m_hintPicOffTimer->start();
-        } else if (m_flashCount == 0) {
+        } else {
             this->hintBtnflash(GameBtnType::OnlyPic);
             this->recoverBtnState();
         }
+
     });
     QObject::connect(m_hintPicOffTimer, &QTimer::timeout, this, [&] {
         m_hintPicOffTimer->stop();
@@ -474,7 +472,7 @@ void GamePage::updateConnection(GameButton *preBtn, GameButton *currentBtn)
     } else {
         //如果两个按钮不相邻,根据通路组求具体坐标,绘制通路路线
         //        qInfo()<<m_pathVec<<(m_pathVec.end()-1)->second;
-        for (iter = m_pathVec.end() - 1; iter >= m_pathVec.begin(); iter--) {
+        for (iter = m_pathVec.end() - 1; iter >= m_pathVec.begin(); --iter) {
             QPointF pos;
             int rowIndex = iter->second.x();
             int columnIndex = iter->second.y();
@@ -555,7 +553,7 @@ QPointF GamePage::dirCoord(PosType order, int dir, QPointF pos)
     //游戏区域原点坐标
     int framePosX = m_gameFrame->pos().x();
     int framePosY = m_gameFrame->pos().y();
-    int explodePicSize = 5;
+
     QPointF dirPos;
 
     //如果是绘制开始爆炸效果,求爆炸效果图之后的连线开始坐标

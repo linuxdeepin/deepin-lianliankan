@@ -32,7 +32,7 @@ DWIDGET_USE_NAMESPACE
 class Utils
 {
 public:
-    static QPixmap getDpiPixmap(QSize size, const QString filename, DWidget *w);
+    static QPixmap getDpiPixmap(QSize size, const QString &filename, DWidget *w);
 };
 
 #endif // UTIL_H

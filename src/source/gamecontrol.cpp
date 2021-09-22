@@ -31,7 +31,7 @@
 const int m_row = 10;
 const int m_column = 16;
 const int m_total = 160;
-const int INF = 0x3f3f3f3f;
+const int INF = 0x3f;
 
 GameBtnFlag GameControl::m_map[12][18];
 int GameControl::m_minTurn[12][18];

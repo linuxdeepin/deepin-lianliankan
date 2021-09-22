@@ -118,12 +118,12 @@ protected:
    private:
    QPixmap m_pic;//按钮背景图
    QPixmap m_icon;//按钮图标
-   GameIconType m_iconType;//按钮图标类型
+   GameIconType m_iconType = None; //按钮图标类型
    QString m_text;//按钮文字
    QFont  m_font; //按钮字体
-   GameBtnSize m_size;//按钮大小
-   int m_rowIndex; //行
-   int m_columnIndex; //列
+   GameBtnSize m_size = Default; //按钮大小
+   int m_rowIndex = 0; //行
+   int m_columnIndex = 0; //列
    bool m_gameBtnPressd = false; //判读游戏按钮是否点击
    bool m_cotrolBtnPressd = false; //判读控制按钮是否点击
    GameBtnType m_btnType; //按钮样式类型

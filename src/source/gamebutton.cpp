@@ -33,11 +33,14 @@
 
 GameButton::GameButton(const GameBtnFlag &flag, const GameBtnSize &size, const QString &text, QWidget *parent)
     : QPushButton(parent)
+    , m_pic(GameControl::m_picMap.value(qMakePair(flag, size)))
+    , m_iconType(None)
     , m_text(text)
     , m_size(size)
+    , m_rowIndex(0)
+    , m_columnIndex(0)
     , m_btnType(TextOnPic)
 {
-    m_pic = GameControl::m_picMap.value(qMakePair(flag, size));
     setBtnMask(m_pic);
 }
 
@@ -46,6 +49,8 @@ GameButton::GameButton(const QPixmap &pic, const GameIconType &icontype, QWidget
     , m_pic(pic)
     , m_iconType(icontype)
     , m_size(Small)
+    , m_rowIndex(0)
+    , m_columnIndex(0)
     , m_btnType(IconOnPic)
 {
     loadIcon(m_iconType);
@@ -55,6 +60,10 @@ GameButton::GameButton(const QPixmap &pic, const GameIconType &icontype, QWidget
 GameButton::GameButton(const QPixmap &pic, QWidget *parent)
     : QPushButton(parent)
     , m_pic(pic)
+    , m_iconType(None)
+    , m_size(Default)
+    , m_rowIndex(0)
+    , m_columnIndex(0)
     , m_btnType(OnlyPic)
 {
 }

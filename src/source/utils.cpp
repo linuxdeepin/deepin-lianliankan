@@ -24,7 +24,7 @@
 #include <QApplication>
 #include <QIcon>
 
-QPixmap Utils::getDpiPixmap(QSize size, const QString filename, DWidget *w)
+QPixmap Utils::getDpiPixmap(QSize size, const QString &filename, DWidget *w)
 {
     QPixmap pixmap;
     qreal devicePixelRatio = qApp->devicePixelRatio();

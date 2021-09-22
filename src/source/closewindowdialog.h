@@ -32,7 +32,7 @@ class CloseWindowDialog : public DDialog
     Q_OBJECT
 
 public:
-    CloseWindowDialog(QWidget *parent = nullptr);
+    explicit CloseWindowDialog(QWidget *parent = nullptr);
     /**
      * @brief result Get standard button enum result
      * @return Standard button enum result

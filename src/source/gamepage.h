@@ -50,11 +50,6 @@ public:
     */
     void setSoundSwitch(bool isOpen);
     /**
-    * @brief  GamePage:: soundSwitch 音效当前开关状态
-    * @return bool 音效开关
-    */
-    bool soundSwitch() const;
-    /**
      * @brief GamePage::setOnOffGame 开始停止按钮和最小化暂停控制游戏的开始停止
      * @param isBegin 设置开始暂停状态
      */
