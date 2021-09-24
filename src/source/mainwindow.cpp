@@ -218,7 +218,7 @@ void MainWindow::changeEvent(QEvent *event)
     if(event->type()!=QEvent::WindowStateChange) {
         event->accept();
     }
-    if(this->windowState()==Qt::WindowMinimized) {
+    if (this->windowState() == Qt::WindowMinimized && m_gamePage) {
         if (m_gamePage->onOffGame())
             m_gamePage->setOnOffGame(false);
     }
