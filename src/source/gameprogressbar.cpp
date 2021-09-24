@@ -23,6 +23,7 @@
 
 #include <QDebug>
 #include <QPainter>
+#include <QPainterPath>
 
 GameProgressBar::GameProgressBar(QWidget *parent)
     : DColoredProgressBar(parent)

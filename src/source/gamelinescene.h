@@ -22,6 +22,7 @@
 #define GAMELINESCENE_H
 
 #include <QWidget>
+#include <QPainterPath>
 
 class GameLineScene : public QWidget
 {
