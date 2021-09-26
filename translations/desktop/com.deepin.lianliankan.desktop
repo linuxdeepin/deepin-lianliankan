@@ -1,5 +1,5 @@
 [Desktop Entry]
-Categories=Qt
+Categories=Game;Qt
 Exec=/usr/bin/deepin-lianliankan %F
 GenericName=LianLianKan
 GenericName[en_US]=LianLianKan
