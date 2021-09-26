@@ -22,12 +22,12 @@
 <context>
     <name>GameoverBlurEffectWidget</name>
     <message>
-        <location filename="../src/source/gameoverblureffectwidget.cpp" line="86"/>
+        <location filename="../src/source/gameoverblureffectwidget.cpp" line="98"/>
         <source>Play Again</source>
         <translation>Play Again</translation>
     </message>
     <message>
-        <location filename="../src/source/gameoverblureffectwidget.cpp" line="87"/>
+        <location filename="../src/source/gameoverblureffectwidget.cpp" line="99"/>
         <source>Have a Rest</source>
         <translation>Have a Rest</translation>
     </message>
@@ -73,12 +73,12 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/source/mainwindow.cpp" line="222"/>
+        <location filename="../src/source/mainwindow.cpp" line="108"/>
         <source>FAIL</source>
         <translation>FAIL</translation>
     </message>
     <message>
-        <location filename="../src/source/mainwindow.cpp" line="225"/>
+        <location filename="../src/source/mainwindow.cpp" line="111"/>
         <source>VICTORY</source>
         <translation>VICTORY</translation>
     </message>

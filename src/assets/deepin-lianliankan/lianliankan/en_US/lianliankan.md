@@ -1,211 +1,104 @@
-# Log Viewer|deepin-log-viewer|
+# Lianliankan|deepin-lianliankan|
 
-## Overview 
+## Overview
 
-Log viewer is a tool that collects logs generated when an application is running, for example, logs generated when operating system and applications start up and run. You can do trouble-shooting and solve problems quickly by analyzing logs. 
+Lianliankan is a leisure puzzle game based on the connection and elimination of two same  patterns with easy rules and different levels and is able to satisfy your entertainment and relaxation needs in the debris time.
 
-![0|homepage](fig/homepage.png)
 
-## Guide
+## Guides
 
-You can run, close or create a shortcut for Log Viewer.
+You can run, close, and create shortcuts for Lianliankan in the following ways.
 
-### Run Log Viewer 
+### Run Lianliankan
 
-1. Click ![deepin_launcher](../common/deepin_launcher.svg)on the Dock to enter the interface of launcher.
-2. Locate ![deepin_log_viewer](../common/deepin_log_viewer.svg) by scrolling the mouse wheel or searching "Log Viewer" in the Launcher interface and click it to run.
-3. Right-click![deepin_log_viewer](../common/deepin_log_viewer.svg) to:
-   - Select **Send to desktop** to create a shortcut on the desktop.
+1. Click the Launcher icon ![launcher](../common/deepin_launcher.svg) in the Dock and enter the Launcher interface.
+2. Locate Lianliankan ![deepin_lianliankan](../common/deepin_lianliankan.svg) by scrolling the mouse wheel or searching "lianliankan" in the Launcher interface and click it to run. 
+3. Right-click ![deepin_lianliankan](../common/deepin_lianliankan.svg) and you can:
+ - Click **Send to desktop** to create a desktop shortcut.
+ - Click **Send to dock** to fix the application in the Dock.
+ - Click **Add to startup** to add the application to startup and it will automatically run when the system starts up.
 
-   - Select  **Send to dock** to fix it onto the dock.
 
-   - Select **Add to startup** to run it automatically when the computer is turned on.
 
-### Exit Log Viewer 
+### Exit Lianliankan
 
-- On the main interface, click  ![close_icon](../common/close_icon.svg) to exit.
-- Right-click ![deepin_log_viewer](../common/deepin_log_viewer.svg) on the Dock, select **Close all** to exit.
-- On interface of Log Viewer, click ![icon_menu](../common/icon_menu.svg) and select **Exit** to exit.
+- On the home interface, click![close_icon](../common/close_icon.svg)to exit Lianliankan.
 
-## Operations
+- Right-click ![deepin_lianliankan](../common/deepin_lianliankan.svg) in the Dock and select **Close All** to exit Lianliankan.
+- On the Lianliankan interface, click ![icon_menu](../common/icon_menu.svg) and select **Exit** to exit Lianliankan.
 
-### Search
+  
 
-1. Click![search](../common/search.svg)in the search box.
-2. Input keywords. And the results are displayed after input. 
-3. Click ![close_icon](../common/close_icon.svg) to clear up current searching.
+## Rules
 
-![0|search](fig/search.png)
+Eliminate the two same patterns connected by at most three straight lines and eliminate all the patterns in the interface within the given time to finish the round of game successfully.
 
-### Filter
+## Basic Operations
 
- Filtering parameters include **period**, **level**, **status**, **application list** and **event type**.
+1. On the home page, select the game level, easy, normal or hard level corresponding with different durations 480s, 320s and 160s respectively. 
 
-<table border="1">
-   <tr>
-    <th>Filtering Type</th>
- <th>Description </th>
+   <img src="fig/mode.png" alt="1|main" style="zoom: 80%;" />
+
+2. Click ![play](../common/play.svg) to start the game on the game interface.
+
+   <img src="fig/main.png" alt="1|main" style="zoom:80%;" />
+
+3. You can also perform the other operations by clicking the icons listed in the table below.
+
+<table class=block1>
+<tr>
+    <td>Icon</td>
+    <td>Description</td>
+    <td>Icon</td>
+    <td>Description</td>
 </tr>
-   <tr>
-    <td>Filtering by period</td>
-    <td>to filter in the order of log generating date
-      <ul>
-          <li>Options include: "All", "Today", "3 days", "1 week", "1 month", and "3 months". Default option is "All".</li>
-          <li>Applicable for: "period" is not displayed only for boot logs, other kinds of logs support filtering by period.</li>
-      </ul>
- </td>
+<tr>
+   <td><img src="../common/play.svg" alt></td>
+   <td>Start/Pause the game</td>
+   <td><img src="../common/restart.svg" alt></td>
+   <td>Shuffle the patterns</td>
 </tr>
-   <tr>
-    <td>Filtering by level</td>
-    <td>to filter by seriousness levels of events
-    <ul>
-          <li>Options include: "All", "Emergency", "Alert", "Critical", "Error", "Warning", "Notice", "Info"and "Debug". Default option is "Info".</li>
-          <li>Applicable for: system logs and application logs</li>
-      </ul>
-      <tr>
-    <td>Filtering by status</td>
-    <td>
-    <ul>
-          <li>Options include: "All", "OK", and "Failed". Default option is "All".</li>
-          <li>Applicable for: boot logs only</li>
-      </ul>
-          <tr>
-    <td>Filtering by application list: </td>
-    <td>to filter log files of applications, default option is the first one. 
-        Applicable for: application logs only.  </td>
-              <tr>
-    <td>Filtering by event type</td>
-    <td>
-    <ul>
-          <li>Options include:  "All", "Login", "Reboot", and "Shutdown", the default option is "all".  </li>
-          <li>Applicable for: boot-shutdown events only.</li>
-      </ul>
- </td>
-   </tr>
-   </table>
-
-### View Logs
-
-#### System Log
-
-1. On the main interface, click **System Log**. 
-2. You can see a list of system logs which are detailed by "Level", "Process", "Date and Time", and "Info".
-3. Click a log, you can see its particular info below the list, including process, user, PID, time and info.
-
-![0|rsyslog](fig/rsyslog.png)
-
-#### Kernel Log
-
-1. On the main interface, click  **Kernel Log**.
-2. Input password in the popped up authentication window. 
-3. You can view the status and information of kernel logs.
-4. Click a log, you can see its particular info below the list, including time, user, process, info, etc.
+<tr>
+   <td><img src="../common/tip.svg" alt></td>
+   <td>Game tips </td>
+   <td><img src="../common/sound.svg" alt></td>
+   <td>Sound effect of the game </td>
+</tr>
+<tr>
+   <td><img src="../common/home.svg" alt></td>
+   <td>Return to the home page to select the game level</td>
+   <td></td>
+   <td></td>
+</tr>
+</table>
 
 
 
-![0|kernlog](fig/kernlog.png)
-
-#### Boot Log
-
-1. On the main interface, click **Boot Log**.
-2. Input password in the popped up authentication window. 
-3. You can view the status and information of boot logs.
-4. Click a log, you can see its particular info below the list, including user, status,  info, etc.
-
-
-
-![0|bootlog](fig/bootlog.png)
-
-#### dpkg Log
-
-1. On the main interface, click **dpkg Log**. 
-2. You can view time and information of dpkg logs.
-3. Click a log, you can see its particular info below the list, including user, action, time, info, etc.
-
-![0|dpkglog](fig/dpkglog.png)
-
-#### Xorg Log
-
-1. On the main interface, click **Xorg Log**.
-2. You can view time and information of Xorg logs.
-3. Click a log, you can see its particular info below the list, including user, time, info, etc.
-
-![0|xorglog](fig/xorglog.png)
-
-#### Application Log
-
-1. On the main interface, click  **Application Log**.
-2. You can view level, time, source and information of application logs.
-3. Click a log, you can see its particular info below the list, including user, time info, etc.
-
-![0|applog](fig/applog.png)
-
-
-#### Boot-Shutdown Event
-
-1. On the main interface, click  **Boot-Shutdown Event**.
-2. You can view event type, username, time and information of boot-shutdown events.
-3. Click a log, you can see its particular info below the list, including user, time, event type, detailed info and so on.
-![0|powerevent](fig/powerevent.png)
-
-### Export
-
-You can export logs and save them in format of  txt/doc/xls/html.
-
-1. On the main interface, click **Export**. 
-2. An interface of file manager pops up. Select the storing path, input a file name and select a format. 
-3. Click **Save**. When the log file is exported successfully, a hint pops up in the lower part of the interface.
-
-### Refresh
-1. On the interface of File Manager, select a log type in the left panel and right-click.
-2. Select **Refresh** to reload the log and update log list.
-
-
-### Display in File Manager
-
-**Display in file manager** is only applicable for kernel log, boot log, dpkg log, Xorg log and application log.
-
-1. On the interface of Log Viewer, select a log type in the left panel and right-click.
-2. Select **Display in file manager**, the folder path of the current log will be opened. 
-
-![display](fig/displayinfm.png)
-
-### Clear Log
-
-**Clear log** is only applicable for kernel log, boot log, dpkg log, Xorg log and application log.
-
-1. On the interface of File Manager, select a log type in the left panel and right-click.
-2. Select **Clear log**, click **Confirm** button in the pop-up window to clear current logs.
-3. If authentication window pops up, please input password to finish the operation.
 
 
 ## Main Menu
 
-In the main menu, you can switch themes, view help manual, and so on.
+In the main menu, you can switch window themes, view help manual, and get more information about Lianliankan.
 
 ### Theme
 
-The window theme includes Light Theme, Dark Theme and System Theme.
+The window theme provides three theme types, namely Light Theme, Dark Theme, and System Theme.
 
-1. Click ![icon_menu](../common/icon_menu.svg)on the interface.
-2. Click **Theme** to select one.
-
+1.  On the Lianliankan interface, click ![main_menu](../common/icon_menu.svg).
+2.  Click **Theme** to choose one theme.
 
 ### Help
 
-Click Help to get the manual, which will help you further know and use Log Viewer.
-
-1. Click ![icon_menu](../common/icon_menu.svg)on the interface.
-2. Click **Help** to view the manual.
-
+1.  On the Lianliankan interface, click ![icon_menu](../common/icon_menu.svg).
+2.  Click **Help** to view the manual of Lianliankan.
 
 ### About
 
-1. Click ![icon_menu](../common/icon_menu.svg)on the interface.
-2. Click **About** to view version information and introduction about Log Viewer.
+1.  On the Lianliankan interface, click ![icon_menu](../common/icon_menu.svg).
+2.  Click **About** to view the version and introduction of Lianliankan.
 
 ### Exit
 
-1. Click ![icon_menu](../common/icon_menu.svg)on the interface.
-2. Click  **Exit**.
+1.  On the Lianliankan interface, click ![icon_menu](../common/icon_menu.svg).
+2.  Click **Exit** to exit Lianliankan.
 
