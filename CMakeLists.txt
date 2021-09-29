@@ -34,6 +34,7 @@ set(CMAKE_EXE_LINKER_FLAGS "-pie")
 
 
 add_subdirectory(src)
+add_subdirectory(tests)
 
 
 

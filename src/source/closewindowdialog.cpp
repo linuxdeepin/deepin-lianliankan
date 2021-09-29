@@ -58,8 +58,7 @@ void CloseWindowDialog::initUI()
 
 void CloseWindowDialog::onButtonClicked(int index, const QString &)
 {
-
-    if (index == CloseButtonType::close) {
+    if (index == CloseButtonType::CloseDialog) {
         setResult(QMessageBox::Ok);
     } else {
         setResult(QMessageBox::No);

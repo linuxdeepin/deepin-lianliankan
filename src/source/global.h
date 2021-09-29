@@ -110,9 +110,9 @@ struct GameNode {
 };
 
 //关闭弹窗按钮
-enum CloseButtonType{
-    ignore = 0,
-    close
+enum CloseButtonType {
+    IgnoreDialog = 0,
+    CloseDialog
 };
 
 //点击按钮排列
