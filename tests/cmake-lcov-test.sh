@@ -17,7 +17,7 @@ mkdir -p report
 
 lcov -d $workdir -c -o ./report/coverage.info
 
-lcov --extract ./report/coverage.info '*/application/*' '*/logViewerAuth/*' '*/logViewerService/*' '*/logViewerTruncate/*' -o ./report/coverage.info
+lcov --extract ./report/coverage.info '*/src/*' -o ./report/coverage.info
 
 lcov --remove ./report/coverage.info '*/tests/*' -o ./report/coverage.info
 

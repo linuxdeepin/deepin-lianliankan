@@ -22,6 +22,44 @@
 #include <stub.h>
 
 #include <mainwindow.h>
+#include <gamepage.h>
+
+#include <DTitlebar>
+#include <DGuiApplicationHelper>
+
+#include <QPaintEvent>
+#include <QEventLoop>
+
+const int primary = 0;
+const int inter = 1;
+const int advance = 2;
+
+DGuiApplicationHelper::ColorType UT_MainWindow_themeType_001()
+{
+    return DGuiApplicationHelper::DarkType;
+}
+
+DGuiApplicationHelper::ColorType UT_MainWindow_themeType_002()
+{
+    return DGuiApplicationHelper::LightType;
+}
+
+bool UT_MainWindow_onOffGame()
+{
+    return true;
+}
+
+void UT_MainWindow_setOnOffGame(bool isBegin)
+{
+    Q_UNUSED(isBegin);
+}
+
+int UT_MainWindow_exec(QEventLoop::ProcessEventsFlags flags)
+{
+    Q_UNUSED(flags);
+    return 0;
+}
+
 class UT_MainWindow : public testing::Test
 {
 public:
@@ -38,10 +76,125 @@ public:
     MainWindow *m_mainwindow;
 };
 
+TEST_F(UT_MainWindow, UT_MainWindow_initUI)
+{
+    m_mainwindow->initUI();
+    EXPECT_EQ(m_mainwindow->windowFlags(), m_mainwindow->windowFlags() & ~Qt::WindowMaximizeButtonHint) << "check the status after initUI()";
+    EXPECT_EQ(m_mainwindow->size(), QSize(WINDOW_WIDTH, WINDOW_HEIGHT)) << "check the status after initUI()";
+}
+
 TEST_F(UT_MainWindow, UT_MainWindow_loadMainpage)
 {
     m_mainwindow->loadMainpage();
     EXPECT_NE(m_mainwindow->m_stackedWidget, nullptr) << "check the status after loadMainpage()";
     EXPECT_NE(m_mainwindow->m_mainPage, nullptr) << "check the status after loadMainpage()";
     EXPECT_EQ(m_mainwindow->m_stackedWidget->currentWidget(), m_mainwindow->m_mainPage) << "check the status after loadMainpage()";
+}
+
+TEST_F(UT_MainWindow, UT_MainWindow_loadGamePage_001)
+{
+    m_mainwindow->loadGamePage(primary);
+    EXPECT_NE(m_mainwindow->m_stackedWidget, nullptr) << "check the status after loadGamePage001()";
+    EXPECT_NE(m_mainwindow->m_gamePage, nullptr) << "check the status after loadGamePage001()";
+    EXPECT_EQ(m_mainwindow->m_stackedWidget->currentWidget(), m_mainwindow->m_gamePage) << "check the status after loadGamePage001()";
+    EXPECT_EQ(m_mainwindow->m_gamePage->m_value, PRIMARY_TIME) << "check the status after loadGamePage001()";
+}
+
+TEST_F(UT_MainWindow, UT_MainWindow_loadGamePage_002)
+{
+    m_mainwindow->loadGamePage(inter);
+    EXPECT_NE(m_mainwindow->m_stackedWidget, nullptr) << "check the status after loadGamePage002()";
+    EXPECT_NE(m_mainwindow->m_gamePage, nullptr) << "check the status after loadGamePage002()";
+    EXPECT_EQ(m_mainwindow->m_stackedWidget->currentWidget(), m_mainwindow->m_gamePage) << "check the status after loadGamePage002()";
+    EXPECT_EQ(m_mainwindow->m_gamePage->m_value, INTER_TIME) << "check the status after loadGamePage002()";
+}
+
+TEST_F(UT_MainWindow, UT_MainWindow_loadGamePage_003)
+{
+    m_mainwindow->m_firstGame = false;
+    m_mainwindow->loadGamePage(advance);
+    EXPECT_NE(m_mainwindow->m_stackedWidget, nullptr) << "check the status after loadGamePage003()";
+    EXPECT_NE(m_mainwindow->m_gamePage, nullptr) << "check the status after loadGamePage003()";
+    EXPECT_EQ(m_mainwindow->m_stackedWidget->currentWidget(), m_mainwindow->m_gamePage) << "check the status after loadGamePage003()";
+    EXPECT_EQ(m_mainwindow->m_gamePage->m_value, ADVANCED_TIME) << "check the status after loadGamePage003()";
+}
+
+TEST_F(UT_MainWindow, UT_MainWindow_loadOverPage_001)
+{
+    m_mainwindow->loadOverPage(true);
+    EXPECT_NE(m_mainwindow->m_stackedWidget, nullptr) << "check the status after loadOverPage001()";
+    EXPECT_NE(m_mainwindow->m_gameOverPage, nullptr) << "check the status after loadOverPage001()";
+    EXPECT_EQ(m_mainwindow->m_gameOverPage->m_tipLabel->text(), "VICTORY") << "check the status after loadOverPage001()";
+    EXPECT_EQ(m_mainwindow->m_gameOverPage->size(), QSize(WINDOW_WIDTH, WINDOW_HEIGHT - m_mainwindow->m_titlebar->height())) << "check the status after loadOverPage001()";
+}
+
+TEST_F(UT_MainWindow, UT_MainWindow_loadOverPage_002)
+{
+    m_mainwindow->loadOverPage(false);
+    EXPECT_NE(m_mainwindow->m_stackedWidget, nullptr) << "check the status after loadOverPage002()";
+    EXPECT_NE(m_mainwindow->m_gameOverPage, nullptr) << "check the status after loadOverPage002()";
+    EXPECT_EQ(m_mainwindow->m_gameOverPage->m_tipLabel->text(), "FAIL") << "check the status after loadOverPage002()";
+    EXPECT_EQ(m_mainwindow->m_gameOverPage->size(), QSize(WINDOW_WIDTH, WINDOW_HEIGHT - m_mainwindow->m_titlebar->height())) << "check the status after loadOverPage002()";
+}
+
+TEST_F(UT_MainWindow, UT_MainWindow_onShowClickedPage)
+{
+    m_mainwindow->onShowClickedPage(primary);
+    EXPECT_NE(m_mainwindow->m_stackedWidget, nullptr) << "check the status after onShowClickedPage()";
+    EXPECT_NE(m_mainwindow->m_gamePage, nullptr) << "check the status after onShowClickedPage()";
+}
+
+TEST_F(UT_MainWindow, UT_MainWindow_showFinishPage)
+{
+    m_mainwindow->showFinishPage(true);
+    EXPECT_NE(m_mainwindow->m_stackedWidget, nullptr) << "check the status after showFinishPage()";
+    EXPECT_NE(m_mainwindow->m_gameOverPage, nullptr) << "check the status after showFinishPage()";
+    EXPECT_EQ(m_mainwindow->m_gameState, false) << "check the status after showFinishPage()";
+}
+
+TEST_F(UT_MainWindow, UT_MainWindow_eventFilter_001)
+{
+    Stub stub;
+    stub.set(ADDR(DGuiApplicationHelper, themeType), UT_MainWindow_themeType_001);
+    QEvent event(QEvent::Paint);
+    bool res = m_mainwindow->eventFilter(m_mainwindow->m_titlebar, &event);
+    EXPECT_NE(m_mainwindow->m_titlebar, nullptr) << "check the status after eventFilter001()";
+    EXPECT_EQ(res, true) << "check the status after eventFilter001()";
+}
+
+TEST_F(UT_MainWindow, UT_MainWindow_eventFilter_002)
+{
+    Stub stub;
+    stub.set(ADDR(DGuiApplicationHelper, themeType), UT_MainWindow_themeType_002);
+    QEvent event(QEvent::Paint);
+    bool res = m_mainwindow->eventFilter(m_mainwindow->m_titlebar, &event);
+    EXPECT_NE(m_mainwindow->m_titlebar, nullptr) << "check the status after eventFilter002()";
+    EXPECT_EQ(res, true) << "check the status after eventFilter002()";
+}
+
+TEST_F(UT_MainWindow, UT_MainWindow_paintEvent)
+{
+    QPaintEvent paintEvent(m_mainwindow->rect());
+    m_mainwindow->paintEvent(&paintEvent);
+    EXPECT_NE(m_mainwindow, nullptr) << "check the status after paintEvent()";
+}
+
+TEST_F(UT_MainWindow, UT_MainWindow_closeEvent)
+{
+    Stub stub;
+    stub.set(ADDR(GamePage, onOffGame), UT_MainWindow_onOffGame);
+    stub.set(ADDR(GamePage, setOnOffGame), UT_MainWindow_setOnOffGame);
+    stub.set(ADDR(QEventLoop, exec), UT_MainWindow_exec);
+    QCloseEvent closeEvent;
+    m_mainwindow->closeEvent(&closeEvent);
+    m_mainwindow->m_gameState = true;
+    m_mainwindow->closeEvent(&closeEvent);
+    EXPECT_NE(m_mainwindow, nullptr) << "check the status after closeEvent()";
+}
+
+TEST_F(UT_MainWindow, UT_MainWindow_changeEvent)
+{
+    QEvent event(QEvent::WindowStateChange);
+    m_mainwindow->changeEvent(&event);
+    EXPECT_NE(m_mainwindow, nullptr) << "check the status after changeEvent()";
 }
