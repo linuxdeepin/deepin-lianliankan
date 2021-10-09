@@ -246,28 +246,13 @@ void GamePage::initConnect()
     QObject::connect(m_controlGrp, QOverload<int>::of(&QButtonGroup::buttonClicked), this, &GamePage::onControlBtnControl);
     QObject::connect(m_animalGrp, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonPressed), this, &GamePage::onAnimalBtnControl);
     QObject::connect(m_progress, &GameProgressBar::valueChanged, this, &GamePage::onProgressChanged);
+    QObject::connect(m_hintPicOnTimer, &QTimer::timeout, this, &GamePage::onhintPicOnTimerOut);
+    QObject::connect(m_hintPicOffTimer, &QTimer::timeout, this, &GamePage::onhintPicOffTimerOut);
     QObject::connect(m_timer, &QTimer::timeout, this, [&] {
         m_value--;
         m_progress->setValue(m_value);  
     });
-    QObject::connect(m_hintPicOnTimer, &QTimer::timeout, this, [&] {
-        m_hintPicOnTimer->stop();
-        m_flashCount--;
-        this->hintBtnflash(GameBtnType::OnlyPic);
 
-        if(m_flashCount != 0) {
-            m_hintPicOffTimer->start();
-        } else {
-            this->hintBtnflash(GameBtnType::OnlyPic);
-            this->recoverBtnState();
-        }
-
-    });
-    QObject::connect(m_hintPicOffTimer, &QTimer::timeout, this, [&] {
-        m_hintPicOffTimer->stop();
-        this->hintBtnflash(GameBtnType::NoneType);
-        m_hintPicOnTimer->start();
-    });
 }
 
 void GamePage::initGameBtn()
@@ -690,10 +675,29 @@ void GamePage::onControlBtnControl(int id)
     }
 }
 
+void GamePage::onhintPicOnTimerOut()
+{
+    m_hintPicOnTimer->stop();
+    m_flashCount--;
+    this->hintBtnflash(GameBtnType::OnlyPic);
+
+    if (m_flashCount != 0) {
+        m_hintPicOffTimer->start();
+    } else {
+        this->hintBtnflash(GameBtnType::OnlyPic);
+        this->recoverBtnState();
+    }
+}
+
+void GamePage::onhintPicOffTimerOut()
+{
+    m_hintPicOffTimer->stop();
+    this->hintBtnflash(GameBtnType::NoneType);
+    m_hintPicOnTimer->start();
+}
+
 void GamePage::onAnimalBtnControl(QAbstractButton *btn)
 {
-    QTime time;
-    time.start();
     GameButton *gameBtn = dynamic_cast<GameButton *>(btn);
     if (!gameBtn || gameBtn->btnMode() == GameBtnType::NoneType) {
         qWarning() << "btn is illegal";
@@ -727,7 +731,6 @@ void GamePage::onAnimalBtnControl(QAbstractButton *btn)
         //点击第一个按钮,增加一个按钮
         m_locationVec.append(gameBtn);
     }
-    //    qInfo() << time.elapsed();
 }
 
 void GamePage::onProgressChanged(int value)

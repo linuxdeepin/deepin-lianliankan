@@ -92,6 +92,14 @@ public slots:
     */
     void onControlBtnControl(int id);
     /**
+    * @brief  GamePage::onhintPicOnTimerOut 提示时间到的处理
+    */
+    void onhintPicOnTimerOut();
+    /**
+    * @brief  GamePage::onhintPicOffTimerOut 提示闪烁定时器(隐藏)时间的处理
+    */
+    void onhintPicOffTimerOut();
+    /**
     * @brief  GamePage::onAnimalBtnControl 游戏界面动物按钮的选中
     * @param btn 选中的游戏动物按钮
     */
