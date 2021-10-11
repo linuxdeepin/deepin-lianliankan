@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
     a.setApplicationVersion(VERSION);
     a.setOrganizationName("deepin");
     a.setApplicationName("deepin-lianliankan");
-    a.setProductIcon(QIcon(":/assets/icon/com.deepin.lianliankan.svg"));
+    a.setProductIcon(QIcon(":/assets/icon/deepin-lianliankan.svg"));
     a.setProductName(DApplication::translate("Main", "LianLianKan"));
     a.setApplicationDescription(DApplication::translate("Main", "Lianliankan is a puzzle game."));
     a.setApplicationDisplayName(QCoreApplication::translate("Main", "LianLianKan"));

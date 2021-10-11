@@ -40,7 +40,7 @@ void MainWindow::initUI()
     setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
     this->setFixedSize(QSize(WINDOW_WIDTH, WINDOW_HEIGHT));
     m_titlebar = titlebar();
-    m_titlebar->setIcon(QIcon(":/assets/icon/com.deepin.lianliankan.svg"));
+    m_titlebar->setIcon(QIcon(":/assets/icon/deepin-lianliankan.svg"));
     m_titlebar->installEventFilter(this);
     m_titlebar->setBackgroundTransparent(true);
     //加载主页面
