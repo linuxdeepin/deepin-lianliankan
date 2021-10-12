@@ -374,8 +374,6 @@ void GamePage::failedAction(GameButton *preBtn, GameButton *currentBtn)
     //连线失败音效
     if (m_soundSwitch)
         m_soundMap.value("failed")->play();
-    //如果不成功,取消按钮选中状态
-    preBtn->setPressed(false);
     //添加当前选中按钮,pop前一个按钮
     m_locationVec.append(currentBtn);
     m_locationVec.pop_front();
@@ -730,6 +728,17 @@ void GamePage::onAnimalBtnControl(QAbstractButton *btn)
     } else {
         //点击第一个按钮,增加一个按钮
         m_locationVec.append(gameBtn);
+    }
+    //fix---消除点击太快偶现选中效果无法消失的问题,故对除了空白按钮和当前按钮的所有按钮进行刷新----
+    for (QAbstractButton *btn : m_animalGrp->buttons()) {
+        GameButton *gameBtn = dynamic_cast<GameButton *>(btn);
+        if (!gameBtn || gameBtn->btnMode() == NoneType)
+            continue;
+        if (!m_locationVec.isEmpty()) {
+            if (gameBtn != m_locationVec.last()) {
+                gameBtn->setPressed(false);
+            }
+        }
     }
 }
 

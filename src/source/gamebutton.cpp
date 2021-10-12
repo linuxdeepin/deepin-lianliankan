@@ -176,7 +176,6 @@ void GameButton::paintEvent(QPaintEvent *e)
 void GameButton::mousePressEvent(QMouseEvent *e)
 {
     if (e->button() != Qt::LeftButton) {
-        e->ignore();
         return;
     }
 
@@ -191,14 +190,12 @@ void GameButton::mousePressEvent(QMouseEvent *e)
             QPixmap pressPic = GameControl::m_picMap.value(qMakePair(ButtonSPress, Small));
             m_pic = pressPic;
         }
-        e->accept();
     } else {
         if (m_btnType == OnlyPic) {
             m_gameBtnPressd = false;
         } else {
             m_cotrolBtnPressd = false;
         }
-        e->ignore();
     }
 
     return QPushButton::mousePressEvent(e);
@@ -228,9 +225,8 @@ void GameButton::enterEvent(QEvent *event)
     }else if (m_btnType == IconOnPic) {
         QPixmap hoverPic = GameControl::m_picMap.value(qMakePair(ButtonSHover, Small));
         m_pic = hoverPic;
-    } else if (m_btnType == OnlyPic){
-        event->ignore();
     }
+
     return QPushButton::enterEvent(event);
 
 }
@@ -243,9 +239,8 @@ void GameButton::leaveEvent(QEvent *event)
     }else if (m_btnType == IconOnPic) {
         QPixmap normalPic = GameControl::m_picMap.value(qMakePair(ButtonSmall, Small));
         m_pic = normalPic;
-    } else if (m_btnType == OnlyPic){
-        event->ignore();
     }
+
     return QWidget::leaveEvent(event);
 }
 
