@@ -185,6 +185,7 @@ TEST_F(UT_MainWindow, UT_MainWindow_closeEvent)
     stub.set(ADDR(GamePage, onOffGame), UT_MainWindow_onOffGame);
     stub.set(ADDR(GamePage, setOnOffGame), UT_MainWindow_setOnOffGame);
     stub.set(ADDR(QEventLoop, exec), UT_MainWindow_exec);
+    m_mainwindow->m_gamePage = new GamePage(m_mainwindow);
     QCloseEvent closeEvent;
     m_mainwindow->closeEvent(&closeEvent);
     m_mainwindow->m_gameState = true;

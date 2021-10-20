@@ -62,6 +62,14 @@ int UT_GamePage_resultNo()
     return QMessageBox::No;
 }
 
+QPair<bool, QList<QPoint>> UT_GamePage_gameJudge()
+{
+    QList<QPoint> pointList;
+    pointList.append(QPoint(1, 1));
+    pointList.append(QPoint(1, 2));
+    return qMakePair(true, pointList);
+}
+
 class UT_GamePage : public testing::Test
 {
 public:
@@ -126,6 +134,7 @@ TEST_F(UT_GamePage, UT_GamePage_onControlBtnControl)
 {
     Stub stub;
     stub.set(ADDR(QEventLoop, exec), UT_GamePage_Exec);
+    stub.set(ADDR(GameControl, gameJudge), UT_GamePage_gameJudge);
     m_gamePage->setOnOffGame(true);
     m_gamePage->onControlBtnControl(0);
     EXPECT_EQ(m_gamePage->onOffGame(), false) << "check the status after UT_GamePage_onControlBtnControl()";
@@ -144,6 +153,8 @@ TEST_F(UT_GamePage, UT_GamePage_onControlBtnControl)
 
 TEST_F(UT_GamePage, UT_GamePage_onAnimalBtnControl)
 {
+    Stub stub;
+    stub.set(ADDR(GameControl, gameJudge), UT_GamePage_gameJudge);
     GameButton *firstBtn = BtnFactory::createBtn(ButtonCow, Default, None, "", nullptr);
     GameButton *secondBtn = BtnFactory::createBtn(ButtonCow, Default, None, "", nullptr);
     GameButton *thirdBtn = BtnFactory::createBtn(ButtonLion, Default, None, "", nullptr);
@@ -203,6 +214,8 @@ TEST_F(UT_GamePage, UT_GamePage_resetGame)
 
 TEST_F(UT_GamePage, UT_GamePage_hintGame)
 {
+    Stub stub;
+    stub.set(ADDR(GameControl, gameJudge), UT_GamePage_gameJudge);
     GameButton *firstBtn = BtnFactory::createBtn(ButtonCow, Default, None, "", nullptr);
     GameButton *secondBtn = BtnFactory::createBtn(ButtonCow, Default, None, "", nullptr);
     firstBtn->setLocation(1, 1);
@@ -232,8 +245,10 @@ TEST_F(UT_GamePage, UT_GamePage_updateBtn)
 TEST_F(UT_GamePage, UT_GamePage_successAction001)
 {
     Stub stub;
-    stub.set(ADDR(QEventLoop, exec), UT_GamePage_Exec);
     stub.set(ADDR(GamePage, judgeVictory), UT_GamePage_judgeVictoryTrue);
+    stub.set(ADDR(GameControl, gameJudge), UT_GamePage_gameJudge);
+    stub.set(ADDR(QEventLoop, exec), UT_GamePage_Exec);
+    GameControl::m_pathMap[1][2] = QPoint(1, 1);
     m_gamePage->m_soundSwitch = true;
     m_gamePage->hintGame();
     m_gamePage->successAction(m_gamePage->m_hintBtn.at(0), m_gamePage->m_hintBtn.at(1));
@@ -246,6 +261,8 @@ TEST_F(UT_GamePage, UT_GamePage_successAction002)
     Stub stub;
     stub.set(ADDR(QEventLoop, exec), UT_GamePage_Exec);
     stub.set(ADDR(GamePage, judgeVictory), UT_GamePage_judgeVictoryFalse);
+    stub.set(ADDR(GameControl, gameJudge), UT_GamePage_gameJudge);
+    GameControl::m_pathMap[1][2] = QPoint(1, 1);
     m_gamePage->m_soundSwitch = true;
     m_gamePage->hintGame();
     m_gamePage->successAction(m_gamePage->m_hintBtn.at(0), m_gamePage->m_hintBtn.at(1));
@@ -255,6 +272,8 @@ TEST_F(UT_GamePage, UT_GamePage_successAction002)
 
 TEST_F(UT_GamePage, UT_GamePage_failedAction)
 {
+    Stub stub;
+    stub.set(ADDR(GameControl, gameJudge), UT_GamePage_gameJudge);
     m_gamePage->m_soundSwitch = true;
     m_gamePage->hintGame();
     m_gamePage->failedAction(m_gamePage->m_hintBtn.at(0), m_gamePage->m_hintBtn.at(1));
@@ -305,6 +324,8 @@ TEST_F(UT_GamePage, UT_GamePage_updateConnection)
 
 TEST_F(UT_GamePage, UT_GamePage_hintBtnflash)
 {
+    Stub stub;
+    stub.set(ADDR(GameControl, gameJudge), UT_GamePage_gameJudge);
     m_gamePage->hintGame();
     m_gamePage->hintBtnflash(OnlyPic);
     EXPECT_EQ(m_gamePage->m_hintBtn.at(0)->btnMode(), OnlyPic) << "check the status after UT_GamePage_hintBtnflash()";
@@ -313,6 +334,8 @@ TEST_F(UT_GamePage, UT_GamePage_hintBtnflash)
 
 TEST_F(UT_GamePage, UT_GamePage_recoverBtnState)
 {
+    Stub stub;
+    stub.set(ADDR(GameControl, gameJudge), UT_GamePage_gameJudge);
     m_gamePage->recoverBtnState();
     m_gamePage->hintGame();
     m_gamePage->recoverBtnState();
@@ -322,6 +345,8 @@ TEST_F(UT_GamePage, UT_GamePage_recoverBtnState)
 
 TEST_F(UT_GamePage, UT_GamePage_judgeGame)
 {
+    Stub stub;
+    stub.set(ADDR(GameControl, gameJudge), UT_GamePage_gameJudge);
     bool res = m_gamePage->judgeGame();
     EXPECT_EQ(res, true) << "check the status after UT_GamePage_judgeGame()";
 }

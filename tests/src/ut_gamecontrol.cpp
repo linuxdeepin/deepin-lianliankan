@@ -116,6 +116,8 @@ TEST_F(UT_GameControl, UT_GameControl_gameReset)
 
 TEST_F(UT_GameControl, UT_GameControl_gameJudge)
 {
+    Stub stub;
+    stub.set(ADDR(GameControl, gameBfs), UT_GameControl_gameBfsTrue);
     QPair<bool, QList<QPoint>> res = GameControl::GameInterFace().gameJudge();
     EXPECT_NE(res.second.count(), 0) << "check the status after UT_GameControl_gameJudge()";
     EXPECT_EQ(res.first, true) << "check the status after UT_GameControl_gameJudge()";
