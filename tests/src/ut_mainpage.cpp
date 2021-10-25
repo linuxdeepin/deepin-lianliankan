@@ -37,7 +37,11 @@ public:
     }
     void TearDown() //TEST跑完之后会执行TearDown
     {
-        delete m_mainPage;
+        if (m_mainPage) {
+            delete m_mainPage;
+            m_mainPage = nullptr;
+        }
+
         qInfo() << "TearDown" << endl;
     }
     MainPage *m_mainPage;

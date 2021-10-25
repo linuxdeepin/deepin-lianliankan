@@ -82,8 +82,13 @@ public:
     }
     void TearDown() //TEST跑完之后会执行TearDown
     {
-        delete m_gamePage;
-        delete m_window;
+        if (m_gamePage && m_window) {
+            delete m_gamePage;
+            delete m_window;
+            m_gamePage = nullptr;
+            m_window = nullptr;
+        }
+
         qInfo() << "TearDown" << endl;
     }
     GamePage *m_gamePage;

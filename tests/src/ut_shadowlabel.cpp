@@ -37,7 +37,11 @@ public:
     }
     void TearDown() //TEST跑完之后会执行TearDown
     {
-        delete m_label;
+        if (m_label) {
+            delete m_label;
+            m_label = nullptr;
+        }
+
         qInfo() << "TearDown" << endl;
     }
     ShadowLabel *m_label;

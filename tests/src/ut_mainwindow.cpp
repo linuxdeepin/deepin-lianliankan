@@ -70,7 +70,10 @@ public:
     }
     void TearDown() //TEST跑完之后会执行TearDown
     {
-        delete m_mainwindow;
+        if (m_mainwindow) {
+            delete m_mainwindow;
+            m_mainwindow = nullptr;
+        }
         qInfo() << "TearDown" << endl;
     }
     MainWindow *m_mainwindow;

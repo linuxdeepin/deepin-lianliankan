@@ -38,20 +38,7 @@ qreal UT_Utils_DevicePixelRatioF()
     return 2.0;
 }
 
-class UT_Utils : public testing::Test
-{
-public:
-    void SetUp() //TEST跑之前会执行SetUp
-    {
-        qInfo() << "SetUp" << endl;
-    }
-    void TearDown() //TEST跑完之后会执行TearDown
-    {
-        qInfo() << "TearDown" << endl;
-    }
-};
-
-TEST_F(UT_Utils, UT_Utils_getDpiPixmap_001)
+TEST(UT_Utils, UT_Utils_getDpiPixmap_001)
 {
     Stub stub;
     stub.set(ADDR(QGuiApplication, devicePixelRatio), UT_Utils_DevicePixelRatioF);

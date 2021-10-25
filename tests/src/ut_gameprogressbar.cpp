@@ -37,7 +37,10 @@ public:
     }
     void TearDown() //TEST跑完之后会执行TearDown
     {
-        delete m_progress;
+        if (m_progress) {
+            delete m_progress;
+            m_progress = nullptr;
+        }
         qInfo() << "TearDown" << endl;
     }
     GameProgressBar *m_progress;

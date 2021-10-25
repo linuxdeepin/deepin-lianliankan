@@ -36,7 +36,10 @@ public:
     }
     void TearDown() //TEST跑完之后会执行TearDown
     {
-        delete m_dialog;
+        if (m_dialog) {
+            delete m_dialog;
+            m_dialog = nullptr;
+        }
         qInfo() << "TearDown" << endl;
     }
     CloseWindowDialog *m_dialog;

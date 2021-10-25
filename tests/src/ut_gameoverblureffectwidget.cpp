@@ -37,7 +37,10 @@ public:
     }
     void TearDown() //TEST跑完之后会执行TearDown
     {
-        delete m_overWidget;
+        if (m_overWidget) {
+            delete m_overWidget;
+            m_overWidget = nullptr;
+        }
         qInfo() << "TearDown" << endl;
     }
     GameoverBlurEffectWidget *m_overWidget;

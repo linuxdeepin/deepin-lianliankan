@@ -38,7 +38,10 @@ public:
     }
     void TearDown() //TEST跑完之后会执行TearDown
     {
-        delete m_scene;
+        if (m_scene) {
+            delete m_scene;
+            m_scene = nullptr;
+        }
         qInfo() << "TearDown" << endl;
     }
     GameLineScene *m_scene;

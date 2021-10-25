@@ -38,7 +38,10 @@ public:
     }
     void TearDown() //TEST跑完之后会执行TearDown
     {
-        delete m_btn;
+        if (m_btn) {
+            delete m_btn;
+            m_btn = nullptr;
+        }
         qInfo() << "TearDown" << endl;
     }
     GameButton *m_btn;

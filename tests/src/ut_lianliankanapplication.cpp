@@ -26,25 +26,11 @@
 
 #include <QDebug>
 
-class UT_LianLianKanApplication : public testing::Test
-{
-public:
-    void SetUp() //TEST跑之前会执行SetUp
-    {
-        qInfo() << "SetUp" << endl;
-    }
-    void TearDown() //TEST跑完之后会执行TearDown
-    {
-        qInfo() << "TearDown" << endl;
-    }
-};
-
-TEST_F(UT_LianLianKanApplication, UT_LianLianKanApplication_handleQuitAction)
+TEST(UT_LianLianKanApplication, UT_LianLianKanApplication_handleQuitAction)
 {
     int argc = 0;
     char **argv;
     LianLianKanApplication *app = new LianLianKanApplication(argc, argv);
-    ;
     app->handleQuitAction();
     EXPECT_NE(app, nullptr) << "check the status after UT_LianLianKanApplication_handleQuitAction()";
     app->deleteLater();

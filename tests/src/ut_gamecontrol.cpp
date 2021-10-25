@@ -58,6 +58,7 @@ public:
 TEST_F(UT_GameControl, UT_GameControl_GameInterFace)
 {
     GameControl::GameInterFace();
+    EXPECT_NE(&GameControl::GameInterFace(), nullptr) << "check the status after UT_GameControl_GameInterFace()";
 }
 
 TEST_F(UT_GameControl, UT_GameControl_loadPic)
