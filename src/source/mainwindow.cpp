@@ -155,9 +155,9 @@ bool MainWindow::eventFilter(QObject *obj, QEvent *event)
         DGuiApplicationHelper::ColorType themtype = DGuiApplicationHelper::instance()->themeType();
         QColor broundColor;
          if (themtype == DGuiApplicationHelper::ColorType::DarkType) {
-             broundColor = m_titlebar->palette().color(QPalette::Normal, QPalette::Dark);
+             broundColor = QColor(qRgb(98, 107, 49));
          } else if (themtype == DGuiApplicationHelper::ColorType::LightType) {
-             broundColor = m_titlebar->palette().color(QPalette::Normal, QPalette::Light);
+             broundColor = QColor(qRgb(215, 234, 112));
          }
         QPainter painter(m_titlebar);
         painter.setRenderHint(QPainter::Antialiasing, true);
