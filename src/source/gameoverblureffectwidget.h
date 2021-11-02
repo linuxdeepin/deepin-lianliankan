@@ -26,7 +26,9 @@
 
 #include <DBlurEffectWidget>
 #include <DLabel>
+
 #include <QButtonGroup>
+#include <QVBoxLayout>
 
 DWIDGET_USE_NAMESPACE
 class GameoverBlurEffectWidget : public DBlurEffectWidget
@@ -34,6 +36,8 @@ class GameoverBlurEffectWidget : public DBlurEffectWidget
     Q_OBJECT
 public:
     explicit GameoverBlurEffectWidget(QWidget *parent = nullptr);
+    ~GameoverBlurEffectWidget() override;
+
 protected:
     void paintEvent(QPaintEvent *event)override;
     void mouseMoveEvent(QMouseEvent *event)override;
@@ -58,6 +62,7 @@ signals:
     void backToMainPage();//点击休息一下，返回主界面
     void reGame();//再玩一次
 private:
+    QVBoxLayout *m_mainLayout = nullptr;
     ShadowLabel *m_tipLabel;//提示语
     QButtonGroup *m_OverBtnGroup;
     bool m_overType = false;//游戏结果

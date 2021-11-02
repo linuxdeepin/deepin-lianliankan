@@ -24,7 +24,6 @@
 #include "gamelinescene.h"
 
 #include <QHBoxLayout>
-#include <QVBoxLayout>
 #include <QGraphicsDropShadowEffect>
 #include <QtMultimedia/QSound>
 #include <QDebug>
@@ -55,6 +54,14 @@ GamePage::GamePage(QWidget *parent)
     m_soundMap.insert("failed", serachFailed);
     initUI();
     initConnect();
+}
+
+GamePage::~GamePage()
+{
+    if (m_mainLayout) {
+        delete m_mainLayout;
+        m_mainLayout = nullptr;
+    }
 }
 
 void GamePage::setInitalTime(int time)
@@ -182,7 +189,7 @@ bool GamePage::judgeVictory()
 
 void GamePage::initUI()
 {
-    QVBoxLayout *mainLayout = new QVBoxLayout;
+    m_mainLayout = new QVBoxLayout(this);
     QHBoxLayout *gameFrameLayout = new QHBoxLayout;
     QVBoxLayout *controlBtnLayout = new QVBoxLayout;
     m_gameBtngridLayout = new QGridLayout;
@@ -232,10 +239,10 @@ void GamePage::initUI()
 
     m_progress = new GameProgressBar(this);
     m_progress->setFixedSize(816, 54);
-    mainLayout->addLayout(gameFrameLayout);
-    mainLayout->addWidget(m_progress);
-    mainLayout->setContentsMargins(15, 86, 15, 25);
-    this->setLayout(mainLayout);
+    m_mainLayout->addLayout(gameFrameLayout);
+    m_mainLayout->addWidget(m_progress);
+    m_mainLayout->setContentsMargins(15, 86, 15, 25);
+    this->setLayout(m_mainLayout);
     m_drawScene = new GameLineScene(this);
     m_drawScene->setFixedSize(this->parent()->property("size").value<QSize>());
 }

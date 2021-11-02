@@ -39,6 +39,7 @@ class GamePage : public QWidget
     Q_OBJECT
 public:
     explicit GamePage(QWidget *parent = nullptr);
+    ~GamePage() override;
     /**
     * @brief GamePage::  setInitalTime 设置倒计时的时间
     * @param time 倒计时时间
@@ -202,6 +203,7 @@ private:
     QPointF dirCoord(PosType order, int dir, QPointF pos);
 
 private:
+    QVBoxLayout *m_mainLayout = nullptr;
     GameBlurEffectWidget *m_gameFrame; //游戏区域
     GameProgressBar *m_progress; //进度条
     QGridLayout *m_gameBtngridLayout; //游戏按钮布局

@@ -24,7 +24,6 @@
 
 #include <QPainter>
 #include <QDebug>
-#include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QGraphicsDropShadowEffect>
 
@@ -33,6 +32,14 @@ GameoverBlurEffectWidget::GameoverBlurEffectWidget(QWidget *parent)
 {
     initUI();
     initConnect();
+}
+
+GameoverBlurEffectWidget::~GameoverBlurEffectWidget()
+{
+    if (m_mainLayout) {
+        delete m_mainLayout;
+        m_mainLayout = nullptr;
+    }
 }
 
 void GameoverBlurEffectWidget::paintEvent(QPaintEvent *event)
@@ -80,7 +87,7 @@ void GameoverBlurEffectWidget::initUI()
 {
     setMaskAlpha(0);
     setRadius(35);
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    m_mainLayout = new QVBoxLayout(this);
 
     m_tipLabel = new ShadowLabel(this);
     QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect(this);
@@ -102,9 +109,9 @@ void GameoverBlurEffectWidget::initUI()
     QHBoxLayout *buttonLayout = new QHBoxLayout;
     buttonLayout->addWidget(againButton,Qt::AlignLeft);
     buttonLayout->addWidget(restButton,Qt::AlignRight);
-    mainLayout->addWidget(m_tipLabel,Qt::AlignCenter);
-    mainLayout->addLayout(buttonLayout,Qt::AlignBottom);
-    mainLayout->setContentsMargins(295,370,295,171);
+    m_mainLayout->addWidget(m_tipLabel, Qt::AlignCenter);
+    m_mainLayout->addLayout(buttonLayout, Qt::AlignBottom);
+    m_mainLayout->setContentsMargins(295, 370, 295, 171);
 }
 
 void GameoverBlurEffectWidget::initConnect()
