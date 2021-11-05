@@ -30,7 +30,7 @@
 #include <QDebug>
 #include <QCloseEvent>
 
-MainWindow::MainWindow(QWidget *parent):DMainWindow (parent)
+MainWindow::MainWindow(QWidget *parent): DMainWindow(parent)
 {
     initUI();
 }
@@ -131,10 +131,10 @@ void MainWindow::loadMainpage()
     for (int i = 13; i < 19; i++) {
         GameControl::loadPic(GameBtnFlag(i), GameBtnSize::Default, this);
     }
-    for (int i=1;i<4;i++) {
-    GameControl::loadPic(GameBtnFlag(-1),GameBtnSize(i), this);
-    GameControl::loadPic(GameBtnFlag(14), GameBtnSize(i), this);
-    GameControl::loadPic(GameBtnFlag(15), GameBtnSize(i), this);
+    for (int i = 1; i < 4; i++) {
+        GameControl::loadPic(GameBtnFlag(-1), GameBtnSize(i), this);
+        GameControl::loadPic(GameBtnFlag(14), GameBtnSize(i), this);
+        GameControl::loadPic(GameBtnFlag(15), GameBtnSize(i), this);
     }
     GameControl::loadPic(GameBtnFlag(16), GameBtnSize(Small), this);
     GameControl::loadPic(GameBtnFlag(17), GameBtnSize(Small), this);
@@ -150,27 +150,27 @@ void MainWindow::loadMainpage()
 bool MainWindow::eventFilter(QObject *obj, QEvent *event)
 {
     //对titlebar透明度进行处理
-    if(obj==m_titlebar){
-    if(event->type()==QEvent::Paint){
-        DGuiApplicationHelper::ColorType themtype = DGuiApplicationHelper::instance()->themeType();
-        QColor broundColor;
-         if (themtype == DGuiApplicationHelper::ColorType::DarkType) {
-             broundColor = QColor(qRgb(98, 107, 49));
-         } else if (themtype == DGuiApplicationHelper::ColorType::LightType) {
-             broundColor = QColor(qRgb(215, 234, 112));
-         }
-        QPainter painter(m_titlebar);
-        painter.setRenderHint(QPainter::Antialiasing, true);
-        broundColor.setAlphaF(0.8);
-        painter.setBrush(broundColor);
-        painter.setPen(Qt::NoPen);
-        painter.fillRect(titlebar()->rect(), broundColor);
-        painter.drawRect(titlebar()->rect());
-        return  true;
-     }
+    if (obj == m_titlebar) {
+        if (event->type() == QEvent::Paint) {
+            DGuiApplicationHelper::ColorType themtype = DGuiApplicationHelper::instance()->themeType();
+            QColor broundColor;
+            if (themtype == DGuiApplicationHelper::ColorType::DarkType) {
+                broundColor = QColor(qRgb(59, 76, 37));
+            } else if (themtype == DGuiApplicationHelper::ColorType::LightType) {
+                broundColor = QColor(qRgb(215, 234, 112));
+            }
+            QPainter painter(m_titlebar);
+            painter.setRenderHint(QPainter::Antialiasing, true);
+            broundColor.setAlphaF(0.8);
+            painter.setBrush(broundColor);
+            painter.setPen(Qt::NoPen);
+            painter.fillRect(titlebar()->rect(), broundColor);
+            painter.drawRect(titlebar()->rect());
+            return  true;
+        }
 
     }
-    return  DMainWindow::eventFilter(obj,event);
+    return  DMainWindow::eventFilter(obj, event);
 }
 
 void MainWindow::paintEvent(QPaintEvent *event)
@@ -215,7 +215,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::changeEvent(QEvent *event)
 {
-    if(event->type()!=QEvent::WindowStateChange) {
+    if (event->type() != QEvent::WindowStateChange) {
         return;
     }
     if (this->windowState() == Qt::WindowMinimized && m_gamePage) {
