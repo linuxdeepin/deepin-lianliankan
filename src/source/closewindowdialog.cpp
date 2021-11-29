@@ -40,7 +40,7 @@ CloseWindowDialog::CloseWindowDialog(QWidget *parent)
 void CloseWindowDialog::initUI()
 {
     //set icon
-    setIcon(QIcon(":/assets/icon/deepin-lianliankan.svg"));
+    setIcon(QIcon::fromTheme("com.deepin.lianliankan"));
     m_detailLabel = new DLabel(this);
     m_detailLabel->setWordWrap(true);
     m_detailLabel->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);

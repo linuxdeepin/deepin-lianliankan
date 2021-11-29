@@ -39,6 +39,6 @@
         <file>assets/images/snormal.png</file>
         <file>assets/images/spress.png</file>
         <file>assets/images/shover.png</file>
-        <file>assets/icon/deepin-lianliankan.svg</file>
+        <file>assets/icon/com.deepin.lianliankan.svg</file>
     </qresource>
 </RCC>
