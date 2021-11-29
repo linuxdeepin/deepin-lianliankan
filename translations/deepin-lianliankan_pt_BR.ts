@@ -1,20 +1,20 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="es" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS language="pt_BR" version="2.1">
 <context>
     <name>CloseWindowDialog</name>
     <message>
         <location filename="../src/source/closewindowdialog.cpp" line="47"/>
         <source>Are you sure you want to exit the game?</source>
-        <translation>¿Estás seguro de que quieres salir del juego?</translation>
+        <translation>Tem certeza que deseja sair do jogo?</translation>
     </message>
     <message>
         <location filename="../src/source/closewindowdialog.cpp" line="55"/>
         <source>Keep Playing</source>
-        <translation>Seguir jugando</translation>
+        <translation>Continuar jogando</translation>
     </message>
     <message>
         <location filename="../src/source/closewindowdialog.cpp" line="56"/>
         <source>Exit</source>
-        <translation>Salir</translation>
+        <translation>Sair</translation>
     </message>
 </context>
 <context>
@@ -22,12 +22,12 @@
     <message>
         <location filename="../src/source/gameoverblureffectwidget.cpp" line="82"/>
         <source>Play Again</source>
-        <translation>Volver a jugar</translation>
+        <translation>Jogar novamente</translation>
     </message>
     <message>
         <location filename="../src/source/gameoverblureffectwidget.cpp" line="83"/>
         <source>Have a Rest</source>
-        <translation>Descansa un poco</translation>
+        <translation>Tire um descanso</translation>
     </message>
 </context>
 <context>
@@ -42,7 +42,7 @@
     <message>
         <location filename="../src/main.cpp" line="64"/>
         <source>Lianliankan is a puzzle game.</source>
-        <translation>Lianliankan es un juego de puzzle.</translation>
+        <translation>Lianliankan é um jogo de raciocínio.</translation>
     </message>
 </context>
 <context>
@@ -55,7 +55,7 @@
     <message>
         <location filename="../src/source/mainpage.cpp" line="47"/>
         <source>Normal</source>
-        <translation>Normal</translation>
+        <translation>Médio</translation>
     </message>
     <message>
         <location filename="../src/source/mainpage.cpp" line="48"/>
@@ -65,7 +65,7 @@
     <message>
         <location filename="../src/source/mainpage.cpp" line="67"/>
         <source>Select Level</source>
-        <translation>Seleccionar nivel</translation>
+        <translation>Selecione o nível</translation>
     </message>
 </context>
 <context>
@@ -73,12 +73,12 @@
     <message>
         <location filename="../src/source/mainwindow.cpp" line="221"/>
         <source>FAIL</source>
-        <translation>FALLO</translation>
+        <translation>DERROTA</translation>
     </message>
     <message>
         <location filename="../src/source/mainwindow.cpp" line="224"/>
         <source>VICTORY</source>
-        <translation>VICTORIA</translation>
+        <translation>VITÓRIA</translation>
     </message>
 </context>
 </TS>
