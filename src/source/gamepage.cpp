@@ -23,6 +23,8 @@
 #include "closewindowdialog.h"
 #include "gamelinescene.h"
 
+#include <DGuiApplicationHelper>
+
 #include <QHBoxLayout>
 #include <QGraphicsDropShadowEffect>
 #include <QtMultimedia/QSound>
@@ -389,21 +391,27 @@ void GamePage::failedAction(GameButton *preBtn, GameButton *currentBtn)
 void GamePage::popDialog()
 {
     CloseWindowDialog *dialog = new CloseWindowDialog(this);
-
     //保留弹出窗口前的开始暂停状态
     bool preOnOff = onOffGame();
     //弹出阻塞窗口暂停游戏
     setOnOffGame(false);
     dialog->setMinimumWidth(390);
-    this->parentWidget()->parentWidget()->setEnabled(false);
-    dialog->setEnabled(true);
-    dialog->show();
-    //添加时间循环，直到获取按钮信息退出循环
-    QEventLoop loop;
-    connect(dialog, &CloseWindowDialog::buttonClicked, &loop, &QEventLoop::quit);
-    connect(dialog, &CloseWindowDialog::finished, &loop, &QEventLoop::quit);
-    loop.exec();
-    this->parentWidget()->parentWidget()->setEnabled(true);
+
+    //wayland下只能使用模态窗口去让弹窗存在的情况下不退出，x11情况下需要让弹窗与应用dock栏缩小时保持一致，故不使用模态窗口。
+    if (qApp->platformName() == "dwayland" || qApp->property("_d_isDwayland").toBool()) {
+        dialog->exec();
+    } else {
+        this->parentWidget()->parentWidget()->setEnabled(false);
+        dialog->setEnabled(true);
+        dialog->show();
+        //添加时间循环，直到获取按钮信息退出循环
+        QEventLoop loop;
+        connect(dialog, &CloseWindowDialog::buttonClicked, &loop, &QEventLoop::quit);
+        connect(dialog, &CloseWindowDialog::finished, &loop, &QEventLoop::quit);
+        loop.exec();
+        this->parentWidget()->parentWidget()->setEnabled(true);
+    }
+
     if (dialog->result() == QMessageBox::Ok) {
         //返回主页面
         Q_EMIT backToMainPage();

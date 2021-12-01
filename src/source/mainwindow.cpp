@@ -192,24 +192,31 @@ void MainWindow::closeEvent(QCloseEvent *event)
         //弹出阻塞窗口暂停游戏
         m_gamePage->setOnOffGame(false);
         dialog->setMinimumWidth(390);
-        this->setEnabled(false);
-        dialog->setEnabled(true);
-        dialog->show();
-        //添加时间循环，直到获取按钮信息退出循环
-        QEventLoop loop;
-        connect(dialog, &CloseWindowDialog::buttonClicked, &loop, &QEventLoop::quit);
-        connect(dialog, &CloseWindowDialog::finished, &loop, &QEventLoop::quit);
-        loop.exec();
-        this->setEnabled(true);
+
+        //wayland下只能使用模态窗口去让弹窗存在的情况下不退出，x11情况下需要让弹窗与应用dock栏缩小时保持一致，故不使用模态窗口。
+        if (qApp->platformName() == "dwayland" || qApp->property("_d_isDwayland").toBool()) {
+            dialog->exec();
+        } else {
+            this->setEnabled(false);
+            dialog->setEnabled(true);
+            dialog->show();
+            //添加时间循环，直到获取按钮信息退出循环
+            QEventLoop loop;
+            connect(dialog, &CloseWindowDialog::buttonClicked, &loop, &QEventLoop::quit);
+            connect(dialog, &CloseWindowDialog::finished, &loop, &QEventLoop::quit);
+            loop.exec();
+            this->setEnabled(true);
+        }
+
         if (dialog->result() == QMessageBox::Ok) {
-            event->accept();
+            qApp->quit();
         } else {
             m_gamePage->setOnOffGame(preOnOff);
             event->ignore();
         }
         dialog->done(0);
     } else {
-        event->accept();
+        qApp->quit();
     }
 }
 
