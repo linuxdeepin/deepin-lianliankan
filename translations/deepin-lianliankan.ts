@@ -20,12 +20,20 @@
 <context>
     <name>GameoverBlurEffectWidget</name>
     <message>
+<<<<<<< Updated upstream
         <location filename="../src/source/gameoverblureffectwidget.cpp" line="82"/>
+=======
+        <location filename="../src/source/gameoverblureffectwidget.cpp" line="105"/>
+>>>>>>> Stashed changes
         <source>Play Again</source>
         <translation>Play Again</translation>
     </message>
     <message>
+<<<<<<< Updated upstream
         <location filename="../src/source/gameoverblureffectwidget.cpp" line="83"/>
+=======
+        <location filename="../src/source/gameoverblureffectwidget.cpp" line="106"/>
+>>>>>>> Stashed changes
         <source>Have a Rest</source>
         <translation>Have a Rest</translation>
     </message>

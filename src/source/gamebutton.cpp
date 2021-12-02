@@ -70,7 +70,7 @@ GameButton::GameButton(const QPixmap &pic, QWidget *parent)
 
 void GameButton::setFont(const QFont &font)
 {
-    m_font=font;
+    m_font = font;
 }
 
 void GameButton::setLocation(int x, int y)
@@ -96,13 +96,13 @@ void GameButton::updatePic(const QPixmap &pic)
 void GameButton::updatePlayIcon(const GameBtnType &btntype, bool isStarted)
 {
     if (btntype == GameCtl) {
-        if(isStarted) {
+        if (isStarted) {
             loadIcon(Pause);
         } else {
             loadIcon(Begin);
         }
-    } else if(btntype == SoundCtl) {
-        if(isStarted) {
+    } else if (btntype == SoundCtl) {
+        if (isStarted) {
             loadIcon(Sound);
         } else {
             loadIcon(Mute);
@@ -132,7 +132,7 @@ void GameButton::paintEvent(QPaintEvent *e)
     if (m_gameBtnPressd) {
         drawRect(p);
     }
-    p.drawPixmap(rect(),m_pic);
+    p.drawPixmap(rect(), m_pic);
     switch (m_btnType) {
     case TextOnPic: {
         //绘制文字按钮
@@ -182,7 +182,7 @@ void GameButton::mousePressEvent(QMouseEvent *e)
     if (hitButton(e->pos())) {
         if (m_btnType == OnlyPic) {
             m_gameBtnPressd = true;
-        } else if (m_btnType == TextOnPic){
+        } else if (m_btnType == TextOnPic) {
             QPixmap pressPic = GameControl::m_picMap.value(qMakePair(ButtonPress, m_size));
             m_pic = pressPic;
         } else if (m_btnType == IconOnPic) {
@@ -206,7 +206,7 @@ void GameButton::mouseReleaseEvent(QMouseEvent *e)
     if (m_btnType == TextOnPic) {
         QPixmap normalPic = GameControl::m_picMap.value(qMakePair(ButtonHover, m_size));
         m_pic = normalPic;
-    }else if (m_btnType == IconOnPic) {
+    } else if (m_btnType == IconOnPic) {
         m_cotrolBtnPressd = false;
         QPixmap normalPic = GameControl::m_picMap.value(qMakePair(ButtonSHover, Small));
         m_pic = normalPic;
@@ -222,7 +222,7 @@ void GameButton::enterEvent(QEvent *event)
     if (m_btnType == TextOnPic) {
         QPixmap hoverPic = GameControl::m_picMap.value(qMakePair(ButtonHover, m_size));
         m_pic = hoverPic;
-    }else if (m_btnType == IconOnPic) {
+    } else if (m_btnType == IconOnPic) {
         QPixmap hoverPic = GameControl::m_picMap.value(qMakePair(ButtonSHover, Small));
         m_pic = hoverPic;
     }
@@ -236,7 +236,7 @@ void GameButton::leaveEvent(QEvent *event)
     if (m_btnType == TextOnPic) {
         QPixmap normalPic = GameControl::m_picMap.value(qMakePair(ButtonNormal, m_size));
         m_pic = normalPic;
-    }else if (m_btnType == IconOnPic) {
+    } else if (m_btnType == IconOnPic) {
         QPixmap normalPic = GameControl::m_picMap.value(qMakePair(ButtonSmall, Small));
         m_pic = normalPic;
     }

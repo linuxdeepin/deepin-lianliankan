@@ -60,7 +60,7 @@ void GameoverBlurEffectWidget::paintEvent(QPaintEvent *event)
     //绘制背景色
     QPainter painterBackground(this);
     painterBackground.setRenderHint(QPainter::Antialiasing, true);
-    QColor color = QColor(60,72,0);
+    QColor color = QColor(60, 72, 0);
     color.setAlphaF(0.5);
     painterBackground.fillRect(rect(), color);
     //绘制居中图片
@@ -104,11 +104,20 @@ void GameoverBlurEffectWidget::initUI()
     m_OverBtnGroup = new QButtonGroup(this);
     GameButton *againButton = BtnFactory::createBtn(ButtonNormal, Over, None, tr("Play Again"));
     GameButton *restButton = BtnFactory::createBtn(ButtonNormal, Over, None, tr("Have a Rest"));
-    m_OverBtnGroup->addButton(againButton,0);
-    m_OverBtnGroup->addButton(restButton,1);
+    QLocale l;
+    if (l.name() == "bo_CN") {
+        QFont font;
+        font.setPointSize(13);
+        font.setFamily("Noto Sans CJK SC");
+        font.setWeight(QFont::DemiBold);
+        againButton->setFont(font);
+        restButton->setFont(font);
+    }
+    m_OverBtnGroup->addButton(againButton, 0);
+    m_OverBtnGroup->addButton(restButton, 1);
     QHBoxLayout *buttonLayout = new QHBoxLayout;
-    buttonLayout->addWidget(againButton,Qt::AlignLeft);
-    buttonLayout->addWidget(restButton,Qt::AlignRight);
+    buttonLayout->addWidget(againButton, Qt::AlignLeft);
+    buttonLayout->addWidget(restButton, Qt::AlignRight);
     m_mainLayout->addWidget(m_tipLabel, Qt::AlignCenter);
     m_mainLayout->addLayout(buttonLayout, Qt::AlignBottom);
     m_mainLayout->setContentsMargins(295, 370, 295, 171);
