@@ -1,21 +1,63 @@
 [Desktop Entry]
+
+# Translations:
+# Do not manually modify!
 Categories=Game;Qt
 Exec=/usr/bin/deepin-lianliankan %F
 GenericName=LianLianKan
+GenericName[az]=LianLianKan
+GenericName[bo]=སྦྲེལ་སྦྲེལ་སྦྲེལ། 
+GenericName[ca]=LianLianKan
+GenericName[cs]=LianLianKan
+GenericName[de]=LianLianKan
 GenericName[en_US]=LianLianKan
 GenericName[es]=LianLianKan
+GenericName[fi]=LianLianKan
+GenericName[hr]=LianLianKan
+GenericName[hu]=LianLianKan
+GenericName[it]=LianLianKan
+GenericName[nl]=LianLianKan
+GenericName[pl]=LianLianKan
+GenericName[pt]=LianLianKan
+GenericName[pt_BR]=LianLianKan
+GenericName[ru]=LianLianKan
+GenericName[sq]=LianLianKan
+GenericName[sr]=Лианлианкан
+GenericName[tr]=LianLianKan
+GenericName[ug]=ليەنليەنكەن
+GenericName[uk]=Лянь лянь кань
 GenericName[zh_CN]=连连看
 GenericName[zh_HK]=連連看
 GenericName[zh_TW]=連連看
 Icon=com.deepin.lianliankan
 Keywords=lianliankan;game;deepin;
 Name=LianLianKan
+Name[az]=LianLianKan
+Name[bo]=སྦྲེལ་སྦྲེལ་སྦྲེལ། 
+Name[ca]=LianLianKan
+Name[cs]=LianLianKan
+Name[de]=LianLianKan
 Name[en_US]=LianLianKan
 Name[es]=LianLianKan
+Name[fi]=LianLianKan
+Name[hr]=LianLianKan
+Name[hu]=LianLianKan
+Name[it]=LianLianKan
+Name[nl]=LianLianKan
+Name[pl]=LianLianKan
+Name[pt]=LianLianKan
+Name[pt_BR]=LianLianKan
+Name[ru]=LianLianKan
+Name[sq]=LianLianKan
+Name[sr]=Лианлианкан
+Name[tr]=LianLianKan
+Name[ug]=ليەنليەنكەن
+Name[uk]=Лянь лянь кань
 Name[zh_CN]=连连看
 Name[zh_HK]=連連看
 Name[zh_TW]=連連看
 StartupNotify=false
 TryExec=/usr/bin/deepin-lianliankan
 Type=Application
-X-Deepin-Vendor=user-custom
+X-Deepin-Vendor=deepin
+
