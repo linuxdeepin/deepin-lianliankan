@@ -196,7 +196,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
         //wayland下只能使用模态窗口去让弹窗存在的情况下不退出，x11情况下需要让弹窗与应用dock栏缩小时保持一致，故不使用模态窗口。
         if (qApp->platformName() == "dwayland" || qApp->property("_d_isDwayland").toBool()) {
             dialog->exec();
-        } else {
+        } else if (!(m_gamePage->getDialogState())) {
             this->setEnabled(false);
             dialog->setEnabled(true);
             dialog->show();

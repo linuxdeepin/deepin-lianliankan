@@ -157,7 +157,7 @@ void GamePage::hintGame()
         QList<GameButton *> gameBtnList;
         for (QPoint pos : m_hintPoint) {
             //qInfo()<<pos;
-            GameButton *gameBtn = dynamic_cast<GameButton *>(m_gameBtngridLayout->itemAt((pos.x() - 1) * 16 + pos.y() - 1)->widget());         
+            GameButton *gameBtn = dynamic_cast<GameButton *>(m_gameBtngridLayout->itemAt((pos.x() - 1) * 16 + pos.y() - 1)->widget());
             if (!gameBtn) {
                 qWarning() << "Btn is Null";
                 return;
@@ -259,7 +259,7 @@ void GamePage::initConnect()
     QObject::connect(m_hintPicOffTimer, &QTimer::timeout, this, &GamePage::onhintPicOffTimerOut);
     QObject::connect(m_timer, &QTimer::timeout, this, [&] {
         m_value--;
-        m_progress->setValue(m_value);  
+        m_progress->setValue(m_value);
     });
 
 }
@@ -408,6 +408,7 @@ void GamePage::popDialog()
         QEventLoop loop;
         connect(dialog, &CloseWindowDialog::buttonClicked, &loop, &QEventLoop::quit);
         connect(dialog, &CloseWindowDialog::finished, &loop, &QEventLoop::quit);
+        m_isDialog = true;
         loop.exec();
         this->parentWidget()->parentWidget()->setEnabled(true);
     }
@@ -428,6 +429,7 @@ void GamePage::popDialog()
     }
     btn->setControlBtnPressed(false);
     dialog->done(0);
+    m_isDialog = false;
 }
 
 void GamePage::updateConnection(GameButton *preBtn, GameButton *currentBtn)
@@ -624,7 +626,7 @@ int GamePage::changeDir(int dir)
 
 void GamePage::hintBtnflash(GameBtnType type)
 {
-    if(!m_hintBtn.isEmpty()) {
+    if (!m_hintBtn.isEmpty()) {
         m_hintBtn.at(0)->setBtnMode(type);
         m_hintBtn.at(1)->setBtnMode(type);
     }
@@ -632,14 +634,14 @@ void GamePage::hintBtnflash(GameBtnType type)
 
 void GamePage::recoverBtnState()
 {
-    if(m_hintBtn.isEmpty()) {
+    if (m_hintBtn.isEmpty()) {
         return;
     }
-    if(m_hintBtn.at(0)) {
+    if (m_hintBtn.at(0)) {
         m_hintBtn.at(0)->setPressed(false);
         m_hintBtn.at(0)->setEnabled(true);
     }
-    if(m_hintBtn.at(1)) {
+    if (m_hintBtn.at(1)) {
         m_hintBtn.at(1)->setPressed(false);
         m_hintBtn.at(1)->setEnabled(true);
     }

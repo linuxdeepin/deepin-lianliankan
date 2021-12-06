@@ -65,6 +65,12 @@ public:
     * @param isFirst 是否为第一次
     */
     void restartGame(bool isFirst);
+
+    /**
+     * @brief getDialogState 获取当前是否有弹窗
+     * @return 弹窗存在与否
+     */
+    inline bool getDialogState() {return m_isDialog;}
 signals:
     /**
     * @brief  GamePage:: reStartGame 回到主页面的信号
@@ -227,6 +233,7 @@ private:
     bool m_isStart = false; //开始暂停的控制
     bool m_soundSwitch = true; //音效开关控制
     bool m_gameStart = false; //记录游戏是否正在进行,暂停也是正在行
+    bool m_isDialog = false; //记录是否已有弹窗
 };
 
 #endif // GAMEPAGE_H
