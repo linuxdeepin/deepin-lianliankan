@@ -29,6 +29,8 @@
 
 #include <QPaintEvent>
 #include <QEventLoop>
+#include <QDebug>
+
 
 const int primary = 0;
 const int inter = 1;

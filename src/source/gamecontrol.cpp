@@ -37,7 +37,7 @@ GameBtnFlag GameControl::m_map[12][18];
 int GameControl::m_minTurn[12][18];
 int GameControl::m_dir[12][18];
 QPoint GameControl::m_pathMap[12][18];
-QHash<QPair<GameBtnFlag,GameBtnSize>,QPixmap> GameControl::m_picMap;
+QHash<QPair<GameBtnFlag, GameBtnSize>, QPixmap> GameControl::m_picMap;
 
 GameControl::GameControl(QObject *parent)
     : QObject(parent)
@@ -288,8 +288,7 @@ bool GameControl::gameBfs(bool isOveride, const QPoint &startPos, const QPoint &
                 if (popNode.direction == -1 || popNode.direction == i) {
                     tmpNode.direction = i;
                     tmpNode.turnNum = popNode.turnNum;
-                } else //否则，trunNum加1
-                {
+                } else { //否则，trunNum加1
                     tmpNode.direction = i;
                     tmpNode.turnNum = popNode.turnNum + 1;
                 }

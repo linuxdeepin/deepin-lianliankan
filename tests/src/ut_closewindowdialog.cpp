@@ -25,6 +25,7 @@
 #include <closewindowdialog.h>
 
 #include <QMessageBox>
+#include <QDebug>
 
 class UT_CloseWindowDialog : public testing::Test
 {
