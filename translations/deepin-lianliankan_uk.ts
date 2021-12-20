@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="uk" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="uk">
 <context>
     <name>CloseWindowDialog</name>
     <message>
@@ -20,12 +20,12 @@
 <context>
     <name>GameoverBlurEffectWidget</name>
     <message>
-        <location filename="../src/source/gameoverblureffectwidget.cpp" line="82"/>
+        <location filename="../src/source/gameoverblureffectwidget.cpp" line="105"/>
         <source>Play Again</source>
         <translation>Зіграти ще раз</translation>
     </message>
     <message>
-        <location filename="../src/source/gameoverblureffectwidget.cpp" line="83"/>
+        <location filename="../src/source/gameoverblureffectwidget.cpp" line="106"/>
         <source>Have a Rest</source>
         <translation>Досить</translation>
     </message>
@@ -48,22 +48,22 @@
 <context>
     <name>MainPage</name>
     <message>
-        <location filename="../src/source/mainpage.cpp" line="46"/>
+        <location filename="../src/source/mainpage.cpp" line="45"/>
         <source>Easy</source>
         <translation>Простий</translation>
     </message>
     <message>
-        <location filename="../src/source/mainpage.cpp" line="47"/>
+        <location filename="../src/source/mainpage.cpp" line="46"/>
         <source>Normal</source>
         <translation>Звичайний</translation>
     </message>
     <message>
-        <location filename="../src/source/mainpage.cpp" line="48"/>
+        <location filename="../src/source/mainpage.cpp" line="47"/>
         <source>Hard</source>
         <translation>Складний</translation>
     </message>
     <message>
-        <location filename="../src/source/mainpage.cpp" line="67"/>
+        <location filename="../src/source/mainpage.cpp" line="65"/>
         <source>Select Level</source>
         <translation>Виберіть рівень</translation>
     </message>
@@ -71,12 +71,12 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/source/mainwindow.cpp" line="221"/>
+        <location filename="../src/source/mainwindow.cpp" line="108"/>
         <source>FAIL</source>
         <translation>НЕВДАЧА</translation>
     </message>
     <message>
-        <location filename="../src/source/mainwindow.cpp" line="224"/>
+        <location filename="../src/source/mainwindow.cpp" line="111"/>
         <source>VICTORY</source>
         <translation>ПЕРЕМОГА</translation>
     </message>

@@ -1,4 +1,4 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS language="en_US" version="2.1">
+<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="en_US">
 <context>
     <name>CloseWindowDialog</name>
     <message>
@@ -20,20 +20,12 @@
 <context>
     <name>GameoverBlurEffectWidget</name>
     <message>
-<<<<<<< Updated upstream
-        <location filename="../src/source/gameoverblureffectwidget.cpp" line="82"/>
-=======
         <location filename="../src/source/gameoverblureffectwidget.cpp" line="105"/>
->>>>>>> Stashed changes
         <source>Play Again</source>
         <translation>Play Again</translation>
     </message>
     <message>
-<<<<<<< Updated upstream
-        <location filename="../src/source/gameoverblureffectwidget.cpp" line="83"/>
-=======
         <location filename="../src/source/gameoverblureffectwidget.cpp" line="106"/>
->>>>>>> Stashed changes
         <source>Have a Rest</source>
         <translation>Have a Rest</translation>
     </message>
@@ -56,22 +48,22 @@
 <context>
     <name>MainPage</name>
     <message>
-        <location filename="../src/source/mainpage.cpp" line="46"/>
+        <location filename="../src/source/mainpage.cpp" line="45"/>
         <source>Easy</source>
         <translation>Easy</translation>
     </message>
     <message>
-        <location filename="../src/source/mainpage.cpp" line="47"/>
+        <location filename="../src/source/mainpage.cpp" line="46"/>
         <source>Normal</source>
         <translation>Normal</translation>
     </message>
     <message>
-        <location filename="../src/source/mainpage.cpp" line="48"/>
+        <location filename="../src/source/mainpage.cpp" line="47"/>
         <source>Hard</source>
         <translation>Hard</translation>
     </message>
     <message>
-        <location filename="../src/source/mainpage.cpp" line="67"/>
+        <location filename="../src/source/mainpage.cpp" line="65"/>
         <source>Select Level</source>
         <translation>Select Level</translation>
     </message>
@@ -79,12 +71,12 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/source/mainwindow.cpp" line="221"/>
+        <location filename="../src/source/mainwindow.cpp" line="108"/>
         <source>FAIL</source>
         <translation>FAIL</translation>
     </message>
     <message>
-        <location filename="../src/source/mainwindow.cpp" line="224"/>
+        <location filename="../src/source/mainwindow.cpp" line="111"/>
         <source>VICTORY</source>
         <translation>VICTORY</translation>
     </message>
