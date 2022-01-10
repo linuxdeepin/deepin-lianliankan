@@ -4,7 +4,7 @@
     <message>
         <location filename="../src/source/closewindowdialog.cpp" line="47"/>
         <source>Are you sure you want to exit the game?</source>
-        <translation>Czy jesteś pewien że chcesz opuścić grę?</translation>
+        <translation>Czy na pewno chcesz wyjść z gry?</translation>
     </message>
     <message>
         <location filename="../src/source/closewindowdialog.cpp" line="55"/>
