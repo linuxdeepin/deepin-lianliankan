@@ -24,7 +24,7 @@
 
 - 在連連看介面，單擊 ![close_icon](../common/close_icon.svg)，退出連連看。
 - 在任務欄右鍵單擊 ![deepin_lianliankan](../common/deepin_lianliankan.svg)，選擇 **全部關閉**，退出連連看。
-- 在連連看介面，單擊 ![icon_menu](../common/icon_menu.svg)， 選擇 **離開**，退出連連看。
+- 在連連看介面，單擊 ![icon_menu](../common/icon_menu.svg)， 選擇 **退出**，退出連連看。
 
   
 
@@ -101,8 +101,8 @@
 2. 選擇 **關於**。
 3. 查看連連看的版本和介紹。
 
-### 離開
+### 退出
 
 1. 在連連看介面，單擊 ![icon_menu](../common/icon_menu.svg)。
-2. 選擇 **離開**。
+2. 選擇 **退出**。
 
