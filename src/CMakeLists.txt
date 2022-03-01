@@ -8,6 +8,11 @@ project(${EXE_NAME})
 # 配置版本号
 configure_file(environments.h.in environments.h @ONLY)
 
+#添加ci编译参数
+if(CMAKE_COVERAGE_ARG STREQUAL "CMAKE_COVERAGE_ARG_ON")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -g -Wall -fprofile-arcs -ftest-coverage")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -Wall -fprofile-arcs -ftest-coverage")
+endif()
 
 # Find the library
 include(FindPkgConfig)
