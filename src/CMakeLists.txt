@@ -5,6 +5,11 @@ cmake_minimum_required(VERSION 3.9.5)
 set(EXE_NAME deepin-lianliankan)
 project(${EXE_NAME})
 
+include(GNUInstallDirs)
+if (CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
+   set(CMAKE_INSTALL_PREFIX /usr)
+endif ()
+
 # 配置版本号
 configure_file(environments.h.in environments.h @ONLY)
 
@@ -67,10 +72,9 @@ target_link_libraries(${EXE_NAME}
 )
 
 # Install files
-set(CMAKE_INSTALL_PREFIX /usr)
-install(FILES ${INSTALL_QM_FILES} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/deepin-lianliankan/translations)
-install(FILES ../translations/desktop/deepin-lianliankan.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
+install(FILES ${INSTALL_QM_FILES} DESTINATION ${CMAKE_INSTALL_DATADIR}/deepin-lianliankan/translations)
+install(FILES ../translations/desktop/deepin-lianliankan.desktop DESTINATION ${CMAKE_INSTALL_DATADIR}/applications)
 install(FILES assets/icon/com.deepin.lianliankan.svg
-            DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps/)
-install(TARGETS ${EXE_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
-install(DIRECTORY assets/deepin-lianliankan DESTINATION /usr/share/deepin-manual/manual-assets/application/)
+            DESTINATION ${CMAKE_INSTALL_DATADIR}/icons/hicolor/scalable/apps/)
+install(TARGETS ${EXE_NAME} DESTINATION ${CMAKE_INSTALL_BINDIR})
+install(DIRECTORY assets/deepin-lianliankan DESTINATION ${CMAKE_INSTALL_DATADIR}/deepin-manual/manual-assets/application/)
