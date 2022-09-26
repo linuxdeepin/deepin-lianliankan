@@ -18,3 +18,6 @@ sudo apt-get install deepin-lianliankan
 - cmake ..
 - make
 - make install
+## License
+
+deepin-lianliankan is licensed under [GPL-3.0-or-later](LICENSE).
