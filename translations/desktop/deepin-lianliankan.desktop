@@ -3,7 +3,7 @@
 # Translations:
 # Do not manually modify!
 Categories=Game;Qt
-Exec=/usr/bin/deepin-lianliankan %F
+Exec=deepin-lianliankan %F
 GenericName=LianLianKan
 GenericName[az]=LianLianKan
 GenericName[bo]=སྦྲེལ་སྦྲེལ་སྦྲེལ། 

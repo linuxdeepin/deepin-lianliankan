@@ -67,10 +67,16 @@ target_link_libraries(${EXE_NAME}
 )
 
 # Install files
-set(CMAKE_INSTALL_PREFIX /usr)
-install(FILES ${INSTALL_QM_FILES} DESTINATION ${CMAKE_INSTALL_PREFIX}/share/deepin-lianliankan/translations)
-install(FILES ../translations/desktop/deepin-lianliankan.desktop DESTINATION ${CMAKE_INSTALL_PREFIX}/share/applications)
+#根据环境修改/usr 目录
+if(DEFINED ENV{PREFIX})
+   set(CMAKE_INSTALL_PREFIX $ENV{PREFIX})
+else()
+   set(CMAKE_INSTALL_PREFIX /usr)
+endif()
+
+install(FILES ${INSTALL_QM_FILES} DESTINATION share/deepin-lianliankan/translations)
+install(FILES ../translations/desktop/deepin-lianliankan.desktop DESTINATION share/applications)
 install(FILES assets/icon/com.deepin.lianliankan.svg
             DESTINATION ${CMAKE_INSTALL_PREFIX}/share/icons/hicolor/scalable/apps/)
-install(TARGETS ${EXE_NAME} DESTINATION ${CMAKE_INSTALL_PREFIX}/bin)
-install(DIRECTORY assets/deepin-lianliankan DESTINATION /usr/share/deepin-manual/manual-assets/application/)
+install(TARGETS ${EXE_NAME} DESTINATION bin)
+install(DIRECTORY assets/deepin-lianliankan DESTINATION ${CMAKE_INSTALL_PREFIX}/share/deepin-manual/manual-assets/application/)
