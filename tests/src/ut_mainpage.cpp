@@ -16,7 +16,7 @@ class UT_MainPage : public testing::Test
 public:
     void SetUp() //TEST跑之前会执行SetUp
     {
-        qInfo() << "SetUp" << endl;
+        qInfo() << "SetUp" << Qt::endl;
         m_mainPage = new MainPage;
     }
     void TearDown() //TEST跑完之后会执行TearDown
@@ -26,7 +26,7 @@ public:
             m_mainPage = nullptr;
         }
 
-        qInfo() << "TearDown" << endl;
+        qInfo() << "TearDown" << Qt::endl;
     }
     MainPage *m_mainPage;
 };

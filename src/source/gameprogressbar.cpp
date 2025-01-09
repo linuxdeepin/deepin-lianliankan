@@ -83,7 +83,11 @@ void GameProgressBar::paintEvent(QPaintEvent *e)
     BackFont.setWeight(QFont::DemiBold);
     BackFont.setPointSize(15);
     QFontMetricsF mertic(textFont);
+#if QT_VERSION_MAJOR > 5
+    qreal merticWidth = mertic.boundingRect(text).width();
+#else
     qreal merticWidth = mertic.width(text);
+#endif
     qreal merticHeight = mertic.height();
 
     //绘制字体阴影效果

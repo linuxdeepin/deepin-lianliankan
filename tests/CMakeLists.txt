@@ -8,16 +8,16 @@ if (NOT DEFINED VERSION)
     set(VERSION 1.0.0)
 endif ()
 configure_file(../src/environments.h.in environments.h @ONLY)
-set(LINK_LIBS
-    Qt5::Core
-    Qt5::Widgets
-    Qt5::Gui
-    Qt5::Multimedia
-    Qt5::Test
-    ${DtkWidget_LIBRARIES}
-    ${DtkCore_LIBRARIES}
-    ${DtkGUI_LIBRARIES}
-)
+# set(LINK_LIBS
+#     Qt5::Core
+#     Qt5::Widgets
+#     Qt5::Gui
+#     Qt5::Multimedia
+#     Qt5::Test
+#     ${DtkWidget_LIBRARIES}
+#     ${DtkCore_LIBRARIES}
+#     ${DtkGUI_LIBRARIES}
+# )
 #可访问private
 ADD_COMPILE_OPTIONS(-fno-access-control)
 ADD_COMPILE_OPTIONS(-fno-inline)
@@ -50,15 +50,14 @@ endif()
 
 # Find the library
 find_package(PkgConfig REQUIRED)
-find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Gui REQUIRED)
-find_package(Qt5Core REQUIRED)
-find_package(DtkWidget REQUIRED)
-find_package(DtkGui REQUIRED)
-find_package(DtkCore REQUIRED)
-find_package(Qt5LinguistTools REQUIRED)
-find_package(Qt5Test REQUIRED)
-find_package(Qt5Multimedia REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR}Gui REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR}Core REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR}Test REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR}Widgets REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Multimedia REQUIRED)
+find_package(Dtk${DTK_VERSION}Core REQUIRED)
+find_package(Dtk${DTK_VERSION}Widget REQUIRED)
+find_package(Dtk${DTK_VERSION}Gui REQUIRED)
 add_definitions(${Qt5Test_DEFINITIONS})
 FILE(GLOB allSource
      ../src/source/closewindowdialog.cpp
@@ -99,10 +98,6 @@ endfunction()
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_sub_directories_recursively("${CMAKE_CURRENT_SOURCE_DIR}/../src/source")
-include_directories(${DtkWidget_INCLUDE_DIRS})
-include_directories(${DtkCore_INCLUDE_DIRS})
-include_directories(${DtkGui_INCLUDE_DIRS})
-include_directories( ${Qt5TestLib_LIBRARIES})
 find_package(GTest REQUIRED)
 include_directories(${GTEST_INCLUDE_DIRS})
 
@@ -114,7 +109,15 @@ include_directories(src)
 
 add_executable (${PROJECT_NAME_TEST} ${allSource} ${APP_QRC_FILES}  ${APP_QM_FILES} ${qrcFiles}   ${allTestSource})
 
-
-
-target_link_libraries(${PROJECT_NAME_TEST}  ${LINK_LIBS} ${GTEST_LIBRARIES} ${GTEST_MAIN_LIBRARIES} pthread -ldl -fPIC)
+target_link_libraries(${PROJECT_NAME_TEST}
+    ${LINK_LIBS}
+    ${GTEST_LIBRARIES}
+    ${GTEST_MAIN_LIBRARIES}
+    pthread -ldl -fPIC
+    Dtk${DTK_VERSION}::Core
+    Dtk${DTK_VERSION}::Gui
+    Dtk${DTK_VERSION}::Widget
+    Qt${QT_VERSION_MAJOR}::Widgets
+    Qt${QT_VERSION_MAJOR}::Multimedia
+)
 

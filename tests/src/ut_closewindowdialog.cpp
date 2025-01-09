@@ -17,7 +17,7 @@ public:
     void SetUp() //TEST跑之前会执行SetUp
     {
         m_dialog = new CloseWindowDialog();
-        qInfo() << "SetUp" << endl;
+        qInfo() << "SetUp" << Qt::endl;
     }
     void TearDown() //TEST跑完之后会执行TearDown
     {
@@ -25,7 +25,7 @@ public:
             delete m_dialog;
             m_dialog = nullptr;
         }
-        qInfo() << "TearDown" << endl;
+        qInfo() << "TearDown" << Qt::endl;
     }
     CloseWindowDialog *m_dialog;
 };

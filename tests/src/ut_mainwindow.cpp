@@ -53,7 +53,7 @@ public:
     void SetUp() //TEST跑之前会执行SetUp
     {
         m_mainwindow = new MainWindow();
-        qInfo() << "SetUp" << endl;
+        qInfo() << "SetUp" << Qt::endl;
     }
     void TearDown() //TEST跑完之后会执行TearDown
     {
@@ -61,7 +61,7 @@ public:
             delete m_mainwindow;
             m_mainwindow = nullptr;
         }
-        qInfo() << "TearDown" << endl;
+        qInfo() << "TearDown" << Qt::endl;
     }
     MainWindow *m_mainwindow;
 };

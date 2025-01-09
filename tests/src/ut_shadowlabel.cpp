@@ -17,7 +17,7 @@ public:
     void SetUp() //TEST跑之前会执行SetUp
     {
         m_label = new ShadowLabel;
-        qInfo() << "SetUp" << endl;
+        qInfo() << "SetUp" << Qt::endl;
     }
     void TearDown() //TEST跑完之后会执行TearDown
     {
@@ -26,7 +26,7 @@ public:
             m_label = nullptr;
         }
 
-        qInfo() << "TearDown" << endl;
+        qInfo() << "TearDown" << Qt::endl;
     }
     ShadowLabel *m_label;
 };

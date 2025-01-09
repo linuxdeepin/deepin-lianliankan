@@ -62,7 +62,7 @@ public:
         m_window = new MainWindow;
         m_gamePage = new GamePage(m_window->m_stackedWidget);
         Stub stub;
-        qInfo() << "SetUp" << endl;
+        qInfo() << "SetUp" << Qt::endl;
     }
     void TearDown() //TEST跑完之后会执行TearDown
     {
@@ -73,7 +73,7 @@ public:
             m_window = nullptr;
         }
 
-        qInfo() << "TearDown" << endl;
+        qInfo() << "TearDown" << Qt::endl;
     }
     GamePage *m_gamePage;
     MainWindow *m_window;

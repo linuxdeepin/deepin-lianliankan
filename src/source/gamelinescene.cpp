@@ -34,7 +34,11 @@ void GameLineScene::paintEvent(QPaintEvent *event)
     } else {
         QPainter painter(this);
         //反走样
+#if QT_VERSION_MAJOR > 5
+        painter.setRenderHint(QPainter::Antialiasing, true);
+#else
         painter.setRenderHint(QPainter::HighQualityAntialiasing, true);
+#endif
         //获取爆炸图片
         const QPixmap &pic = GameControl::m_picMap.value(qMakePair(ExplodePic, Default));
         QPen pen;

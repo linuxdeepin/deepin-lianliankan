@@ -12,7 +12,6 @@
 
 #include <QHBoxLayout>
 #include <QGraphicsDropShadowEffect>
-#include <QtMultimedia/QSound>
 #include <QDebug>
 #include <QTime>
 #include <QGraphicsBlurEffect>
@@ -35,10 +34,16 @@ GamePage::GamePage(QWidget *parent)
     m_hintPicOffTimer = new QTimer(this);
     m_hintPicOffTimer->setInterval(200);
     m_flashCount = BtnFlashCount;
+#if QT_VERSION_MAJOR > 5
+    m_player = new QMediaPlayer(this);
+    m_audioOutput = new QAudioOutput(this);
+    m_player->setAudioOutput(m_audioOutput);
+#else
     QSound *serachSuccess = new QSound(":/assets/Sound/ConnectSuccess.wav", this);
     QSound *serachFailed = new QSound(":/assets/Sound/ConnectFailed.wav", this);
     m_soundMap.insert("success", serachSuccess);
     m_soundMap.insert("failed", serachFailed);
+#endif
     initUI();
     initConnect();
 }
@@ -237,7 +242,11 @@ void GamePage::initUI()
 
 void GamePage::initConnect()
 {
+#if QT_VERSION_MAJOR > 5
+    QObject::connect(m_controlGrp, &QButtonGroup::idClicked, this, &GamePage::onControlBtnControl);
+#else
     QObject::connect(m_controlGrp, QOverload<int>::of(&QButtonGroup::buttonClicked), this, &GamePage::onControlBtnControl);
+#endif
     QObject::connect(m_animalGrp, QOverload<QAbstractButton *>::of(&QButtonGroup::buttonPressed), this, &GamePage::onAnimalBtnControl);
     QObject::connect(m_progress, &GameProgressBar::valueChanged, this, &GamePage::onProgressChanged);
     QObject::connect(m_hintPicOnTimer, &QTimer::timeout, this, &GamePage::onhintPicOnTimerOut);
@@ -330,8 +339,13 @@ void GamePage::successAction(GameButton *preBtn, GameButton *currentBtn)
     updateConnection(preBtn, currentBtn);
 
     //连线成功音效
-    if (m_soundSwitch)
+    if (m_soundSwitch) {
+#if QT_VERSION_MAJOR > 5
+        m_player->setSource(QUrl("qrc:/assets/Sound/ConnectSuccess.wav"));
+#else
         m_soundMap.value("success")->play();
+#endif
+    }
     //更新地图
     GameControl::m_map[currentBtn->location().x()][currentBtn->location().y()] = GameBtnFlag::ButtonBlank;
     GameControl::m_map[preBtn->location().x()][preBtn->location().y()] = GameBtnFlag::ButtonBlank;
@@ -366,8 +380,13 @@ void GamePage::successAction(GameButton *preBtn, GameButton *currentBtn)
 void GamePage::failedAction(GameButton *preBtn, GameButton *currentBtn)
 {
     //连线失败音效
-    if (m_soundSwitch)
+    if (m_soundSwitch) {
+#if QT_VERSION_MAJOR > 5
+        m_player->setSource(QUrl("qrc:/assets/Sound/ConnectFailed.wav"));
+#else
         m_soundMap.value("failed")->play();
+#endif
+    }
     //添加当前选中按钮,pop前一个按钮
     m_locationVec.append(currentBtn);
     m_locationVec.pop_front();

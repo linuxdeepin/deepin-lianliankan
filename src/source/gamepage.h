@@ -15,7 +15,12 @@
 #include <QButtonGroup>
 #include <QTimer>
 #include <QVector>
+#if QT_VERSION_MAJOR > 5
+#include <QMediaPlayer>
+#include <QAudioOutput>
+#else
 #include <QtMultimedia/QSound>
+#endif
 
 class GameLineScene;
 DWIDGET_USE_NAMESPACE
@@ -200,7 +205,12 @@ private:
     QGridLayout *m_gameBtngridLayout; //游戏按钮布局
     QButtonGroup *m_animalGrp; //游戏动物按钮组
     QButtonGroup *m_controlGrp; //控制按钮组
+#if QT_VERSION_MAJOR > 5
+    QMediaPlayer *m_player;
+    QAudioOutput *m_audioOutput;
+#else
     QMap<QString, QSound *> m_soundMap; //游戏音效
+#endif
     QTimer *m_timer; //定时器
     QTimer *m_hintPicOnTimer;//提示闪烁定时器(展示)
     QTimer *m_hintPicOffTimer;//提示闪烁定时器(隐藏)

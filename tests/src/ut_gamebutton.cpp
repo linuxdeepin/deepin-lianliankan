@@ -18,7 +18,7 @@ public:
     void SetUp() //TEST跑之前会执行SetUp
     {
         m_btn = new GameButton(ButtonNormal, Default, "test");
-        qInfo() << "SetUp" << endl;
+        qInfo() << "SetUp" << Qt::endl;
     }
     void TearDown() //TEST跑完之后会执行TearDown
     {
@@ -26,7 +26,7 @@ public:
             delete m_btn;
             m_btn = nullptr;
         }
-        qInfo() << "TearDown" << endl;
+        qInfo() << "TearDown" << Qt::endl;
     }
     GameButton *m_btn;
 };
@@ -89,7 +89,11 @@ TEST_F(UT_GameButton, UT_GameButton_updatePic)
 {
     QPixmap pic;
     m_btn->updatePic(pic);
+#if QT_VERSION_MAJOR > 5
+    EXPECT_EQ(m_btn->m_pic.cacheKey(), pic.cacheKey()) << "check the status after UT_GameButton_updatePic()";
+#else
     EXPECT_EQ(m_btn->m_pic, pic) << "check the status after UT_GameButton_updatePic()";
+#endif
     EXPECT_EQ(m_btn->m_gameBtnPressd, false) << "check the status after UT_GameButton_updatePic()";
 }
 
@@ -188,14 +192,16 @@ TEST_F(UT_GameButton, UT_GameButton_mousePressEvent)
     QMouseEvent rightBtnEvent(QEvent::MouseButtonPress, QPointF(m_btn->x(), m_btn->y()), Qt::RightButton, Qt::RightButton, Qt::NoModifier);
     m_btn->mousePressEvent(&rightBtnEvent);
 
-    QMouseEvent leftBtnEvent(QEvent::MouseButtonPress, QPointF(m_btn->x(), m_btn->y()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    QMouseEvent leftBtnEvent(QEvent::MouseButtonPress, QPointF(1000, 1000), QPointF(m_btn->x(), m_btn->y()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
     m_btn->m_btnType = TextOnPic;
     m_btn->mousePressEvent(&leftBtnEvent);
     m_btn->m_btnType = IconOnPic;
     m_btn->mousePressEvent(&leftBtnEvent);
     m_btn->m_btnType = OnlyPic;
     m_btn->mousePressEvent(&leftBtnEvent);
+#if QT_VERSION_MAJOR <= 5
     leftBtnEvent.setLocalPos(QPointF(1000, 1000));
+#endif
     m_btn->mousePressEvent(&leftBtnEvent);
     m_btn->m_btnType = IconOnPic;
     m_btn->mousePressEvent(&leftBtnEvent);
@@ -214,7 +220,11 @@ TEST_F(UT_GameButton, UT_GameButton_mouseReleaseEvent)
 
 TEST_F(UT_GameButton, UT_GameButton_enterEvent)
 {
+#if QT_VERSION_MAJOR > 5
+    QEnterEvent enterEvent(QPointF(1, 1), QPointF(1, 1), QPointF(1, 1));
+#else
     QEvent enterEvent(QEvent::Enter);
+#endif
     m_btn->m_btnType = OnlyPic;
     m_btn->enterEvent(&enterEvent);
     m_btn->m_btnType = TextOnPic;

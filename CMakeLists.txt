@@ -28,6 +28,11 @@ set(CMAKE_AUTOMOC ON) #打开全局moc
 set(CMAKE_AUTORCC ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+set(QT_VERSION_MAJOR 6)
+if (${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    set(DTK_VERSION 6)
+endif()
+
 
 #对DApplication 进行加速
 set(CMAKE_EXE_LINKER_FLAGS "-pie")
