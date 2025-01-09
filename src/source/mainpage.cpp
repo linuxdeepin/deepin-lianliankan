@@ -59,7 +59,11 @@ void MainPage::initUI()
 
 void MainPage::initConnect()
 {
+#if QT_VERSION_MAJOR > 5
+    connect(m_btnGrp, &QButtonGroup::idClicked, this, &MainPage::buttonPress);
+#else
     connect(m_btnGrp, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &MainPage::buttonPress);
+#endif
     connect(m_soundBtn, &GameButton::pressed, this, [&] {
         this->setSoundState(!m_soundState);
     });

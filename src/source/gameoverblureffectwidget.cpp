@@ -110,7 +110,11 @@ void GameoverBlurEffectWidget::initUI()
 
 void GameoverBlurEffectWidget::initConnect()
 {
+#if QT_VERSION_MAJOR > 5
+    connect(m_OverBtnGroup, &QButtonGroup::idClicked, this, &GameoverBlurEffectWidget::onButtonPressed);
+#else
     connect(m_OverBtnGroup, QOverload<int>::of(&QButtonGroup::buttonClicked), this, &GameoverBlurEffectWidget::onButtonPressed);
+#endif
 }
 
 void GameoverBlurEffectWidget::updateLabel(QString text)

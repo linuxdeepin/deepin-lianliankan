@@ -131,7 +131,11 @@ void GameButton::paintEvent(QPaintEvent *e)
 
         QFontMetricsF mertic(m_font);
         qreal fontHeight = mertic.height();
+#if QT_VERSION_MAJOR > 5
+        qreal fontWidth = mertic.boundingRect(m_text).width();
+#else
         qreal fontWidth = mertic.width(m_text);
+#endif
         qreal textX = (rect().width() - fontWidth) / 2;
         qreal textY = (rect().height() - fontHeight - fontHeight / 2) / 2;
         p.setFont(shadowFont);
@@ -199,7 +203,11 @@ void GameButton::mouseReleaseEvent(QMouseEvent *e)
     return QPushButton::mouseReleaseEvent(e);
 }
 
+#if QT_VERSION_MAJOR > 5
+void GameButton::enterEvent(QEnterEvent *event)
+#else
 void GameButton::enterEvent(QEvent *event)
+#endif
 {
     if (!this->isEnabled()) {
         return;
@@ -269,7 +277,11 @@ void GameButton::drawBackdrop(QPainter &p)
     QPen pen;
     pen.setWidth(0);
     p.setPen(pen);
+#if QT_VERSION_MAJOR > 5
+    p.drawRoundedRect(this->rect().x() + 3, this->rect().y() + 5, 42, 42, 40, 40);
+#else
     p.drawRoundRect(this->rect().x() + 3, this->rect().y() + 5, 42, 42, 40, 40);
+#endif
 }
 
 void GameButton::setBtnMask(QPixmap &pic)

@@ -10,7 +10,9 @@
 #include <DApplication>
 #include <DMainWindow>
 #include <DWidgetUtil>
+#if QT_VERSION_MAJOR <= 5
 #include <DApplicationSettings>
+#endif
 #include <DTitlebar>
 #include <DProgressBar>
 #include <DFontSizeManager>
@@ -52,7 +54,9 @@ int main(int argc, char *argv[])
 
     DLogManager::registerConsoleAppender();
     DLogManager::registerFileAppender();
+#if QT_VERSION_MAJOR <= 5
     DApplicationSettings saveTheme;
+#endif
 
     //                QTime t;
     //                t.start();

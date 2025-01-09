@@ -5,7 +5,6 @@
 
 #include "closewindowdialog.h"
 
-#include <DApplicationHelper>
 #include <DFontSizeManager>
 
 #include <QApplication>
