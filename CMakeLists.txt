@@ -35,7 +35,7 @@ endif()
 
 
 #对DApplication 进行加速
-set(CMAKE_EXE_LINKER_FLAGS "-pie")
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -pie")
 
 
 add_subdirectory(src)
