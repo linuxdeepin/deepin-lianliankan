@@ -16,11 +16,13 @@
 
 MainWindow::MainWindow(QWidget *parent): DMainWindow(parent)
 {
+    qDebug() << "MainWindow constructor called";
     initUI();
 }
 
 void MainWindow::initUI()
 {
+    qDebug() << "Initializing MainWindow UI";
     setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
     this->setFixedSize(QSize(WINDOW_WIDTH, WINDOW_HEIGHT));
     m_titlebar = titlebar();
@@ -33,6 +35,7 @@ void MainWindow::initUI()
 
 void MainWindow::loadGamePage(int id)
 {
+    qDebug() << "Loading game page with difficulty level:" << id;
     //加载游戏页面图片
     for (int i = 1; i < 13; i++) {
         GameControl::loadPic(GameBtnFlag(i), GameBtnSize::Default, this);
@@ -44,6 +47,7 @@ void MainWindow::loadGamePage(int id)
     //游戏页面音效状态与主页面音效状态同步
     m_gamePage->setSoundSwitch(m_mainPage->soundState());
     //选择游戏难度，设置游戏时间
+    qDebug() << "Setting game time based on difficulty level";
     switch (id) {
     case 1:
         m_gamePage->setInitalTime(INTER_TIME);
@@ -83,6 +87,7 @@ void MainWindow::loadGamePage(int id)
 
 void MainWindow::loadOverPage(bool res)
 {
+    qDebug() << "Loading game over page, result:" << res;
     //加载结束界面
     m_gameOverPage = new GameoverBlurEffectWidget(centralWidget());
 
@@ -111,6 +116,7 @@ void MainWindow::loadOverPage(bool res)
 
 void MainWindow::loadMainpage()
 {
+    qDebug() << "Loading main page resources";
     //加载主页面图片资源
     for (int i = 13; i < 19; i++) {
         GameControl::loadPic(GameBtnFlag(i), GameBtnSize::Default, this);
@@ -169,6 +175,7 @@ void MainWindow::paintEvent(QPaintEvent *event)
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+    qDebug() << "Close event received, game state:" << m_gameState;
     if (m_gameState) {
         CloseWindowDialog *dialog = new CloseWindowDialog(this);
         //保留弹出窗口前的开始暂停状态
@@ -193,8 +200,10 @@ void MainWindow::closeEvent(QCloseEvent *event)
         }
 
         if (dialog->result() == QMessageBox::Ok) {
+            qDebug() << "User confirmed application quit";
             qApp->quit();
         } else {
+            qDebug() << "User canceled quit, restoring game state";
             m_gamePage->setOnOffGame(preOnOff);
             event->ignore();
         }
@@ -206,6 +215,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
 
 void MainWindow::changeEvent(QEvent *event)
 {
+    qDebug() << "Window state change event:" << event->type();
     if (event->type() == QEvent::WindowStateChange && this->windowState().testFlag(Qt::WindowMinimized) && m_gamePage) {
         if (m_gamePage->onOffGame())
             m_gamePage->setOnOffGame(false);
@@ -215,12 +225,14 @@ void MainWindow::changeEvent(QEvent *event)
 
 void MainWindow::onShowClickedPage(int id)
 {
+    qDebug() << "Showing clicked page with id:" << id;
     //加载游戏页面
     loadGamePage(id);
 }
 
 void MainWindow::showFinishPage(bool res)
 {
+    qDebug() << "Showing finish page with result:" << res;
     //加载结束页面
     loadOverPage(res);
     //游戏状态停止

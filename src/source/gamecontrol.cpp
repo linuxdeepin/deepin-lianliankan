@@ -27,10 +27,12 @@ QHash<QPair<GameBtnFlag, GameBtnSize>, QPixmap> GameControl::m_picMap;
 GameControl::GameControl(QObject *parent)
     : QObject(parent)
 {
+    qDebug() << "Initializing GameControl";
 }
 
 void GameControl::loadPic(const GameBtnFlag &flag, const GameBtnSize &btnSize, DWidget *widget)
 {
+    qDebug() << "Loading image for flag:" << flag << "size:" << btnSize;
     QString fileName;
     QSize scaledSize;
 
@@ -124,16 +126,19 @@ void GameControl::loadPic(const GameBtnFlag &flag, const GameBtnSize &btnSize, D
 
 void GameControl::gameBegin()
 {
+    qInfo() << "Game starting - initial shuffle";
     gameShuffle(true);
 }
 
 void GameControl::gameReset()
 {
+    qInfo() << "Game resetting - reshuffling";
     gameShuffle(false);
 }
 
 QPair<bool, QList<QPoint>> GameControl::gameJudge()
 {
+    qDebug() << "Judging game state for possible matches";
     QList<QPoint> pointList;
     int rowOffset = 0;
     int columnOffset = 0;
@@ -170,6 +175,7 @@ QPair<bool, QList<QPoint>> GameControl::gameJudge()
 
 GameSearchResult GameControl::gameSearch(const QPoint &startPos, const QPoint &endPos)
 {
+    qDebug() << "Searching path from" << startPos << "to" << endPos;
     //先保证的无交叉正向覆盖搜索,如果没有通路,再进行反向覆盖搜索，最后进行交叉搜索
     if (!gameBfs(false, startPos, endPos)) {
         if (!gameBfs(false, endPos, startPos)) {
@@ -186,6 +192,7 @@ GameSearchResult GameControl::gameSearch(const QPoint &startPos, const QPoint &e
 
 bool GameControl::gameJudgeVictory()
 {
+    qDebug() << "Checking victory condition";
     for (int i = 1; i < m_row + 1; i++) {
         for (int j = 1; j < m_column + 1; j++) {
             if (m_map[i][j] != ButtonBlank)
@@ -197,6 +204,7 @@ bool GameControl::gameJudgeVictory()
 
 void GameControl::gameShuffle(bool inital)
 {
+    qInfo() << "Shuffling game" << (inital ? "initial" : "reset");
     QVector<GameBtnFlag> btnVector; //洗牌容器
     if (!inital) {
         //重置数据
@@ -235,6 +243,7 @@ void GameControl::gameShuffle(bool inital)
 
 bool GameControl::gameBfs(bool isOveride, const QPoint &startPos, const QPoint &endPos)
 {
+    qDebug() << "Running BFS path search" << (isOveride ? "with" : "without") << "override";
     memset(m_minTurn, INF, sizeof(m_minTurn));
     memset(m_pathMap, 0, sizeof(m_pathMap));
     GameBtnFlag startFlag = m_map[startPos.x()][startPos.y()];
@@ -308,6 +317,7 @@ bool GameControl::gameBfs(bool isOveride, const QPoint &startPos, const QPoint &
 
 GameButton *BtnFactory::createBtn(const GameBtnFlag &flag, const GameBtnSize &btnSize, const GameIconType &iconType, const QString &text, QWidget *parent)
 {
+    qDebug() << "Creating button with flag:" << flag << "size:" << btnSize << "icon:" << iconType;
     QFont btnFont;
     btnFont.setFamily("Noto Sans CJK SC");
     btnFont.setWeight(QFont::DemiBold);

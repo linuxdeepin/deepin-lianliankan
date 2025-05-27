@@ -26,7 +26,9 @@ GameButton::GameButton(const GameBtnFlag &flag, const GameBtnSize &size, const Q
     , m_columnIndex(0)
     , m_btnType(TextOnPic)
 {
+    qDebug() << "Creating GameButton with text:" << text << "size:" << size << "flag:" << flag;
     setBtnMask(m_pic);
+    qDebug() << "GameButton created successfully";
 }
 
 GameButton::GameButton(const QPixmap &pic, const GameIconType &icontype, QWidget *parent)
@@ -38,8 +40,10 @@ GameButton::GameButton(const QPixmap &pic, const GameIconType &icontype, QWidget
     , m_columnIndex(0)
     , m_btnType(IconOnPic)
 {
+    qDebug() << "Creating GameButton with icon type:" << icontype;
     loadIcon(m_iconType);
     setBtnMask(m_pic);
+    qDebug() << "Icon GameButton created successfully";
 }
 
 GameButton::GameButton(const QPixmap &pic, QWidget *parent)
@@ -51,6 +55,7 @@ GameButton::GameButton(const QPixmap &pic, QWidget *parent)
     , m_columnIndex(0)
     , m_btnType(OnlyPic)
 {
+    qDebug() << "Creating simple GameButton with pixmap";
 }
 
 void GameButton::setFont(const QFont &font)
@@ -165,25 +170,32 @@ void GameButton::paintEvent(QPaintEvent *e)
 void GameButton::mousePressEvent(QMouseEvent *e)
 {
     if (e->button() != Qt::LeftButton) {
+        qDebug() << "Ignoring non-left button press";
         return;
     }
 
     if (hitButton(e->pos())) {
+        qDebug() << "Button hit at position:" << e->pos();
         if (m_btnType == OnlyPic) {
             m_gameBtnPressd = true;
+            qDebug() << "Set OnlyPic button pressed state to true";
         } else if (m_btnType == TextOnPic) {
             QPixmap pressPic = GameControl::m_picMap.value(qMakePair(ButtonPress, m_size));
             m_pic = pressPic;
+            qDebug() << "Updated TextOnPic button pressed image";
         } else if (m_btnType == IconOnPic) {
             m_cotrolBtnPressd = true;
             QPixmap pressPic = GameControl::m_picMap.value(qMakePair(ButtonSPress, Small));
             m_pic = pressPic;
+            qDebug() << "Updated IconOnPic button pressed image and state";
         }
     } else {
         if (m_btnType == OnlyPic) {
             m_gameBtnPressd = false;
+            qDebug() << "Reset OnlyPic button pressed state to false";
         } else {
             m_cotrolBtnPressd = false;
+            qDebug() << "Reset control button pressed state to false";
         }
     }
 
@@ -195,10 +207,12 @@ void GameButton::mouseReleaseEvent(QMouseEvent *e)
     if (m_btnType == TextOnPic) {
         QPixmap normalPic = GameControl::m_picMap.value(qMakePair(ButtonHover, m_size));
         m_pic = normalPic;
+        qDebug() << "Reset TextOnPic button to hover image";
     } else if (m_btnType == IconOnPic) {
         m_cotrolBtnPressd = false;
         QPixmap normalPic = GameControl::m_picMap.value(qMakePair(ButtonSHover, Small));
         m_pic = normalPic;
+        qDebug() << "Reset IconOnPic button pressed state and image";
     }
     return QPushButton::mouseReleaseEvent(e);
 }

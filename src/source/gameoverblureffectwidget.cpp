@@ -15,12 +15,14 @@
 GameoverBlurEffectWidget::GameoverBlurEffectWidget(QWidget *parent)
     : DBlurEffectWidget(parent)
 {
+    qDebug() << "Initializing GameoverBlurEffectWidget";
     initUI();
     initConnect();
 }
 
 GameoverBlurEffectWidget::~GameoverBlurEffectWidget()
 {
+    qDebug() << "Destroying GameoverBlurEffectWidget";
     if (m_mainLayout) {
         delete m_mainLayout;
         m_mainLayout = nullptr;
@@ -70,6 +72,7 @@ void GameoverBlurEffectWidget::mouseMoveEvent(QMouseEvent *event)
 
 void GameoverBlurEffectWidget::initUI()
 {
+    qDebug() << "Initializing game over UI components";
     setMaskAlpha(0);
     setRadius(35);
     m_mainLayout = new QVBoxLayout(this);
@@ -110,6 +113,7 @@ void GameoverBlurEffectWidget::initUI()
 
 void GameoverBlurEffectWidget::initConnect()
 {
+    qDebug() << "Setting up game over signal connections";
 #if QT_VERSION_MAJOR > 5
     connect(m_OverBtnGroup, &QButtonGroup::idClicked, this, &GameoverBlurEffectWidget::onButtonPressed);
 #else
@@ -119,17 +123,20 @@ void GameoverBlurEffectWidget::initConnect()
 
 void GameoverBlurEffectWidget::updateLabel(QString text)
 {
+    qDebug() << "Updating game over label text:" << text;
     m_tipLabel->setText(text);
 }
 
 void GameoverBlurEffectWidget::setResult(bool res)
 {
+    qInfo() << "Setting game result to:" << (res ? "Victory" : "Failed");
     m_tipLabel->setResult(res);
     m_overType = res;
 }
 
 void GameoverBlurEffectWidget::onButtonPressed(int id)
 {
+    qDebug() << "Game over button pressed, id:" << id;
     switch (id) {
     case 0: {
         Q_EMIT reGame();

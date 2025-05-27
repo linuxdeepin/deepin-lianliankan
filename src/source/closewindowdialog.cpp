@@ -16,13 +16,16 @@
 CloseWindowDialog::CloseWindowDialog(QWidget *parent)
     : DDialog(parent)
 {
+    qDebug() << "Enter CloseWindowDialog constructor";
     initUI();
 
     connect(this, &CloseWindowDialog::buttonClicked, this, &CloseWindowDialog::onButtonClicked);
+    qDebug() << "Exit CloseWindowDialog constructor";
 }
 
 void CloseWindowDialog::initUI()
 {
+    qDebug() << "Enter initUI";
     //set icon
     setIcon(QIcon::fromTheme("com.deepin.lianliankan"));
     m_detailLabel = new DLabel(this);
@@ -38,15 +41,20 @@ void CloseWindowDialog::initUI()
     addSpacing(10);
     addButton(tr("Keep Playing"), true, ButtonNormal);
     addButton(tr("Exit"), true, ButtonNormal);
+    qDebug() << "Exit initUI";
 }
 
 void CloseWindowDialog::onButtonClicked(int index, const QString &)
 {
+    qDebug() << "Enter onButtonClicked, index:" << index;
     if (index == CloseButtonType::CloseDialog) {
+        qDebug() << "User chose to exit the game";
         setResult(QMessageBox::Ok);
     } else {
+        qDebug() << "User chose to keep playing";
         setResult(QMessageBox::No);
     }
+    qDebug() << "Exit onButtonClicked";
 }
 
 

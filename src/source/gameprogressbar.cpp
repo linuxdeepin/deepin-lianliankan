@@ -13,6 +13,7 @@
 GameProgressBar::GameProgressBar(QWidget *parent)
     : DColoredProgressBar(parent)
 {
+    qDebug() << "Initializing GameProgressBar with default background image";
     QSize scaledSize = QSize(816, 54);
     QString fileName = ":/assets/images/progressback.png";
     m_pic = Utils::getDpiPixmap(scaledSize, fileName, this);
@@ -20,6 +21,7 @@ GameProgressBar::GameProgressBar(QWidget *parent)
 
 void GameProgressBar::setInintalTime(int time)
 {
+    qInfo() << "Setting initial time:" << time << "seconds";
     m_time = time;
     setRange(0, 0);
     setValue(time);
