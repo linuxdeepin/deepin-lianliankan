@@ -12,17 +12,20 @@
 GameLineScene::GameLineScene(QWidget *parent)
     : QWidget(parent)
 {
+    qDebug() << "Initializing GameLineScene with transparent mouse events";
     setAttribute(Qt::WA_TransparentForMouseEvents, true);
 }
 
 void GameLineScene::setDrawPath(const QList<QPointF> &posList)
 {
+    qDebug() << "Setting draw path with" << posList.size() << "points";
     m_posList = posList;
     update();
 }
 
 void GameLineScene::setMissing()
 {
+    qDebug() << "Clearing draw path";
     m_posList.clear();
     update();
 }
@@ -70,6 +73,7 @@ void GameLineScene::paintEvent(QPaintEvent *event)
 
 void GameLineScene::drawLightEffeec(QPainter &p, QPainterPath &path, const QPointF &pos)
 {
+    qDebug() << "Drawing light effect for path";
     //倒数第二pos是连线的终点,进行路径的绘制
     path.lineTo(pos);
     //绘制最后一层连线光效阴影

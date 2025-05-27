@@ -9,6 +9,7 @@
 
 ShadowLabel::ShadowLabel(QWidget *parent) : DLabel (parent)
 {
+    qDebug() << "Initializing ShadowLabel with font: Noto Sans CJK SC, size: 21";
     m_font.setFamily("Noto Sans CJK SC");
     m_font.setPixelSize(21);
 #if QT_VERSION_MAJOR > 5

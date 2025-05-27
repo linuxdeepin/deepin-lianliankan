@@ -11,6 +11,7 @@
 
 QPixmap Utils::getDpiPixmap(QSize size, const QString &filename, DWidget *w)
 {
+    qDebug() << "Loading DPI-aware pixmap for file:" << filename;
     QPixmap pixmap;
     qreal devicePixelRatio = qApp->devicePixelRatio();
     if (w) {
@@ -22,6 +23,7 @@ QPixmap Utils::getDpiPixmap(QSize size, const QString &filename, DWidget *w)
     reader.setFileName(qt_findAtNxFile(filename, devicePixelRatio, &ratio));
 
     if (!qFuzzyCompare(ratio, devicePixelRatio)) {
+        qDebug() << "Scaling required - ratio:" << ratio << "devicePixelRatio:" << devicePixelRatio;
         if (reader.canRead()) {
             QSize picSize;
             if (size != QSize(0, 0)) {
@@ -42,5 +44,6 @@ QPixmap Utils::getDpiPixmap(QSize size, const QString &filename, DWidget *w)
             pixmap.load(filename);
         }
     }
+    qDebug() << "Returning pixmap for file:" << filename << "size:" << pixmap.size();
     return pixmap;
 }

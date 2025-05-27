@@ -20,12 +20,14 @@
 
 MainPage::MainPage(QWidget*parent):DWidget (parent)
 {
+    qDebug() << "MainPage constructor called";
     initUI();
     initConnect();
 }
 
 void MainPage::initUI()
 {
+    qDebug() << "Initializing MainPage UI";
     m_btnGrp=new QButtonGroup(this);
     GameButton *primaryBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Mid, GameIconType::None, tr("Easy"), this);
     GameButton *interBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Mid, GameIconType::None, tr("Normal"), this);
@@ -59,24 +61,28 @@ void MainPage::initUI()
 
 void MainPage::initConnect()
 {
+    qDebug() << "Setting up MainPage signal connections";
 #if QT_VERSION_MAJOR > 5
     connect(m_btnGrp, &QButtonGroup::idClicked, this, &MainPage::buttonPress);
 #else
     connect(m_btnGrp, static_cast<void (QButtonGroup::*)(int)>(&QButtonGroup::buttonClicked), this, &MainPage::buttonPress);
 #endif
     connect(m_soundBtn, &GameButton::pressed, this, [&] {
+        qInfo() << "Sound button pressed, current state:" << m_soundState;
         this->setSoundState(!m_soundState);
     });
 }
 
 void MainPage::setSoundState(bool state)
 {
+    qDebug() << "Setting sound state to:" << state;
     m_soundState = state;
     m_soundBtn->updatePlayIcon(SoundCtl, m_soundState);
 }
 
 bool MainPage::soundState() const
 {
+    qDebug() << "Getting sound state:" << m_soundState;
     return m_soundState;
 }
 

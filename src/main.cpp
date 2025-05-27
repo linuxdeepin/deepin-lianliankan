@@ -32,10 +32,12 @@ DCORE_USE_NAMESPACE
 
 int main(int argc, char *argv[])
 {
+    qDebug() << "Application starting...";
     QGuiApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
     LianLianKanApplication a(argc, argv);
 
     //单例模式
+    qInfo() << "Checking single instance...";
     if (!DGuiApplicationHelper::instance()->setSingleInstance(a.applicationName(), DGuiApplicationHelper::UserScope)) {
         a.activeWindow();
         return 0;
@@ -60,9 +62,12 @@ int main(int argc, char *argv[])
 
     //                QTime t;
     //                t.start();
+    qDebug() << "Creating main window...";
     MainWindow w;
     Dtk::Widget::moveToCenter(&w);
     w.show();
+    qDebug() << "Main window shown";
     //          qInfo()<<t.elapsed()<<"time";
+    qDebug() << "Entering application event loop";
     return a.exec();
 }

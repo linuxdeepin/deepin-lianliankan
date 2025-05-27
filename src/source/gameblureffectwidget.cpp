@@ -15,6 +15,7 @@ GameBlurEffectWidget::GameBlurEffectWidget(const GameBtnSize &size, QWidget *par
     : QWidget(parent)
     , m_sizeFlag(size)
 {
+    qDebug() << "Enter GameBlurEffectWidget constructor, size:" << size;
     QSize scaledSize;
     QString fileName;
 
@@ -22,17 +23,21 @@ GameBlurEffectWidget::GameBlurEffectWidget(const GameBtnSize &size, QWidget *par
     case Big:
         scaledSize = QSize(835, 542);
         fileName = ":/assets/images/bigRect.png";
+        qDebug() << "Selected big size:" << scaledSize << "with file:" << fileName;
         break;
     case Mid:
         scaledSize = QSize(480, 515);
         fileName = ":/assets/images/midRect.png";
+        qDebug() << "Selected mid size:" << scaledSize << "with file:" << fileName;
         break;
     default:
         scaledSize = QSize(175, 542);
         fileName = ":/assets/images/smallRect.png";
+        qDebug() << "Selected small size:" << scaledSize << "with file:" << fileName;
         break;
     }
     m_pic = Utils::getDpiPixmap(scaledSize, fileName, this);
+    qDebug() << "Exit GameBlurEffectWidget constructor";
 }
 
 void GameBlurEffectWidget::paintEvent(QPaintEvent *event)

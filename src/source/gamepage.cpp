@@ -27,6 +27,7 @@ const unsigned int explodePicSize = 5; //爆炸图片大小
 GamePage::GamePage(QWidget *parent)
     : QWidget(parent)
 {
+    qDebug() << "Initializing GamePage with timers and sound system";
     m_timer = new QTimer(this);
     m_timer->setInterval(1000);
     m_hintPicOnTimer = new QTimer(this);
@@ -50,6 +51,7 @@ GamePage::GamePage(QWidget *parent)
 
 GamePage::~GamePage()
 {
+    qDebug() << "Destroying GamePage and cleaning up resources";
     if (m_mainLayout) {
         delete m_mainLayout;
         m_mainLayout = nullptr;
@@ -58,6 +60,7 @@ GamePage::~GamePage()
 
 void GamePage::setInitalTime(int time)
 {
+    qInfo() << "Setting initial game time to:" << time << "seconds";
     m_value = time;
     m_timeRecord = time;
     m_progress->setInintalTime(time);
@@ -66,6 +69,7 @@ void GamePage::setInitalTime(int time)
 
 void GamePage::setSoundSwitch(bool isOpen)
 {
+    qDebug() << "Setting sound switch to:" << isOpen;
     m_soundSwitch = isOpen;
     //更改游戏页面音效图标状态
     GameButton *soundBtn = dynamic_cast<GameButton *>(m_controlGrp->button(3));
@@ -76,6 +80,7 @@ void GamePage::setSoundSwitch(bool isOpen)
 
 void GamePage::restartGame(bool isFirst)
 {
+    qInfo() << "Restarting game, isFirst:" << isFirst;
     GameControl::GameInterFace().gameBegin();
     //第一次游戏只需要打乱游戏地图,重新开始游戏需要刷新按钮
     if (!isFirst)
@@ -84,6 +89,7 @@ void GamePage::restartGame(bool isFirst)
 
 void GamePage::setOnOffGame(bool isBegin)
 {
+    qInfo() << "Setting game state to:" << (isBegin ? "Running" : "Paused");
     if (isBegin) {
         m_gameStart = true;
         m_timer->start();
@@ -116,6 +122,7 @@ bool GamePage::onOffGame() const
 
 void GamePage::resetGame()
 {
+    qInfo() << "Resetting game state";
     GameControl::GameInterFace().gameReset();
     //消除提示效果
     m_hintPicOnTimer->stop();
@@ -127,6 +134,7 @@ void GamePage::resetGame()
 
 void GamePage::hintGame()
 {
+    qDebug() << "Showing game hint";
     //judge判断
     //如果判断有可以连接成功的按钮
     if (judgeGame()) {
@@ -166,6 +174,7 @@ void GamePage::hintGame()
 
 bool GamePage::judgeGame()
 {
+    qDebug() << "Judging game state";
     QPair<bool, QList<QPoint>> res = GameControl::GameInterFace().gameJudge();
     if (res.first) {
         m_hintPoint = res.second;
@@ -176,11 +185,13 @@ bool GamePage::judgeGame()
 
 bool GamePage::judgeVictory()
 {
+    qDebug() << "Checking for victory condition";
     return GameControl::GameInterFace().gameJudgeVictory();
 }
 
 void GamePage::initUI()
 {
+    qDebug() << "Initializing game UI components";
     m_mainLayout = new QVBoxLayout(this);
     QHBoxLayout *gameFrameLayout = new QHBoxLayout;
     QVBoxLayout *controlBtnLayout = new QVBoxLayout;
@@ -242,6 +253,7 @@ void GamePage::initUI()
 
 void GamePage::initConnect()
 {
+    qDebug() << "Setting up signal connections";
 #if QT_VERSION_MAJOR > 5
     QObject::connect(m_controlGrp, &QButtonGroup::idClicked, this, &GamePage::onControlBtnControl);
 #else
@@ -260,6 +272,7 @@ void GamePage::initConnect()
 
 void GamePage::initGameBtn()
 {
+    qDebug() << "Initializing game buttons";
     //初始化游戏按钮
     restartGame(true);
     for (int i = 0; i < GAMEROW; i++) {
@@ -291,6 +304,7 @@ void GamePage::shadowBtn(GameButton *btn)
 
 void GamePage::updateBtn()
 {
+    qDebug() << "Updating game buttons state";
     int index = 0;
     //遍历更新打乱后按钮的状态
     for (int i = 0; i < GAMEROW; i++) {
@@ -317,6 +331,8 @@ void GamePage::updateBtn()
 
 void GamePage::successAction(GameButton *preBtn, GameButton *currentBtn)
 {
+    qInfo() << "Successful connection between buttons at positions:"
+            << preBtn->location() << "and" << currentBtn->location();
     int endX = currentBtn->location().x();
     int endY = currentBtn->location().y();
     int startX = preBtn->location().x();
@@ -379,6 +395,8 @@ void GamePage::successAction(GameButton *preBtn, GameButton *currentBtn)
 
 void GamePage::failedAction(GameButton *preBtn, GameButton *currentBtn)
 {
+    qDebug() << "Failed connection attempt between buttons at positions:"
+             << preBtn->location() << "and" << currentBtn->location();
     //连线失败音效
     if (m_soundSwitch) {
 #if QT_VERSION_MAJOR > 5
@@ -394,6 +412,7 @@ void GamePage::failedAction(GameButton *preBtn, GameButton *currentBtn)
 
 void GamePage::popDialog()
 {
+    qDebug() << "Showing quit confirmation dialog";
     CloseWindowDialog *dialog = new CloseWindowDialog(this);
     //保留弹出窗口前的开始暂停状态
     bool preOnOff = onOffGame();
@@ -653,6 +672,7 @@ void GamePage::recoverBtnState()
 
 void GamePage::onControlBtnControl(int id)
 {
+    qDebug() << "Control button clicked, id:" << id;
     switch (id) {
     case 0: {
         if (!m_isStart) {
@@ -696,6 +716,7 @@ void GamePage::onControlBtnControl(int id)
 
 void GamePage::onhintPicOnTimerOut()
 {
+    qDebug() << "Hint timer on timeout, remaining flashes:" << m_flashCount;
     m_hintPicOnTimer->stop();
     m_flashCount--;
     this->hintBtnflash(GameBtnType::OnlyPic);
@@ -710,6 +731,7 @@ void GamePage::onhintPicOnTimerOut()
 
 void GamePage::onhintPicOffTimerOut()
 {
+    qDebug() << "Hint timer off timeout";
     m_hintPicOffTimer->stop();
     this->hintBtnflash(GameBtnType::NoneType);
     m_hintPicOnTimer->start();
@@ -717,6 +739,7 @@ void GamePage::onhintPicOffTimerOut()
 
 void GamePage::onAnimalBtnControl(QAbstractButton *btn)
 {
+    qDebug() << "Game button pressed";
     GameButton *gameBtn = dynamic_cast<GameButton *>(btn);
     if (!gameBtn || gameBtn->btnMode() == GameBtnType::NoneType) {
         qWarning() << "btn is illegal";
@@ -765,6 +788,7 @@ void GamePage::onAnimalBtnControl(QAbstractButton *btn)
 
 void GamePage::onProgressChanged(int value)
 {
+    qDebug() << "Game time progress changed to:" << value;
     if (value == 0) {
         //无了!
         //显示失败结果,发送失败信号
@@ -776,6 +800,7 @@ void GamePage::onProgressChanged(int value)
 
 void GamePage::reGame()
 {
+    qInfo() << "Restarting game with initial time:" << m_timeRecord;
     setInitalTime(m_timeRecord);
     restartGame(false);
 }
