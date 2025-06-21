@@ -1,18 +1,20 @@
-<?xml version="1.0" ?><!DOCTYPE TS><TS version="2.1" language="az">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="az">
 <context>
     <name>CloseWindowDialog</name>
     <message>
-        <location filename="../src/source/closewindowdialog.cpp" line="47"/>
+        <location filename="../src/source/closewindowdialog.cpp" line="34"/>
         <source>Are you sure you want to exit the game?</source>
         <translation>Oyundan çıxmaq istədiyinizə əminsiniz?</translation>
     </message>
     <message>
-        <location filename="../src/source/closewindowdialog.cpp" line="55"/>
+        <location filename="../src/source/closewindowdialog.cpp" line="42"/>
         <source>Keep Playing</source>
         <translation>Oyuna davam edin</translation>
     </message>
     <message>
-        <location filename="../src/source/closewindowdialog.cpp" line="56"/>
+        <location filename="../src/source/closewindowdialog.cpp" line="43"/>
         <source>Exit</source>
         <translation>Çıxış</translation>
     </message>
@@ -20,12 +22,12 @@
 <context>
     <name>GameoverBlurEffectWidget</name>
     <message>
-        <location filename="../src/source/gameoverblureffectwidget.cpp" line="105"/>
+        <location filename="../src/source/gameoverblureffectwidget.cpp" line="93"/>
         <source>Play Again</source>
         <translation>Yenidən oynayın</translation>
     </message>
     <message>
-        <location filename="../src/source/gameoverblureffectwidget.cpp" line="106"/>
+        <location filename="../src/source/gameoverblureffectwidget.cpp" line="94"/>
         <source>Have a Rest</source>
         <translation>Fasilə verin</translation>
     </message>
@@ -33,14 +35,14 @@
 <context>
     <name>Main</name>
     <message>
-        <location filename="../src/main.cpp" line="63"/>
-        <location filename="../src/main.cpp" line="65"/>
-        <location filename="../src/main.cpp" line="66"/>
+        <location filename="../src/main.cpp" line="52"/>
+        <location filename="../src/main.cpp" line="54"/>
+        <location filename="../src/main.cpp" line="55"/>
         <source>LianLianKan</source>
         <translation>LianLianKan</translation>
     </message>
     <message>
-        <location filename="../src/main.cpp" line="64"/>
+        <location filename="../src/main.cpp" line="53"/>
         <source>Lianliankan is a puzzle game.</source>
         <translation>Lianliankan pazl oyunudur.</translation>
     </message>
@@ -48,22 +50,22 @@
 <context>
     <name>MainPage</name>
     <message>
-        <location filename="../src/source/mainpage.cpp" line="45"/>
+        <location filename="../src/source/mainpage.cpp" line="32"/>
         <source>Easy</source>
         <translation>Asan</translation>
     </message>
     <message>
-        <location filename="../src/source/mainpage.cpp" line="46"/>
+        <location filename="../src/source/mainpage.cpp" line="33"/>
         <source>Normal</source>
         <translation>Normal</translation>
     </message>
     <message>
-        <location filename="../src/source/mainpage.cpp" line="47"/>
+        <location filename="../src/source/mainpage.cpp" line="34"/>
         <source>Hard</source>
         <translation>Çətin</translation>
     </message>
     <message>
-        <location filename="../src/source/mainpage.cpp" line="65"/>
+        <location filename="../src/source/mainpage.cpp" line="52"/>
         <source>Select Level</source>
         <translation>Səviyyəni seçin</translation>
     </message>
@@ -71,12 +73,12 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/source/mainwindow.cpp" line="108"/>
+        <location filename="../src/source/mainwindow.cpp" line="97"/>
         <source>FAIL</source>
         <translation>UĞURSUZ</translation>
     </message>
     <message>
-        <location filename="../src/source/mainwindow.cpp" line="111"/>
+        <location filename="../src/source/mainwindow.cpp" line="100"/>
         <source>VICTORY</source>
         <translation>QƏLƏBƏ</translation>
     </message>
