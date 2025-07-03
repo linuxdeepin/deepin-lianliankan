@@ -66,8 +66,8 @@
     </message>
     <message>
         <location filename="../src/source/mainpage.cpp" line="52"/>
-        <source>Select Level</source>
-        <translation>Seleccioneu el nivell</translation>
+        <source> Select Level </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

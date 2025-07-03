@@ -1,3 +1,9 @@
+com.deepin.lianliankan (6.0.7) unstable; urgency=medium
+
+  * update version  to 6.0.7. 
+
+ -- Tian ShiLin <tianshilin@uniontech.com>  Thu, 03 Jul 2025 15:09:33 +0800
+
 com.deepin.lianliankan (6.0.6) unstable; urgency=medium
 
   * chore: New version 6.0.6.

@@ -29,20 +29,22 @@
     <message>
         <location filename="../src/source/gameoverblureffectwidget.cpp" line="94"/>
         <source>Have a Rest</source>
-        <translation>Hê 'n RUST</translation>
+        <translation>Hê &apos;n RUST</translation>
     </message>
 </context>
 <context>
     <name>Main</name>
     <message>
         <location filename="../src/main.cpp" line="52"/>
+        <location filename="../src/main.cpp" line="54"/>
+        <location filename="../src/main.cpp" line="55"/>
         <source>LianLianKan</source>
         <translation>LianLianKan</translation>
     </message>
     <message>
         <location filename="../src/main.cpp" line="53"/>
         <source>Lianliankan is a puzzle game.</source>
-        <translation>Lianliankan is 'n puzzelspel.</translation>
+        <translation>Lianliankan is &apos;n puzzelspel.</translation>
     </message>
 </context>
 <context>
@@ -64,8 +66,8 @@
     </message>
     <message>
         <location filename="../src/source/mainpage.cpp" line="52"/>
-        <source>Select Level</source>
-        <translation>Kies Nivo</translation>
+        <source> Select Level </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
