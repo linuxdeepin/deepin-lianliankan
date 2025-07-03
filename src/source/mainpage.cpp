@@ -49,7 +49,7 @@ void MainPage::initUI()
     switchFrame->setGeometry(278,125,FRAMEWH,FRAMEHH);
     switchFrame->setLayout(frameLayout);
 
-    GameButton *swithBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Big, GameIconType::None, tr("Select Level"), this);
+    GameButton *swithBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Big, GameIconType::None, tr(" Select Level "), this);
     swithBtn->setEnabled(false);
     //这里由于窗口大小固定，且布局较难控制，故将按钮位置写为固定数字
     swithBtn->setGeometry(393,80,250,135);

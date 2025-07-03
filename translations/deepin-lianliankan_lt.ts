@@ -36,6 +36,8 @@
     <name>Main</name>
     <message>
         <location filename="../src/main.cpp" line="52"/>
+        <location filename="../src/main.cpp" line="54"/>
+        <location filename="../src/main.cpp" line="55"/>
         <source>LianLianKan</source>
         <translation>LianLianKan</translation>
     </message>
@@ -64,8 +66,8 @@
     </message>
     <message>
         <location filename="../src/source/mainpage.cpp" line="52"/>
-        <source>Select Level</source>
-        <translation>Pasirinkite lygį</translation>
+        <source> Select Level </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
