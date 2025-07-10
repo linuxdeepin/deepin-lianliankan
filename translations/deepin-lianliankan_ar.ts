@@ -11,7 +11,7 @@
     <message>
         <location filename="../src/source/closewindowdialog.cpp" line="42"/>
         <source>Keep Playing</source>
-        <translation>حفظ اللعب<br></translation>
+        <translation>حفظ اللعب</translation>
     </message>
     <message>
         <location filename="../src/source/closewindowdialog.cpp" line="43"/>

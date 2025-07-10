@@ -90,8 +90,8 @@ void GameoverBlurEffectWidget::initUI()
     m_tipLabel->setGraphicsEffect(effect);
 
     m_OverBtnGroup = new QButtonGroup(this);
-    GameButton *againButton = BtnFactory::createBtn(ButtonNormal, Over, None, tr("Play Again"));
-    GameButton *restButton = BtnFactory::createBtn(ButtonNormal, Over, None, tr("Have a Rest"));
+    GameButton *againButton = BtnFactory::createBtn(ButtonNormal, Over, None, tr(" Play Again "));
+    GameButton *restButton = BtnFactory::createBtn(ButtonNormal, Over, None, tr(" Have a Rest "));
     QLocale l;
     if (l.name() == "bo_CN") {
         QFont font;
