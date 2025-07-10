@@ -23,13 +23,13 @@
     <name>GameoverBlurEffectWidget</name>
     <message>
         <location filename="../src/source/gameoverblureffectwidget.cpp" line="93"/>
-        <source>Play Again</source>
-        <translation>再来一局</translation>
+        <source> Play Again </source>
+        <translation> 再来一局 </translation>
     </message>
     <message>
         <location filename="../src/source/gameoverblureffectwidget.cpp" line="94"/>
-        <source>Have a Rest</source>
-        <translation>休息一下</translation>
+        <source> Have a Rest </source>
+        <translation> 休息一下 </translation>
     </message>
 </context>
 <context>
@@ -73,14 +73,14 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../src/source/mainwindow.cpp" line="97"/>
+        <location filename="../src/source/mainwindow.cpp" line="99"/>
         <source>FAIL</source>
         <translation>时间已用完，下次快点喔！</translation>
     </message>
     <message>
-        <location filename="../src/source/mainwindow.cpp" line="100"/>
-        <source>VICTORY</source>
-        <translation>您赢了！！</translation>
+        <location filename="../src/source/mainwindow.cpp" line="102"/>
+        <source> VICTORY </source>
+        <translation> 您赢了！ </translation>
     </message>
 </context>
 </TS>

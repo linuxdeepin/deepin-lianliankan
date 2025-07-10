@@ -97,7 +97,7 @@ void MainWindow::loadOverPage(bool res)
         text = tr("FAIL");
     } else {
         m_gameOverPage->setResult(true);
-        text = tr("VICTORY");
+        text = tr(" VICTORY ");
     }
     m_gameOverPage->updateLabel(text);
     m_gameOverPage->show();
