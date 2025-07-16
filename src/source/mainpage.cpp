@@ -29,9 +29,9 @@ void MainPage::initUI()
 {
     qDebug() << "Initializing MainPage UI";
     m_btnGrp=new QButtonGroup(this);
-    GameButton *primaryBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Mid, GameIconType::None, tr("Easy"), this);
-    GameButton *interBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Mid, GameIconType::None, tr("Normal"), this);
-    GameButton *advanceBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Mid, GameIconType::None, tr("Hard"), this);
+    GameButton *primaryBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Mid, GameIconType::None, tr(" Easy "), this);
+    GameButton *interBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Mid, GameIconType::None, tr(" Normal "), this);
+    GameButton *advanceBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Mid, GameIconType::None, tr(" Hard "), this);
     m_btnGrp->addButton(primaryBtn, 0);
     m_btnGrp->addButton(interBtn, 1);
     m_btnGrp->addButton(advanceBtn, 2);
