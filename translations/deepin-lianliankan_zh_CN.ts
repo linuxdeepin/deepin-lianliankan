@@ -51,18 +51,18 @@
     <name>MainPage</name>
     <message>
         <location filename="../src/source/mainpage.cpp" line="32"/>
-        <source>Easy</source>
-        <translation>初级</translation>
+        <source> Easy </source>
+        <translation> 初级 </translation>
     </message>
     <message>
         <location filename="../src/source/mainpage.cpp" line="33"/>
-        <source>Normal</source>
-        <translation>中级</translation>
+        <source> Normal </source>
+        <translation> 中级 </translation>
     </message>
     <message>
         <location filename="../src/source/mainpage.cpp" line="34"/>
-        <source>Hard</source>
-        <translation>高级</translation>
+        <source> Hard </source>
+        <translation> 高级 </translation>
     </message>
     <message>
         <location filename="../src/source/mainpage.cpp" line="52"/>
