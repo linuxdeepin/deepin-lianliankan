@@ -62,7 +62,7 @@ TEST_F(UT_MainPage, UT_MainPage_soundState)
 
 TEST_F(UT_MainPage, UT_MainPage_mouseMoveEvent)
 {
-    QMouseEvent e(QEvent::Move, QPointF(m_mainPage->x(), m_mainPage->y()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    QMouseEvent e(QEvent::MouseMove, QPointF(m_mainPage->x(), m_mainPage->y()), QPointF(m_mainPage->x(), m_mainPage->y()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
     m_mainPage->mouseMoveEvent(&e);
     EXPECT_NE(m_mainPage, nullptr) << "check the status after UT_MainPage_mouseMoveEvent()";
 }
