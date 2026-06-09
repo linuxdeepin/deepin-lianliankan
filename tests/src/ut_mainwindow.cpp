@@ -114,7 +114,7 @@ TEST_F(UT_MainWindow, UT_MainWindow_loadOverPage_001)
     m_mainwindow->loadOverPage(true);
     EXPECT_NE(m_mainwindow->m_stackedWidget, nullptr) << "check the status after UT_MainWindow_loadOverPage_001()";
     EXPECT_NE(m_mainwindow->m_gameOverPage, nullptr) << "check the status after UT_MainWindow_loadOverPage_001()";
-    EXPECT_EQ(m_mainwindow->m_gameOverPage->m_tipLabel->text(), "VICTORY") << "check the status after UT_MainWindow_loadOverPage_001()";
+    EXPECT_EQ(m_mainwindow->m_gameOverPage->m_tipLabel->text(), QString(" VICTORY ")) << "check the status after UT_MainWindow_loadOverPage_001()";
     EXPECT_EQ(m_mainwindow->m_gameOverPage->size(), QSize(WINDOW_WIDTH, WINDOW_HEIGHT - m_mainwindow->m_titlebar->height())) << "check the status after UT_MainWindow_loadOverPage_001()";
 }
 

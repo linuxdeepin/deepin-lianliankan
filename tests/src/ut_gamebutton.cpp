@@ -189,7 +189,7 @@ TEST_F(UT_GameButton, UT_GameButton_paintEvent)
 
 TEST_F(UT_GameButton, UT_GameButton_mousePressEvent)
 {
-    QMouseEvent rightBtnEvent(QEvent::MouseButtonPress, QPointF(m_btn->x(), m_btn->y()), Qt::RightButton, Qt::RightButton, Qt::NoModifier);
+    QMouseEvent rightBtnEvent(QEvent::MouseButtonPress, QPointF(m_btn->x(), m_btn->y()), QPointF(m_btn->x(), m_btn->y()), Qt::RightButton, Qt::RightButton, Qt::NoModifier);
     m_btn->mousePressEvent(&rightBtnEvent);
 
     QMouseEvent leftBtnEvent(QEvent::MouseButtonPress, QPointF(1000, 1000), QPointF(m_btn->x(), m_btn->y()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
@@ -210,7 +210,7 @@ TEST_F(UT_GameButton, UT_GameButton_mousePressEvent)
 
 TEST_F(UT_GameButton, UT_GameButton_mouseReleaseEvent)
 {
-    QMouseEvent releaseEvent(QEvent::MouseButtonRelease, QPointF(m_btn->x(), m_btn->y()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    QMouseEvent releaseEvent(QEvent::MouseButtonRelease, QPointF(m_btn->x(), m_btn->y()), QPointF(m_btn->x(), m_btn->y()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
     m_btn->m_btnType = TextOnPic;
     m_btn->mouseReleaseEvent(&releaseEvent);
     m_btn->m_btnType = IconOnPic;

@@ -58,7 +58,7 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Multimedia REQUIRED)
 find_package(Dtk${DTK_VERSION}Core REQUIRED)
 find_package(Dtk${DTK_VERSION}Widget REQUIRED)
 find_package(Dtk${DTK_VERSION}Gui REQUIRED)
-add_definitions(${Qt5Test_DEFINITIONS})
+# Qt6 Test definitions (Qt5Test_DEFINITIONS removed in Qt6)
 FILE(GLOB allSource
      ../src/source/closewindowdialog.cpp
      ../src/source/gameblureffectwidget.cpp
@@ -119,5 +119,6 @@ target_link_libraries(${PROJECT_NAME_TEST}
     Dtk${DTK_VERSION}::Widget
     Qt${QT_VERSION_MAJOR}::Widgets
     Qt${QT_VERSION_MAJOR}::Multimedia
+    Qt${QT_VERSION_MAJOR}::Test
 )
 

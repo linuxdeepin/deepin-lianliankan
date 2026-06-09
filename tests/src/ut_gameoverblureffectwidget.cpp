@@ -75,7 +75,7 @@ TEST_F(UT_GameoverBlurEffectWidget, UT_GameoverBlurEffectWidget_paintEvent)
 
 TEST_F(UT_GameoverBlurEffectWidget, UT_GameoverBlurEffectWidget_mouseMoveEvent)
 {
-    QMouseEvent e(QEvent::Move, QPoint(m_overWidget->x(), m_overWidget->y()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    QMouseEvent e(QEvent::MouseMove, QPointF(m_overWidget->x(), m_overWidget->y()), QPointF(m_overWidget->x(), m_overWidget->y()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
     m_overWidget->mouseMoveEvent(&e);
     EXPECT_NE(m_overWidget, nullptr) << "check the status after UT_GameoverBlurEffectWidget_mouseMoveEvent()";
 }

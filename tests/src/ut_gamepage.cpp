@@ -386,7 +386,7 @@ TEST_F(UT_GamePage, UT_GamePage_dirCoord002)
 
 TEST_F(UT_GamePage, UT_GamePage_mouseMoveEvent)
 {
-    QMouseEvent e(QEvent::Move, QPointF(m_gamePage->x(), m_gamePage->y()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
+    QMouseEvent e(QEvent::MouseMove, QPointF(m_gamePage->x(), m_gamePage->y()), QPointF(m_gamePage->x(), m_gamePage->y()), Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);
     m_gamePage->mouseMoveEvent(&e);
     EXPECT_NE(m_gamePage, nullptr) << "check the status after UT_GamePage_mouseMoveEvent()";
 }
