@@ -14,6 +14,8 @@ GameProgressBar::GameProgressBar(QWidget *parent)
     : DColoredProgressBar(parent)
 {
     qDebug() << "Initializing GameProgressBar with default background image";
+    setAccessibleName("Game Countdown Timer");
+    setAccessibleDescription("Displays the remaining game time");
     QSize scaledSize = QSize(816, 54);
     QString fileName = ":/assets/images/progressback.png";
     m_pic = Utils::getDpiPixmap(scaledSize, fileName, this);

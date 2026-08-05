@@ -11,6 +11,7 @@
 #include <QMap>
 #include <QDebug>
 #include <QMessageBox>
+#include <QAbstractButton>
 
 
 CloseWindowDialog::CloseWindowDialog(QWidget *parent)
@@ -28,7 +29,9 @@ void CloseWindowDialog::initUI()
     qDebug() << "Enter initUI";
     //set icon
     setIcon(QIcon::fromTheme("com.deepin.lianliankan"));
+    setAccessibleName(tr("Exit Confirmation"));
     m_detailLabel = new DLabel(this);
+    m_detailLabel->setAccessibleName(tr("Exit Game Prompt"));
     m_detailLabel->setWordWrap(true);
     m_detailLabel->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Minimum);
     m_detailLabel->setText(tr("Are you sure you want to exit the game?"));
@@ -41,6 +44,12 @@ void CloseWindowDialog::initUI()
     addSpacing(10);
     addButton(tr("Keep Playing"), true, ButtonNormal);
     addButton(tr("Exit"), true, ButtonNormal);
+    // 为DDialog的按钮设置可访问名称
+    QList<QAbstractButton *> dialogBtns = this->getButtons();
+    if (dialogBtns.size() >= 2) {
+        dialogBtns.at(0)->setAccessibleName(tr("Keep Playing"));
+        dialogBtns.at(1)->setAccessibleName(tr("Exit"));
+    }
     qDebug() << "Exit initUI";
 }
 

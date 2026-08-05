@@ -25,6 +25,7 @@ void MainWindow::initUI()
     qDebug() << "Initializing MainWindow UI";
     setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
     this->setFixedSize(QSize(WINDOW_WIDTH, WINDOW_HEIGHT));
+    setAccessibleName("LianLianKan");
     m_titlebar = titlebar();
     m_titlebar->setIcon(QIcon::fromTheme("com.deepin.lianliankan"));
     m_titlebar->installEventFilter(this);

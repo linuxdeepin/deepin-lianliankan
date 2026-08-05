@@ -78,6 +78,7 @@ void GameoverBlurEffectWidget::initUI()
     m_mainLayout = new QVBoxLayout(this);
 
     m_tipLabel = new ShadowLabel(this);
+    m_tipLabel->setAccessibleName(tr("Game Result"));
     QGraphicsDropShadowEffect *effect = new QGraphicsDropShadowEffect(this);
     //设置阴影模糊半径为8
     effect->setBlurRadius(8);
@@ -91,7 +92,9 @@ void GameoverBlurEffectWidget::initUI()
 
     m_OverBtnGroup = new QButtonGroup(this);
     GameButton *againButton = BtnFactory::createBtn(ButtonNormal, Over, None, tr(" Play Again "));
+    againButton->setAccessibleName(tr("Play Again"));
     GameButton *restButton = BtnFactory::createBtn(ButtonNormal, Over, None, tr(" Have a Rest "));
+    restButton->setAccessibleName(tr("Have a Rest"));
     QLocale l;
     if (l.name() == "bo_CN") {
         QFont font;

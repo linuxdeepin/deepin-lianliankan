@@ -30,14 +30,18 @@ void MainPage::initUI()
     qDebug() << "Initializing MainPage UI";
     m_btnGrp=new QButtonGroup(this);
     GameButton *primaryBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Mid, GameIconType::None, tr(" Easy "), this);
+    primaryBtn->setAccessibleName(tr("Easy"));
     GameButton *interBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Mid, GameIconType::None, tr(" Normal "), this);
+    interBtn->setAccessibleName(tr("Normal"));
     GameButton *advanceBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Mid, GameIconType::None, tr(" Hard "), this);
+    advanceBtn->setAccessibleName(tr("Hard"));
     m_btnGrp->addButton(primaryBtn, 0);
     m_btnGrp->addButton(interBtn, 1);
     m_btnGrp->addButton(advanceBtn, 2);
     m_btnGrp->setExclusive(true);
 
     GameBlurEffectWidget *switchFrame = new GameBlurEffectWidget(GameBtnSize::Mid, this);
+    switchFrame->setAccessibleName(tr("Difficulty Selection"));
     QVBoxLayout *frameLayout=new QVBoxLayout;
     frameLayout->addWidget(primaryBtn);
     frameLayout->addSpacing(-20);
@@ -50,10 +54,12 @@ void MainPage::initUI()
     switchFrame->setLayout(frameLayout);
 
     GameButton *swithBtn = BtnFactory::createBtn(GameBtnFlag::ButtonNormal, GameBtnSize::Big, GameIconType::None, tr(" Select Level "), this);
+    swithBtn->setAccessibleName(tr("Select Level"));
     swithBtn->setEnabled(false);
     //这里由于窗口大小固定，且布局较难控制，故将按钮位置写为固定数字
     swithBtn->setGeometry(393,80,250,135);
     m_soundBtn = BtnFactory::createBtn(GameBtnFlag::ButtonSmall, GameBtnSize::Small, GameIconType::Sound);
+    m_soundBtn->setAccessibleName(tr("Sound"));
     m_soundBtn->setParent(this);
     m_soundBtn->setGeometry(854, 569, 140, 80);
 
@@ -77,6 +83,7 @@ void MainPage::setSoundState(bool state)
 {
     qDebug() << "Setting sound state to:" << state;
     m_soundState = state;
+    m_soundBtn->setAccessibleName(state ? tr("Sound") : tr("Mute"));
     m_soundBtn->updatePlayIcon(SoundCtl, m_soundState);
 }
 

@@ -75,6 +75,7 @@ void GamePage::setSoundSwitch(bool isOpen)
     GameButton *soundBtn = dynamic_cast<GameButton *>(m_controlGrp->button(3));
     if (!soundBtn)
         return;
+    soundBtn->setAccessibleName(isOpen ? tr("Sound") : tr("Mute"));
     soundBtn->updatePlayIcon(GameBtnType::SoundCtl, isOpen);
 }
 
@@ -105,6 +106,7 @@ void GamePage::setOnOffGame(bool isBegin)
     GameButton *beginBtn = dynamic_cast<GameButton *>(m_controlGrp->button(0));
     if (!beginBtn)
         return;
+    beginBtn->setAccessibleName(isBegin ? tr("Pause") : tr("Start"));
     beginBtn->updatePlayIcon(GameBtnType::GameCtl, isBegin);
 
     for (QAbstractButton *btn : m_controlGrp->buttons()) {
@@ -198,6 +200,7 @@ void GamePage::initUI()
     m_gameBtngridLayout = new QGridLayout;
 
     m_gameFrame = new GameBlurEffectWidget(GameBtnSize::Big, this);
+    m_gameFrame->setAccessibleName(tr("Game Board"));
     m_gameFrame->setFixedSize(835, 542);
 
     m_gameBtngridLayout->setContentsMargins(20, 10, 20, 35);
@@ -211,10 +214,15 @@ void GamePage::initUI()
 
     m_controlGrp = new QButtonGroup(controlFrame);
     GameButton *beginBtn = BtnFactory::createBtn(ButtonSmall, Small, Begin);
+    beginBtn->setAccessibleName(tr("Start"));
     GameButton *resetBtn = BtnFactory::createBtn(ButtonSmall, Small, Reset);
+    resetBtn->setAccessibleName(tr("Reset"));
     GameButton *hintBtn = BtnFactory::createBtn(ButtonSmall, Small, Hint);
+    hintBtn->setAccessibleName(tr("Hint"));
     GameButton *soundBtn = BtnFactory::createBtn(ButtonSmall, Small, Sound);
+    soundBtn->setAccessibleName(tr("Sound"));
     GameButton *homeBtn = BtnFactory::createBtn(ButtonSmall, Small, Home);
+    homeBtn->setAccessibleName(tr("Home"));
     controlBtnLayout->addWidget(beginBtn);
     controlBtnLayout->addSpacing(-23);
     controlBtnLayout->addWidget(resetBtn);
@@ -241,12 +249,14 @@ void GamePage::initUI()
     gameFrameLayout->addWidget(controlFrame);
 
     m_progress = new GameProgressBar(this);
+    m_progress->setAccessibleName(tr("Time remaining"));
     m_progress->setFixedSize(816, 54);
     m_mainLayout->addLayout(gameFrameLayout);
     m_mainLayout->addWidget(m_progress);
     m_mainLayout->setContentsMargins(15, 86, 15, 25);
     this->setLayout(m_mainLayout);
     m_drawScene = new GameLineScene(this);
+    m_drawScene->setAccessibleName(tr("Connection line"));
     m_drawScene->setFixedSize(this->parent()->property("size").value<QSize>());
 }
 
@@ -281,6 +291,25 @@ void GamePage::initGameBtn()
             //游戏按钮阴影处理
             shadowBtn(gameBtn);
             gameBtn->setLocation(i + 1, j + 1);
+            // 为游戏按钮设置可访问名称
+            GameBtnFlag flag = GameControl::m_map[i + 1][j + 1];
+            QString animalName;
+            switch (flag) {
+            case ButtonCow:    animalName = tr("Cow"); break;
+            case ButtonTiger:  animalName = tr("Tiger"); break;
+            case ButtonRabbit: animalName = tr("Rabbit"); break;
+            case ButtonSnake:  animalName = tr("Snake"); break;
+            case ButtonHorse:  animalName = tr("Horse"); break;
+            case ButtonSheep:  animalName = tr("Sheep"); break;
+            case ButtonDog:    animalName = tr("Dog"); break;
+            case ButtonPig:    animalName = tr("Pig"); break;
+            case ButtonCat:    animalName = tr("Cat"); break;
+            case ButtonLion:   animalName = tr("Lion"); break;
+            case ButtonFox:    animalName = tr("Fox"); break;
+            case ButtonPanda:  animalName = tr("Panda"); break;
+            default:           animalName = tr("Empty"); break;
+            }
+            gameBtn->setAccessibleName(QString("%1 %2,%3").arg(animalName).arg(i + 1).arg(j + 1));
             m_btnWidth = gameBtn->width();
             m_btnHeight = gameBtn->height();
             m_animalGrp->addButton(gameBtn);
