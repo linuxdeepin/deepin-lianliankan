@@ -1,0 +1,121 @@
+# AT-SPI UI Map - deepin-lianliankan
+# Generated: 2026-08-06
+# Purpose: Scan result listing controls requiring accessible names
+
+window:
+  - widget: MainWindow
+    type: DMainWindow
+    accessibleName: LianLianKan
+    children:
+      - page: MainPage
+        type: MainPage (DWidget)
+        accessibleName: ""
+        controls:
+          - name: Easy
+            type: GameButton (QPushButton)
+            accessibleName: Easy
+            role: difficulty selection
+          - name: Normal
+            type: GameButton (QPushButton)
+            accessibleName: Normal
+            role: difficulty selection
+          - name: Hard
+            type: GameButton (QPushButton)
+            accessibleName: Hard
+            role: difficulty selection
+          - name: Select Level
+            type: GameButton (QPushButton)
+            accessibleName: Select Level
+            role: disabled label
+          - name: Sound
+            type: GameButton (QPushButton)
+            accessibleName: Sound / Mute
+            role: sound toggle
+          - name: Difficulty Selection
+            type: GameBlurEffectWidget (QWidget)
+            accessibleName: Difficulty Selection
+            role: frame
+      - page: GamePage
+        type: GamePage (QWidget)
+        accessibleName: ""
+        controls:
+          - name: Game Board
+            type: GameBlurEffectWidget (QWidget)
+            accessibleName: Game Board
+            role: game area
+          - name: Start/Pause
+            type: GameButton (QPushButton)
+            accessibleName: Start / Pause
+            role: game control
+          - name: Reset
+            type: GameButton (QPushButton)
+            accessibleName: Reset
+            role: game control
+          - name: Hint
+            type: GameButton (QPushButton)
+            accessibleName: Hint
+            role: game control
+          - name: Sound
+            type: GameButton (QPushButton)
+            accessibleName: Sound / Mute
+            role: sound toggle
+          - name: Home
+            type: GameButton (QPushButton)
+            accessibleName: Home
+            role: navigation
+          - name: Time remaining
+            type: GameProgressBar (DColoredProgressBar)
+            accessibleName: Time remaining
+            role: countdown timer
+          - name: Connection line
+            type: GameLineScene (QWidget)
+            accessibleName: Connection line
+            role: drawing overlay
+          - name: Tiles (160)
+            type: GameButton (QPushButton)
+            accessibleName: "{AnimalName} {row},{col}"
+            role: game tile
+            list:
+              - animal: Cow
+              - animal: Tiger
+              - animal: Rabbit
+              - animal: Snake
+              - animal: Horse
+              - animal: Sheep
+              - animal: Dog
+              - animal: Pig
+              - animal: Cat
+              - animal: Lion
+              - animal: Fox
+              - animal: Panda
+      - overlay: GameoverBlurEffectWidget
+        type: GameoverBlurEffectWidget (DBlurEffectWidget)
+        controls:
+          - name: Game Result
+            type: ShadowLabel (DLabel)
+            accessibleName: Game Result
+            role: result display
+          - name: Play Again
+            type: GameButton (QPushButton)
+            accessibleName: Play Again
+            role: action
+          - name: Have a Rest
+            type: GameButton (QPushButton)
+            accessibleName: Have a Rest
+            role: action
+      - dialog: CloseWindowDialog
+        type: CloseWindowDialog (DDialog)
+        accessibleName: Exit Confirmation
+        controls:
+          - name: Exit Game Prompt
+            type: DLabel
+            accessibleName: Exit Game Prompt
+            role: prompt text
+          - name: Keep Playing
+            type: QAbstractButton
+            accessibleName: Keep Playing
+            role: action
+          - name: Exit
+            type: QAbstractButton
+            accessibleName: Exit
+            role: action
