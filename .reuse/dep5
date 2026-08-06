@@ -52,8 +52,3 @@ License: GPL-3.0-or-later
 Files: tests/*
 Copyright: UnionTech Software Technology Co., Ltd.
 License: GPL-3.0-or-later
-
-# AT-SPI completion report
-Files: AT-SPI-COMPLETION-REPORT.md
-Copyright: UnionTech Software Technology Co., Ltd.
-License: GPL-3.0-or-later
